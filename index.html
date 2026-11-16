@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>For Rakhi ✦</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+    body {
+      font-family: var(--sans);
+      transition: background 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    .font-editorial { font-family: var(--serif); }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 20px 50px rgba(20, 15, 15, 0.05);
+    }
+    .gold-border {
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.12);
+    }
+    .stage-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .stage-section.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes pulseSlow {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.07); opacity: 1; }
+    }
+    .emblem-breathe { animation: pulseSlow 4s ease-in-out infinite; }
+    .tag-pill {
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .tag-pill.selected {
+      background: linear-gradient(135deg, #be123c, #e11d48);
+      color: #ffffff;
+      border-color: #be123c;
+      box-shadow: 0 8px 20px rgba(190, 18, 60, 0.22);
+      transform: translateY(-1px);
+    }
+    .btn-luxury {
+      background: #1c1917;
+      color: #fafaf9;
+      transition: all 0.3s ease;
+    }
+    .btn-luxury:hover {
+      background: #292524;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(28, 25, 23, 0.15);
+    }
+    .btn-rose {
+      background: linear-gradient(135deg, #be123c, #9f1239);
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(190, 18, 60, 0.25);
+    }
+    .fade-in-slow {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .fade-in-slow.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
+    
+    #flappy-canvas { touch-action: none; }
+  </style>
+</head>
+<body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800" style="background: radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%);">
+
+  <!-- TOP MINIMAL PILL -->
+  <header class="w-full max-w-md flex justify-center items-center z-20 pt-1">
+    <div class="px-4 py-2 rounded-full glass-card text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600 shadow-sm border border-stone-200">
+      CUSTOM BUILT FOR RAKHI &nbsp;•&nbsp; <span id="stage-indicator" class="text-rose-700 font-bold">01 / 07</span>
+    </div>
+  </header>
+
+  <!-- FROSTED GLASS IPHONE-STYLE POPUP MODAL -->
+  <div id="modal-overlay" class="fixed inset-0 bg-stone-900/30 backdrop-blur-sm z-50 hidden items-center justify-center p-5 opacity-0 transition-opacity duration-300">
+    <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center border border-white shadow-2xl transform scale-95 transition-transform duration-300" id="modal-box">
+      <div id="modal-icon" class="text-4xl mb-3 drop-shadow-md">✨</div>
+      <p id="modal-text" class="text-stone-800 font-medium text-base leading-relaxed mb-6 whitespace-pre-line"></p>
+      <button id="modal-btn" class="w-full py-3.5 rounded-2xl btn-luxury text-xs font-semibold uppercase tracking-widest">Continue</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="w-full max-w-md my-auto py-6 z-10">
+
+    <!-- ================= STAGE 01: THE MASTER HOOK ================= -->
+    <section id="stage-1" class="stage-section active flex-col items-center text-center">
+      <div class="w-24 h-24 rounded-full glass-card gold-border flex items-center justify-center mb-7 emblem-breathe">
+        <svg class="w-11 h-11 text-rose-800/80" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="50" cy="50" r="38" stroke-dasharray="4 4"/>
+          <circle cx="50" cy="50" r="22"/>
+          <path d="M50 6 L50 94 M6 50 L94 50 M19 19 L81 81 M81 19 L19 81" stroke-opacity="0.45"/>
+          <polygon points="50,35 55,45 65,50 55,55 50,65 45,55 35,50 45,45" fill="currentColor" fill-opacity="0.15"/>
+        </svg>
+      </div>
+
+      <h1 class="font-editorial text-3xl sm:text-4xl font-semibold text-stone-900 leading-[1.2] mb-3 px-2">
+        Anyone can send a normal text. But some things are too special to just type.
+      </h1>
+      <p class="font-editorial italic text-xl text-rose-800/90 mb-6">
+        So I built this whole little world for you instead.
+      </p>
+
+      <div class="glass-card rounded-2xl p-4 mb-8 text-sm text-stone-600 leading-relaxed max-w-xs mx-auto">
+        Normal tareeke se bolna meri aadat nahi hai. Aage 6 chhote stages hain—har ek page par ek khel hai. Bina cheating kiye aakhiri page tak pahunch ke dikhao, Madam.
+      </div>
+
+      <button onclick="goToStage(2)" class="w-full max-w-xs py-4 px-8 rounded-full btn-luxury text-xs font-semibold uppercase tracking-[0.2em] shadow-lg">
+        Accept The Challenge &nbsp;→
+      </button>
+    </section>
+
+    <!-- ================= STAGE 02: THE EGO CLASH & MOOD SWING CATCHER ================= -->
+    <section id="stage-2" class="stage-section flex-col items-center text-center">
+      
+      <!-- GAME 1: TIC-TAC-TOE PRITESH STYLE -->
+      <div id="game-ttt" class="w-full flex flex-col items-center">
+        <span id="ttt-round-badge" class="text-[11px] uppercase tracking-[0.2em] text-sky-800/80 font-semibold mb-1">Game 01 • The Ego Clash (Round 1/2)</span>
+        <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Pritesh vs. Madam</h2>
+        <p id="ttt-status" class="text-xs text-stone-500 mb-5">Aap 'O' (Rose Gold) ho, main 'X' (Crimson). Pehli chaal aapki.</p>
+
+        <div class="glass-card p-5 rounded-3xl mb-4">
+          <div id="ttt-grid" class="grid grid-cols-3 gap-3 w-64 h-64"></div>
+        </div>
+      </div>
+
+      <!-- GAME 2: THE MOOD SWING CATCHER (Flappy Heart) -->
+      <div id="game-flappy" class="w-full hidden flex-col items-center">
+        <span class="text-[11px] uppercase tracking-[0.2em] text-sky-800/80 font-semibold mb-1">Game 02 • Handle With Care</span>
+        <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Mood Swing Catcher</h2>
+        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Tap karke dil (🤍) ko udao. 'Overthinking' (khambon) se bacho aur apne alag-alag moods (Nakhre, Gussa) collect karo. <br><span class="font-bold text-rose-600">Score: <span id="flappy-score">0</span> / 10</span></p>
+
+        <div class="glass-card p-2 rounded-3xl mb-4 relative flex items-center justify-center border-stone-300 shadow-inner overflow-hidden" style="width: 300px; height: 380px;">
+          <canvas id="flappy-canvas" width="284" height="364" class="rounded-2xl cursor-pointer bg-gradient-to-b from-[#e0f2fe] to-[#f0f9ff]"></canvas>
+          
+          <div id="flappy-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-white/40 backdrop-blur-[2px] rounded-3xl z-10 pointer-events-none transition-opacity duration-300">
+             <div class="animate-bounce text-4xl mb-2">👆</div>
+             <span class="text-xs font-bold uppercase tracking-widest text-sky-900 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">Tap To Fly</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= STAGE 03: THE SECRET ARCHIVE ================= -->
+    <section id="stage-3" class="stage-section flex-col items-center text-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-amber-800/70 font-semibold mb-1">Chapter 03 • The Secret Archive</span>
+      <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-2">Why I Saved Them</h2>
+      <p class="text-xs text-stone-600 mb-5 max-w-xs">Aap hamesha sochti thi na main aapki ajeeb-ajeeb snaps kyun save karta tha? Aaj dekh hi lo...</p>
+
+      <div id="snap-spotlight" class="w-full">
+        <div class="glass-card p-4 rounded-3xl mb-4 mx-auto max-w-xs transition-all duration-300">
+          <div class="w-full h-64 rounded-2xl bg-stone-200/70 overflow-hidden mb-4 relative flex items-center justify-center">
+            <img id="snap-img" src="" alt="Saved Snap" class="w-full h-full object-cover">
+            <span id="snap-badge" class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur text-[10px] font-semibold uppercase tracking-wider text-stone-700">01 / 04</span>
+          </div>
+          <p id="snap-caption" class="font-editorial italic text-lg text-stone-800 leading-snug mb-2 min-h-[3.5rem] flex items-center justify-center px-2"></p>
+          <div class="text-[11px] text-stone-400 tracking-widest uppercase">— Saved by P.</div>
+        </div>
+
+        <button id="snap-next-btn" onclick="nextSpotlightSnap()" class="py-3.5 px-7 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+          Next Memory &nbsp;→
+        </button>
+      </div>
+
+      <div id="snap-vault" class="w-full hidden flex-col items-center">
+        <div class="glass-card p-3.5 rounded-3xl w-full max-h-80 overflow-y-auto mb-5">
+          <div class="grid grid-cols-3 gap-2" id="vault-grid-container"></div>
+        </div>
+        <p class="font-editorial italic text-base text-stone-700 mb-5 px-3">
+          "Har ek snap aur video isliye sambhal ke rakhi hai, kyunki aapka har ek mood mere liye art hai."
+        </p>
+        <button onclick="goToStage(4)" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+          Turn The Page &nbsp;→
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 04: THE "HER PERSPECTIVE" 20 TAGS ================= -->
+    <section id="stage-4" class="stage-section flex-col items-center text-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-rose-800/70 font-semibold mb-1">Chapter 04 • Her Perspective</span>
+      <h2 class="font-editorial text-2xl sm:text-3xl font-semibold text-stone-800 mb-1">
+        "Maine toh apni baatein bata di. Ab sach bolne ki baari aapki..."
+      </h2>
+      <p class="text-xs text-stone-500 mb-4">Mujh mein sabse zyada kya pasand hai? (Tap to select)</p>
+
+      <div id="tags-container" class="flex flex-wrap justify-center gap-2 max-h-64 overflow-y-auto p-2 mb-3"></div>
+
+      <button onclick="selectAllTags()" class="w-full py-3 px-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold tracking-wide mb-4 hover:bg-rose-100 transition">
+        Ek-ek karke thak jaogi... Seedha 'SELECT ALL' dabao 😌✨
+      </button>
+
+      <div class="w-full glass-card p-3.5 rounded-2xl mb-5 text-left">
+        <label class="block text-[11px] text-stone-500 mb-1 font-medium">Kuch reh gaya jo is list mein nahi hai? Yahan likh do...</label>
+        <input id="custom-note-input" type="text" placeholder="Type here, Madam..." class="w-full bg-transparent text-sm text-stone-800 placeholder-stone-400 focus:outline-none border-b border-stone-300 pb-1">
+      </div>
+
+      <button onclick="submitStage4()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+        Confirm & Go Next &nbsp;→
+      </button>
+    </section>
+
+    <!-- ================= STAGE 05: THE OBSERVATION DECK ================= -->
+    <section id="stage-5" class="stage-section flex-col items-center text-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-stone-500 font-semibold mb-1">Chapter 05 • The Observation Deck</span>
+      <h2 class="font-editorial text-2xl sm:text-3xl font-semibold text-stone-800 mb-1 px-2">
+        "Maine pehle hi kaha tha, mera dimaag ek artist ka hai... yeh har choti cheez notice karta hai."
+      </h2>
+      <p class="text-xs text-stone-500 mb-5">(Swipe to read 🤍)</p>
+
+      <div id="obs-card-box" class="glass-card w-full rounded-3xl p-7 mb-6 min-h-[225px] flex flex-col justify-between relative overflow-hidden transition-all duration-300 cursor-pointer" onclick="nextObservation()">
+        <div class="flex justify-between items-center text-[11px] text-stone-400 uppercase tracking-widest">
+          <span id="obs-title">Card 01</span>
+          <span id="obs-counter" class="text-rose-700 font-bold">01 / 05</span>
+        </div>
+        <p id="obs-text" class="font-editorial text-xl sm:text-2xl text-stone-800 leading-relaxed my-4"></p>
+        <div class="flex justify-between items-center text-xs text-stone-400">
+          <span class="text-[10px] uppercase tracking-widest">Swipe or Tap Card</span>
+          <span class="font-editorial italic text-sm text-stone-500">— Pritesh</span>
+        </div>
+      </div>
+
+      <button id="obs-btn" onclick="nextObservation()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+        Next Card &nbsp;→
+      </button>
+    </section>
+
+    <!-- ================= STAGE 06: THE GRAND FINALE (WILD 'NO' TRAP) ================= -->
+    <section id="stage-6" class="stage-section flex-col items-center text-center relative overflow-hidden min-h-[85vh]">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700 font-semibold mb-2">Chapter 06 • The Grand Finale</span>
+      
+      <div class="glass-card rounded-3xl p-6 sm:p-7 mb-4 border border-rose-200/60 z-20 relative">
+        <p class="font-editorial text-2xl sm:text-3xl text-stone-900 font-semibold leading-snug mb-3">
+          "Is multiverse mein 8 Billion log hain..."
+        </p>
+        <p id="climax-hook-2" class="font-editorial italic text-xl text-rose-800 leading-snug mb-5 fade-in-slow">
+          "Par mera dimaag, meri art, aur mera 'Spider-Sense' sirf ek hi insaan par aakar lock ho gaya hai."
+        </p>
+        <div id="climax-body" class="fade-in-slow">
+          <hr class="border-rose-200/50 my-4">
+          <p class="text-xs sm:text-sm text-stone-600 leading-relaxed mb-4">
+            "Ab main chupke se aapki snaps save nahi karna chahta. Mujhe wo saare moments saamne se jeene hain. Aapke nakhre, aapki overthinking, aur aapki wo bina-filter wali vibe—mujhe yeh poora package chahiye. Hamesha ke liye."
+          </p>
+          <p class="font-editorial font-semibold text-xl text-stone-900">
+            "Toh bataiye Madam... Should we make this official?"
+          </p>
+        </div>
+      </div>
+
+      <!-- BIG BOLD 15-NO TOAST MESSAGE -->
+      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-5 text-base sm:text-lg font-bold text-rose-900 bg-rose-100/95 border border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-4 leading-snug"></div>
+
+      <!-- WILD FLYING BUTTON ARENA -->
+      <div class="flex items-center justify-center gap-3 w-full mb-12 relative min-h-[220px]" id="button-arena">
+        <button id="yes-btn" onclick="acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest transition-all duration-200 active:scale-95 z-10 shadow-lg">
+          Haan, bilkul 🤍
+        </button>
+        <button id="no-btn" onclick="clickNoButton()" class="py-4 px-7 rounded-full glass-card text-stone-800 text-sm font-bold uppercase tracking-wider border border-stone-400 transition-all duration-300 z-20 shadow-md">
+          Nahi, sochna padega 🤔
+        </button>
+      </div>
+
+      <button onclick="tooSoonRespect()" class="absolute bottom-2 text-[11px] text-stone-400 underline underline-offset-4 hover:text-stone-600 transition z-10">
+        No, it's a bit too soon.
+      </button>
+    </section>
+
+    <!-- ================= STAGE 07: MULTIVERSE CONTRACT & TIMESTAMP SEAL ================= -->
+    <section id="stage-7" class="stage-section flex-col items-center text-center">
+      <div id="certificate-card" class="glass-card gold-border rounded-3xl p-6 w-full mb-5 bg-[#FCFBF9] relative">
+        <div class="text-[10px] uppercase tracking-[0.25em] text-amber-700 font-bold mb-1">
+          THE MULTIVERSE CONTRACT // ARCHIVE SEALED
+        </div>
+        <h2 class="font-editorial text-2xl font-semibold text-stone-900 mb-2">Official Babuaa–Madam Pact</h2>
+        <p class="text-xs text-stone-600 leading-relaxed mb-4">
+          Aapne 'Haan' dabaya hai, toh ab back-out karne ka koi option nahi hai. Yeh ek officially binding universe contract hai.
+        </p>
+
+        <div class="text-left mb-2 flex justify-between items-center">
+          <span class="text-[11px] font-semibold text-stone-600">Apni ungli se yahan sign karo, Madam ✍️</span>
+          <button id="clear-sig-btn" onclick="clearSignature()" class="text-[10px] text-rose-700 underline font-semibold">Clear</button>
+        </div>
+
+        <div class="rounded-2xl border border-stone-300 bg-white overflow-hidden mb-3 relative" id="canvas-container">
+          <canvas id="sig-canvas" class="w-full h-36 touch-none cursor-crosshair"></canvas>
+          
+          <!-- Timestamp Overlay -->
+          <div id="timestamp-overlay" class="absolute inset-0 bg-white/75 backdrop-blur-[3px] hidden flex-col items-center justify-center text-center p-2 z-10 border border-emerald-500/30">
+             <span class="text-emerald-700 text-3xl mb-1">🔒</span>
+             <span class="text-xs font-bold text-stone-800 uppercase tracking-widest">Officially Sealed</span>
+             <span id="time-stamp-text" class="text-[11px] text-emerald-800 font-bold mt-1 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200"></span>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center text-[10px] text-stone-400 uppercase tracking-widest pt-1">
+          <span>Signed By: Rakhi</span>
+          <span>Witness: Pritesh ✦</span>
+        </div>
+      </div>
+
+      <div class="flex gap-3 w-full">
+        <button onclick="downloadCertificate()" class="flex-1 py-3.5 px-4 rounded-full glass-card border border-stone-300 text-stone-700 text-xs font-semibold uppercase tracking-wider">
+          Save Memory 📥
+        </button>
+        <button onclick="finishAndSeal()" class="flex-1 py-3.5 px-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest shadow-lg">
+          Seal Contract 🔒
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-[10px] text-stone-400 tracking-widest uppercase pb-1">
+    Handcrafted with patience • Pritesh
+  </footer>
+
+  <!-- ================= JAVASCRIPT MASTER ENGINE ================= -->
+  <script>
+    const CONFIG = {
+      whatsappNumber: "918328843203",
+      web3FormsKey: "8097f3dd-d51d-4adb-a562-6aa0e889e1eb",
+      
+      spotlightSnaps: [
+        { img: "main1.jpg", caption: "Isme aapki shakal sach mein cartoon jaisi lag rahi hai. Par din bhar ki thakan ke baad yeh dekh ke hi sabse pehle smile aati thi." },
+        { img: "main2.jpg", caption: "Nakhre aasman pe, par vibe ekdum flawless. Yeh snap save karna toh mera birthright tha." },
+        { img: "main3.jpg", caption: "Bina kisi filter ya koshish ke bhi koi itna sukoon kaise de sakta hai? An artist knows a masterpiece when he sees one." },
+        { img: "main4.jpg", caption: "Yeh wo 4th snap hai jisme aapka pura mood aur bina-filter wali vibe ek saath dikhti hai. Mera absolute favourite frame." }
+      ],
+      vaultGridImages: [
+        "snap1.jpg", "snap2.jpg", "snap3.jpg", "snap4.jpg", "snap5.jpg", "snap6.jpg", "snap7.jpg", "snap8.jpg", "snap9.jpg", "snap10.jpg", "snap11.jpg", "snap12.jpg", "snap13.jpg", "snap14.jpg", "snap15.jpg", "snap16.jpg", "snap17.jpg", "snap18.jpg"
+      ],
+      traitsTags: [
+        "Mujhe \"Madam\" bulana ✨", "Aapka calm aur tension-free nature", "Meri chhoti-chhoti details notice karna", "Meri overthinking ko comedy bana dena", "Aapka Hyper-realistic art aur aesthetic vibe 🎨", "Mere nakhre aur mood swings aaram se jhelna", "Humari Babuaa-Madam wali chemistry", "Bina judge kiye meri saari baatein sunna", "Chupke se meri ajeeb snaps save karna 👀", "Aapke andar ka chhupa hua 'soft corner' 🤍", "Humari late-night weird baatein", "Mere secrets hamesha safe rakhne ka trust", "Har tension ko hansi mein badal dena", "Aapka bina-filter wala sense of humor", "Mujhe respect aur apni space dena", "Aapka focused aur ambitious mindset", "Aapke saath aane wali wo 'comfort vibe'", "Mujhe bina bole samajh jaana", "Aapka hamesha dependable rehna 🛡️", "Aapka kisi bhi aam din ko special bana dena ✨"
+      ],
+      observations: [
+        { title: "Card 01 • The Nakhre Tease", text: "Nakhre aur zidd toh bhare pade hain aap mein... par sach bataun? Aapke wo nakhre jhelne mein ek alag hi sukoon milta hai, Madam. 😌" },
+        { title: "Card 02 • The Overthinking Check", text: "Baat-baat par overthink karna aur khud ko stress dena... is department mein lagta hai aapne Ph.D. ki hui hai. Par fikar mat karo, us overthinking ko comedy mein badalne ke liye main hu na." },
+        { title: "Card 03 • The Artist's Muse", text: "Main canvas par chahe jitni bhi hyper-realistic painting bana lu... par aapki us ek bina-filter wali smile ke saamne mera har art pheeka hai. 🎨✨" },
+        { title: "Card 04 • The Peace & Comfort", text: "Aapki baatein aur wo ajeeb sa logic... din bhar ki chahe jitni thakan ho, aapki ek vibe sab kuch ek second mein gayab kar deti hai." },
+        { title: "Card 05 • The Ultimate Security", text: "Bahar se kitni bhi strong banne ki koshish kar lo, par aapke andar ek bohot pyara aur soft side hai... aur us soft side ko main hamesha protect karunga. 🤍" }
+      ],
+      noButtonTexts: [
+        "Itni jaldi No? Ek baar aur soch lijiye 😌", 
+        "Ungli fisal gayi kya madam? 'Haan' wala button left mein hai. 👀", 
+        "Acha zidd? Dekhte hain kiski zidd badi hai.", 
+        "Abhi bhi 'Nahi'? Itne nakhre toh main canvas pe bhi nahi jhelta. 🎨", 
+        "Pata hai na main artist hu? Mere paas patience bohot hai, karte raho try.", 
+        "Dabate raho 'Nahi', mujhe sach mein koi jaldi nahi hai.", 
+        "Thakogi nahi? Meri tarah thoda calm ho jao aur 'Haan' dabao.", 
+        "Okay, ab lag raha hai aap sach mein maze le rahi ho is button ke saath.", 
+        "Dekho, ab Universe bhi keh raha hai ki maan jao.", 
+        "10 baar daba chuki ho. Dedication toh bohot hai aapke andar.", 
+        "Accha ruko, ab main sach mein bura maan jaunga. 😂", 
+        "Babuaa-Madam wali chemistry kharab karogi kya ab?", 
+        "Bas 2 attempt aur, uske baad yeh button hi main hata dunga.", 
+        "Aakhiri warning madam... shanti se 'Haan' pe click kar lijiye.", 
+        "Bohot nakhre ho gaye! 😌 Ab aap chaho toh bhi 'Nahi' daba sakti. You are officially out of options."
+      ]
+    };
+
+    let currentStage = 1;
+    let selectedTags = new Set();
+    let currentSnapIndex = 0;
+    let currentObsIndex = 0;
+    let noClickCount = 0;
+    let hasSignedCanvas = false;
+
+    const STAGE_BACKGROUNDS = {
+      1: "radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%)",
+      2: "#F4F7FB",
+      3: "radial-gradient(circle at 50% 20%, #FFFDF7 0%, #FAF5E8 60%, #F2E9D5 100%)",
+      4: "radial-gradient(circle at 50% 20%, #FFF5F7 0%, #FCECEF 60%, #F5DCE2 100%)",
+      5: "linear-gradient(180deg, #F7F6F2 0%, #EFECE6 100%)",
+      6: "radial-gradient(circle at 50% 20%, #FFF0F3 0%, #FDE2E8 60%, #F7CDD6 100%)",
+      7: "radial-gradient(circle at 50% 20%, #FFFCF7 0%, #FAF4E8 60%, #F2E8D5 100%)"
+    };
+
+    function goToStage(stageNum) {
+      document.querySelectorAll('.stage-section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById(`stage-${stageNum}`);
+      if (target) target.classList.add('active');
+
+      currentStage = stageNum;
+      document.getElementById('stage-indicator').innerText = `0${stageNum} / 07`;
+
+      if (STAGE_BACKGROUNDS[stageNum]) document.getElementById('app-body').style.background = STAGE_BACKGROUNDS[stageNum];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (stageNum === 2) initTicTacToe(1);
+      if (stageNum === 3) initStage3();
+      if (stageNum === 4) initStage4();
+      if (stageNum === 5) initStage5();
+      if (stageNum === 6) initStage6Climax();
+      if (stageNum === 7) { setTimeout(initSignatureCanvas, 150); }
+    }
+
+    function showModal(text, icon = "✨", btnText = "Continue", callback = null) {
+      const overlay = document.getElementById('modal-overlay');
+      const box = document.getElementById('modal-box');
+      document.getElementById('modal-icon').innerText = icon;
+      document.getElementById('modal-text').innerText = text;
+      const btn = document.getElementById('modal-btn');
+      btn.innerText = btnText;
+
+      overlay.classList.remove('hidden'); overlay.classList.add('flex');
+      setTimeout(() => { overlay.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 20);
+
+      btn.onclick = () => {
+        overlay.classList.add('opacity-0'); box.classList.add('scale-95');
+        setTimeout(() => { overlay.classList.remove('flex'); overlay.classList.add('hidden'); if (callback) callback(); }, 280);
+      };
+    }
+
+    /*************************************************************
+     * STAGE 02 - GAME 1: TIC-TAC-TOE
+     *************************************************************/
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let tttRound = 1;
+    let tttActive = true;
+
+    function initTicTacToe(roundNumber = 1) {
+      tttRound = roundNumber; board = ["", "", "", "", "", "", "", "", ""]; tttActive = true;
+      document.getElementById('ttt-round-badge').innerText = `Game 01 • The Ego Clash (Round ${tttRound}/2)`;
+      document.getElementById('ttt-status').innerText = tttRound === 1
+        ? "Aap 'O' (Soft Rose Gold) ho, main 'X' (Deep Crimson). Pehli chaal aapki."
+        : "Round 02: Chalo dekhte hain is baar aap jeet paati ho ya nahi 😌";
+      renderTTTGrid();
+    }
+
+    function renderTTTGrid() {
+      const grid = document.getElementById('ttt-grid'); grid.innerHTML = "";
+      board.forEach((cell, i) => {
+        const btn = document.createElement('button');
+        btn.className = "rounded-2xl bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center font-editorial text-3xl font-bold transition-all active:scale-95";
+        if (cell === "O") { btn.style.color = "#E19898"; btn.innerText = "O"; } 
+        else if (cell === "X") { btn.style.color = "#9F1239"; btn.innerText = "X"; } 
+        else { btn.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-stone-300/75"></span>`; }
+        btn.onclick = () => handlePlayerMove(i);
+        grid.appendChild(btn);
+      });
+    }
+
+    function handlePlayerMove(index) {
+      if (!tttActive || board[index] !== "") return;
+      board[index] = "O"; renderTTTGrid();
+      if (checkWinner(board, "O")) { handleRoundEnd("O"); return; }
+      if (!board.includes("")) { handleRoundEnd("DRAW"); return; }
+      tttActive = false;
+      document.getElementById('ttt-status').innerText = "Pritesh apni chaal chal raha hai...";
+      setTimeout(() => {
+        const move = (tttRound === 1) ? getUnbeatableMove(board) : getLetHerWinMove(board);
+        if (move !== -1) board[move] = "X";
+        renderTTTGrid();
+        if (checkWinner(board, "X")) { handleRoundEnd("X"); } 
+        else if (!board.includes("")) { handleRoundEnd("DRAW"); } 
+        else { tttActive = true; document.getElementById('ttt-status').innerText = "Ab aapki chaal, Madam."; }
+      }, 420);
+    }
+
+    function handleRoundEnd(winner) {
+      tttActive = false;
+      if (tttRound === 1) {
+        setTimeout(() => { showModal("\"Aapko kya laga, pehli baar mein hi mujhe hara dogi? Ek aur try lo, shayad is baar reham kha lu. 😌\"", "😌", "Try Again 🔄", () => initTicTacToe(2)); }, 380);
+      } else {
+        setTimeout(() => {
+          showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Aage badhte hain. ✨\"", "✨", "Next Level →", () => {
+            document.getElementById('game-ttt').classList.add('hidden');
+            const flappyGame = document.getElementById('game-flappy');
+            flappyGame.classList.remove('hidden'); flappyGame.classList.add('flex');
+            initFlappyGame();
+          });
+        }, 380);
+      }
+    }
+
+    function checkWinner(b, p) {
+      const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      return wins.some(c => c.every(i => b[i] === p));
+    }
+    function getUnbeatableMove(b) {
+      let bestScore = -Infinity; let move = -1;
+      for (let i = 0; i < 9; i++) { if (b[i] === "") { b[i] = "X"; let score = minimax(b, 0, false); b[i] = ""; if (score > bestScore) { bestScore = score; move = i; } } }
+      return move;
+    }
+    function minimax(b, depth, isMaximizing) {
+      if (checkWinner(b, "X")) return 10 - depth; if (checkWinner(b, "O")) return depth - 10; if (!b.includes("")) return 0;
+      if (isMaximizing) { let best = -Infinity; for (let i = 0; i < 9; i++) { if (b[i] === "") { b[i] = "X"; best = Math.max(best, minimax(b, depth + 1, false)); b[i] = ""; } } return best; } 
+      else { let best = Infinity; for (let i = 0; i < 9; i++) { if (b[i] === "") { b[i] = "O"; best = Math.min(best, minimax(b, depth + 1, true)); b[i] = ""; } } return best; }
+    }
+    function getLetHerWinMove(b) {
+      const empty = b.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+      const nonBlockingAndNonWinning = empty.filter(i => { b[i] = "X"; const xWins = checkWinner(b, "X"); b[i] = "O"; const blocksO = checkWinner(b, "O"); b[i] = ""; return !xWins && !blocksO; });
+      if (nonBlockingAndNonWinning.length > 0) return nonBlockingAndNonWinning[0];
+      const nonWinning = empty.filter(i => { b[i] = "X"; const xWins = checkWinner(b, "X"); b[i] = ""; return !xWins; });
+      return nonWinning.length > 0 ? nonWinning[0] : empty[0];
+    }
+
+    /*************************************************************
+     * STAGE 02 - GAME 2: MOOD SWING CATCHER (Flappy Heart)
+     *************************************************************/
+    let fgCanvas, ctxFg;
+    let fgActive = false;
+    let fgAnimId;
+    let fgScore = 0;
+    const TARGET_SCORE = 10;
+    
+    // Physics
+    let bird = { x: 50, y: 150, v: 0, r: 16, emoji: "🤍", hit: false };
+    const GRAVITY = 0.35;
+    const JUMP = -5.8;
+    const PIPE_SPEED = 2.0;
+    const GAP = 125;
+    
+    let pipes = [];
+    let items = [];
+    let particles = [];
+    let frames = 0;
+
+    const MOODS = [
+      { text: "Gussa", emoji: "😡", color: "#f43f5e" },
+      { text: "Care", emoji: "🥰", color: "#10b981" },
+      { text: "Nakhre", emoji: "😒", color: "#f59e0b" },
+      { text: "Pyaar", emoji: "🤍", color: "#ec4899" },
+      { text: "Zidd", emoji: "😤", color: "#8b5cf6" },
+      { text: "Smile", emoji: "😊", color: "#fcd34d" }
+    ];
+
+    function initFlappyGame() {
+      fgCanvas = document.getElementById('flappy-canvas');
+      ctxFg = fgCanvas.getContext('2d');
+      document.getElementById('flappy-overlay').classList.remove('opacity-0');
+      
+      const startAction = (e) => {
+        if(e) e.preventDefault();
+        if(!fgActive) {
+          fgActive = true;
+          document.getElementById('flappy-overlay').classList.add('opacity-0');
+          resetFlappy();
+          flappyLoop();
+        } else {
+          bird.v = JUMP;
+        }
+      };
+
+      fgCanvas.onmousedown = startAction;
+      fgCanvas.ontouchstart = startAction;
+    }
+
+    function resetFlappy() {
+      bird = { x: 50, y: fgCanvas.height/2, v: 0, r: 16, emoji: "🤍", hit: false };
+      pipes = [];
+      items = [];
+      particles = [];
+      frames = 0;
+      fgScore = 0;
+      document.getElementById('flappy-score').innerText = fgScore;
+    }
+
+    function spawnParticle(x, y, text, color) {
+      particles.push({ x: x, y: y, text: text, color: color, life: 40, maxLife: 40 });
+    }
+
+    function flappyLoop() {
+      if(!fgActive) return;
+      ctxFg.clearRect(0, 0, fgCanvas.width, fgCanvas.height);
+      
+      // Update Bird
+      bird.v += GRAVITY;
+      bird.y += bird.v;
+
+      // Check Floor/Ceiling
+      if(bird.y + bird.r > fgCanvas.height || bird.y - bird.r < 0) {
+         gameOverFlappy();
+         return;
+      }
+
+      // Generate Pipes & Items
+      if(frames % 100 === 0) {
+        let topHeight = Math.random() * (fgCanvas.height - GAP - 60) + 30;
+        let pX = fgCanvas.width;
+        pipes.push({ x: pX, w: 35, top: topHeight, bottom: topHeight + GAP, passed: false });
+        
+        let mood = MOODS[Math.floor(Math.random() * MOODS.length)];
+        items.push({ x: pX + 17, y: topHeight + GAP/2, mood: mood, active: true });
+      }
+
+      // Draw & Update Pipes
+      for(let i = pipes.length - 1; i >= 0; i--) {
+        let p = pipes[i];
+        p.x -= PIPE_SPEED;
+
+        ctxFg.fillStyle = "rgba(100, 116, 139, 0.4)"; 
+        ctxFg.fillRect(p.x, 0, p.w, p.top);
+        ctxFg.fillRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
+        
+        ctxFg.strokeStyle = "rgba(71, 85, 105, 0.6)";
+        ctxFg.lineWidth = 1.5;
+        ctxFg.strokeRect(p.x, 0, p.w, p.top);
+        ctxFg.strokeRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
+
+        ctxFg.fillStyle = "rgba(71, 85, 105, 0.8)";
+        ctxFg.font = "9px sans-serif";
+        ctxFg.textAlign = "center";
+        ctxFg.fillText("Overthinking", p.x + p.w/2, p.top - 10);
+
+        let cx = bird.x, cy = bird.y, r = bird.r - 4;
+        let hitTop = cx + r > p.x && cx - r < p.x + p.w && cy - r < p.top;
+        let hitBot = cx + r > p.x && cx - r < p.x + p.w && cy + r > p.bottom;
+        if(hitTop || hitBot) { gameOverFlappy(); return; }
+
+        if(p.x + p.w < 0) pipes.splice(i, 1);
+      }
+
+      // Draw & Update Items
+      for(let i = items.length - 1; i >= 0; i--) {
+        let item = items[i];
+        item.x -= PIPE_SPEED;
+        if(item.active) {
+          ctxFg.font = "14px sans-serif";
+          ctxFg.textAlign = "center";
+          let floatY = item.y + Math.sin(frames * 0.1) * 3;
+          
+          ctxFg.fillStyle = item.mood.color;
+          ctxFg.fillText(item.mood.text, item.x, floatY - 12);
+          ctxFg.fillText(item.mood.emoji, item.x, floatY + 5);
+
+          let dist = Math.hypot(bird.x - item.x, bird.y - floatY);
+          if(dist < 28) {
+            item.active = false;
+            fgScore++;
+            document.getElementById('flappy-score').innerText = fgScore;
+            
+            bird.emoji = item.mood.emoji;
+            spawnParticle(item.x, floatY, item.mood.text, item.mood.color);
+
+            if(fgScore >= TARGET_SCORE) {
+              winFlappy();
+              return;
+            }
+          }
+        }
+        if(item.x < -30) items.splice(i, 1);
+      }
+
+      // Draw Particles
+      for(let i = particles.length - 1; i >= 0; i--) {
+        let pt = particles[i];
+        pt.y -= 1.5;
+        pt.life--;
+        ctxFg.globalAlpha = pt.life / pt.maxLife;
+        ctxFg.fillStyle = pt.color;
+        ctxFg.font = "bold 16px sans-serif";
+        ctxFg.fillText("+" + pt.text, pt.x, pt.y);
+        ctxFg.globalAlpha = 1.0;
+        if(pt.life <= 0) particles.splice(i, 1);
+      }
+
+      // Draw Bird
+      ctxFg.font = "28px sans-serif";
+      ctxFg.textAlign = "center";
+      ctxFg.textBaseline = "middle";
+      
+      ctxFg.save();
+      ctxFg.translate(bird.x, bird.y);
+      let rot = Math.min(Math.PI/4, Math.max(-Math.PI/4, (bird.v * 0.1)));
+      ctxFg.rotate(rot);
+      ctxFg.fillText(bird.emoji, 0, 0);
+      ctxFg.restore();
+
+      frames++;
+      fgAnimId = requestAnimationFrame(flappyLoop);
+    }
+
+    function gameOverFlappy() {
+      fgActive = false;
+      cancelAnimationFrame(fgAnimId);
+      setTimeout(() => {
+        showModal("\"Overthinking mein crash ho gayi? Tsk tsk... Dhyan kahan hai aajkal? Wapas try karo aur is baar thoda game pe focus kar lena, mere baare mein baad mein soch lena. 😏\"", "😏", "Try Again 🔄", () => {
+          document.getElementById('flappy-overlay').classList.remove('opacity-0');
+        });
+      }, 300);
+    }
+
+    function winFlappy() {
+      fgActive = false;
+      cancelAnimationFrame(fgAnimId);
+      setTimeout(() => {
+        showModal("\"Aapke yeh 100 nakhre, gussa aur mood swings jhelna sirf mere hi bas ki baat hai, Madam. Koi aur hota toh kabka bhaag chuka hota. Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
+      }, 500);
+    }
+
+    /*************************************************************
+     * STAGE 03: SNAP ARCHIVE
+     *************************************************************/
+    function initStage3() {
+      currentSnapIndex = 0;
+      document.getElementById('snap-spotlight').classList.remove('hidden');
+      document.getElementById('snap-vault').classList.add('hidden');
+      document.getElementById('snap-vault').classList.remove('flex');
+      renderSpotlightSnap();
+
+      const vaultContainer = document.getElementById('vault-grid-container');
+      vaultContainer.innerHTML = "";
+      CONFIG.vaultGridImages.forEach((imgUrl) => {
+        const item = document.createElement('div');
+        item.className = "aspect-square rounded-xl overflow-hidden bg-stone-200 border border-white shadow-sm";
+        item.innerHTML = `<img src="${imgUrl}" alt="Vault Snap" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">`;
+        vaultContainer.appendChild(item);
+      });
+    }
+
+    function renderSpotlightSnap() {
+      const total = CONFIG.spotlightSnaps.length;
+      const current = CONFIG.spotlightSnaps[currentSnapIndex];
+      document.getElementById('snap-img').src = current.img;
+      document.getElementById('snap-caption').innerText = `"${current.caption}"`;
+      document.getElementById('snap-badge').innerText = `0${currentSnapIndex + 1} / 0${total}`;
+      const btn = document.getElementById('snap-next-btn');
+      btn.innerHTML = (currentSnapIndex === total - 1) ? "Open Full Vault &nbsp;🔓" : "Next Memory &nbsp;→";
+    }
+
+    function nextSpotlightSnap() {
+      if (currentSnapIndex < CONFIG.spotlightSnaps.length - 1) { currentSnapIndex++; renderSpotlightSnap(); } 
+      else {
+        document.getElementById('snap-spotlight').classList.add('hidden');
+        const vault = document.getElementById('snap-vault');
+        vault.classList.remove('hidden'); vault.classList.add('flex');
+      }
+    }
+
+    /*************************************************************
+     * STAGE 04: THE 20 "HER PERSPECTIVE" TAGS
+     *************************************************************/
+    function initStage4() {
+      const container = document.getElementById('tags-container');
+      container.innerHTML = "";
+      selectedTags.clear();
+      CONFIG.traitsTags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.className = "tag-pill px-3.5 py-2 rounded-full text-xs font-medium bg-white/85 text-stone-700 border border-stone-200 shadow-sm";
+        btn.innerText = tag;
+        btn.onclick = () => {
+          if (selectedTags.has(tag)) { selectedTags.delete(tag); btn.classList.remove('selected'); }
+          else { selectedTags.add(tag); btn.classList.add('selected'); }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function selectAllTags() {
+      selectedTags.clear();
+      document.querySelectorAll('#tags-container .tag-pill').forEach((btn, i) => { selectedTags.add(CONFIG.traitsTags[i]); btn.classList.add('selected'); });
+    }
+
+    function submitStage4() {
+      if (selectedTags.size === 0) { showModal("Kam se kam ek cheez toh select karo, Madam! Ya seedha 'SELECT ALL' daba do 😌", "✨", "Okay"); return; }
+      goToStage(5);
+    }
+
+    /*************************************************************
+     * STAGE 05: THE OBSERVATION DECK
+     *************************************************************/
+    let touchStartX = 0;
+    function initStage5() {
+      currentObsIndex = 0;
+      renderObservationCard();
+      const cardBox = document.getElementById('obs-card-box');
+      cardBox.ontouchstart = (e) => { touchStartX = e.changedTouches[0].screenX; };
+      cardBox.ontouchend = (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 35) nextObservation();
+      };
+    }
+
+    function renderObservationCard() {
+      const total = CONFIG.observations.length;
+      const item = CONFIG.observations[currentObsIndex];
+      document.getElementById('obs-title').innerText = item.title;
+      document.getElementById('obs-counter').innerText = `0${currentObsIndex + 1} / 0${total}`;
+      document.getElementById('obs-text').innerText = `"${item.text}"`;
+      document.getElementById('obs-btn').innerHTML = (currentObsIndex === total - 1) ? "Aage Badein? (Last Stage) ➡️" : "Next Card &nbsp;→";
+    }
+
+    function nextObservation() {
+      if (currentObsIndex < CONFIG.observations.length - 1) { currentObsIndex++; renderObservationCard(); } 
+      else { goToStage(6); }
+    }
+
+    /*************************************************************
+     * STAGE 06: THE GRAND FINALE (WILD 'NO' TRAP & BIG TOAST)
+     *************************************************************/
+    function initStage6Climax() {
+      const hook2 = document.getElementById('climax-hook-2');
+      const body = document.getElementById('climax-body');
+      hook2.classList.remove('visible'); body.classList.remove('visible');
+      setTimeout(() => { hook2.classList.add('visible'); }, 2000);
+      setTimeout(() => { body.classList.add('visible'); }, 3100);
+    }
+
+    function clickNoButton() {
+      const noBtn = document.getElementById('no-btn');
+      const yesBtn = document.getElementById('yes-btn');
+      const toast = document.getElementById('no-toast');
+
+      if (noClickCount < CONFIG.noButtonTexts.length) {
+        toast.innerText = `"${CONFIG.noButtonTexts[noClickCount]}"`;
+        toast.classList.remove('opacity-0');
+        noClickCount++;
+
+        // WILD CRAZY MOVEMENT ACROSS THE ENTIRE SCREEN
+        noBtn.style.position = 'absolute';
+        
+        // Huge random jumps inside the container (-40vw to +40vw, -30vh to +30vh)
+        const randomX = Math.floor(Math.random() * 80) - 40; 
+        const randomY = Math.floor(Math.random() * 60) - 30; 
+        
+        const shrinkScale = Math.max(0.6, 1 - noClickCount * 0.025);
+        const growScale = Math.min(1.25, 1 + noClickCount * 0.015);
+
+        noBtn.style.transform = `translate(${randomX}vw, ${randomY}vh) scale(${shrinkScale})`;
+        yesBtn.style.transform = `scale(${growScale})`;
+
+        // 15th Click: Button Disappears!
+        if (noClickCount === CONFIG.noButtonTexts.length) {
+          setTimeout(() => {
+            noBtn.style.opacity = "0";
+            noBtn.style.pointerEvents = "none";
+            setTimeout(() => { noBtn.style.display = "none"; }, 350);
+          }, 400);
+        }
+      }
+    }
+
+    function acceptProposal() {
+      sendStealthNotification("YES! Rakhi clicked 'Haan, bilkul 🤍'");
+      showModal("Mujhe pata tha! Ab is multiverse ke har dimension mein aap officially meri Madam ho. Chalo ab contract sign karo! 😌🤍", "💍", "Sign The Contract →", () => goToStage(7));
+    }
+
+    function tooSoonRespect() {
+      sendStealthNotification("RESPECTFUL EXIT: Rakhi clicked 'No, it's a bit too soon.'");
+      showModal("\"Koi baat nahi, Madam. Humara bond pehle bhi special tha... You take your time. 🤍\"", "🤍", "Close With Smile", () => {
+        document.getElementById('stage-indicator').innerText = "RESPECTED";
+      });
+    }
+
+    /*************************************************************
+     * STAGE 07: MULTIVERSE CONTRACT (TIMESTAMP LOCK SYSTEM)
+     *************************************************************/
+    let canvas, ctx, drawing = false;
+
+    function initSignatureCanvas() {
+      canvas = document.getElementById('sig-canvas');
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      ctx = canvas.getContext('2d');
+      ctx.strokeStyle = "#881337";
+      ctx.lineWidth = 2.4;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      canvas.onmousedown = (e) => { drawing = true; hasSignedCanvas = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
+      canvas.onmousemove = (e) => { if (!drawing) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); };
+      window.onmouseup = () => { drawing = false; };
+
+      canvas.ontouchstart = (e) => {
+        e.preventDefault(); drawing = true; hasSignedCanvas = true;
+        const r = canvas.getBoundingClientRect(); const t = e.touches[0];
+        ctx.beginPath(); ctx.moveTo(t.clientX - r.left, t.clientY - r.top);
+      };
+      canvas.ontouchmove = (e) => {
+        e.preventDefault(); if (!drawing) return;
+        const r = canvas.getBoundingClientRect(); const t = e.touches[0];
+        ctx.lineTo(t.clientX - r.left, t.clientY - r.top); ctx.stroke();
+      };
+      canvas.ontouchend = () => { drawing = false; };
+    }
+
+    function clearSignature() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasSignedCanvas = false;
+    }
+
+    function fireCelebrationConfetti() {
+      if (typeof confetti !== "function") return;
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      setTimeout(() => { confetti({ particleCount: 70, spread: 90, origin: { y: 0.5 } }); }, 500);
+      setTimeout(() => { confetti({ particleCount: 50, spread: 100, origin: { y: 0.4 } }); }, 1000);
+    }
+
+    async function downloadCertificate() {
+      if (!hasSignedCanvas) { showModal("Pehle apni ungli se box ke andar sign toh karo, Madam! ✍️", "📜", "Okay"); return; }
+      const card = document.getElementById('certificate-card');
+      if (typeof html2canvas === "function") {
+        const shot = await html2canvas(card, { scale: 2, backgroundColor: "#FCFBF9" });
+        const link = document.createElement('a'); link.download = "Official-Babuaa-Madam-Pact.png"; link.href = shot.toDataURL("image/png"); link.click();
+      } else {
+        const link = document.createElement('a'); link.download = "Rakhi-Signature.png"; link.href = canvas.toDataURL("image/png"); link.click();
+      }
+    }
+
+    function finishAndSeal() {
+      if (!hasSignedCanvas) {
+        showModal("Bina sign kiye aage nahi jaa sakti, Madam! Pehle sign karo ✍️", "😌", "Sign Now");
+        return;
+      }
+
+      // Generate Exact Timestamp
+      const now = new Date();
+      const options = { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      const timeString = now.toLocaleString('en-IN', options);
+
+      // Lock the Canvas visually
+      document.getElementById('time-stamp-text').innerText = timeString;
+      document.getElementById('timestamp-overlay').classList.remove('hidden');
+      document.getElementById('timestamp-overlay').classList.add('flex');
+      document.getElementById('clear-sig-btn').style.display = 'none';
+
+      // Send Silent Email Alert to Pritesh
+      const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
+      sendStealthNotification(`🚨 CONTRACT SEALED BY RAKHI! 🤍\nTime: ${timeString}\nSelected Tags (${selectedTags.size}): ${Array.from(selectedTags).join(", ")}\nHer Custom Note: ${customNote}`);
+
+      // Grand Celebration & Final Popup (No WhatsApp App redirect)
+      fireCelebrationConfetti();
+      
+      setTimeout(() => {
+        showModal(
+          "Contract Officially Sealed! 🤍\n\nAapka jawab aur yeh contract exact time aur date ke saath humesha ke liye lock ho chuka hai, Madam.\n\nAb seedha chat par aao, Pritesh aapka wait kar raha hai 😌✨",
+          "🔒✨",
+          "Done 🤍",
+          () => {
+            document.getElementById('stage-indicator').innerText = "SEALED 🤍";
+          }
+        );
+      }, 800);
+    }
+
+    function sendStealthNotification(statusMessage) {
+      if (!CONFIG.web3FormsKey) return;
+      const customNote = document.getElementById('custom-note-input') ? document.getElementById('custom-note-input').value : "";
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          access_key: CONFIG.web3FormsKey,
+          subject: "🌹 Rakhi Proposal Sealed!",
+          from_name: "Archiscient System",
+          message: statusMessage,
+          no_button_clicks: noClickCount
+        })
+      }).catch(() => {});
+    }
+  </script>
+</body>
+</html>
