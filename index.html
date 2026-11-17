@@ -11,68 +11,106 @@
   <style>
     :root {
       --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     body {
       font-family: var(--sans);
-      transition: background 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: background 1s cubic-bezier(0.22, 1, 0.36, 1);
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       touch-action: pan-y;
     }
     .font-editorial { font-family: var(--serif); }
+
+    /* Animated Ambient iOS Mesh Background */
+    .ambient-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(75px);
+      opacity: 0.45;
+      z-index: 0;
+      pointer-events: none;
+      animation: floatBlob 14s infinite alternate ease-in-out;
+    }
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(25px, -35px) scale(1.12); }
+    }
+
+    /* High-End iPhone Pro Frosted Glassmorphism */
     .glass-card {
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      box-shadow: 0 20px 50px rgba(20, 15, 15, 0.05);
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      box-shadow: 0 24px 48px -12px rgba(28, 25, 23, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
     .gold-border {
-      border: 1px solid rgba(212, 175, 55, 0.45);
-      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      box-shadow: 0 24px 60px rgba(212, 175, 55, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
+
+    /* Apple Spring Button Physics */
+    .btn-luxury {
+      background: rgba(24, 24, 27, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #fafaf9;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 14px 28px -6px rgba(24, 24, 27, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-luxury:hover {
+      background: rgba(39, 39, 42, 0.94);
+      transform: translateY(-2px);
+    }
+    .btn-luxury:active {
+      transform: scale(0.95);
+    }
+    .btn-rose {
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.92), rgba(159, 18, 57, 0.95));
+      backdrop-filter: blur(16px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 14px 30px rgba(190, 18, 60, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-rose:active { transform: scale(0.94); }
+
     .stage-section {
       display: none;
       opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(16px) scale(0.98);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .stage-section.active {
       display: flex;
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
     @keyframes pulseSlow {
-      0%, 100% { transform: scale(1); opacity: 0.85; }
-      50% { transform: scale(1.07); opacity: 1; }
+      0%, 100% { transform: scale(1); opacity: 0.88; }
+      50% { transform: scale(1.06); opacity: 1; }
     }
     .emblem-breathe { animation: pulseSlow 4s ease-in-out infinite; }
+    
     .tag-pill {
-      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .tag-pill.selected {
       background: linear-gradient(135deg, #be123c, #e11d48);
       color: #ffffff;
-      border-color: #be123c;
-      box-shadow: 0 8px 20px rgba(190, 18, 60, 0.22);
-      transform: translateY(-1px);
-    }
-    .btn-luxury {
-      background: #1c1917;
-      color: #fafaf9;
-      transition: all 0.3s ease;
-    }
-    .btn-luxury:hover {
-      background: #292524;
-      transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(28, 25, 23, 0.15);
-    }
-    .btn-rose {
-      background: linear-gradient(135deg, #be123c, #9f1239);
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(190, 18, 60, 0.25);
+      border-color: rgba(255,255,255,0.4);
+      box-shadow: 0 8px 20px rgba(190, 18, 60, 0.25), inset 0 1px 0 rgba(255,255,255,0.3);
+      transform: translateY(-1px) scale(1.03);
     }
     .fade-in-slow {
       opacity: 0;
@@ -83,28 +121,69 @@
       opacity: 1;
       transform: translateY(0);
     }
-    ::-webkit-scrollbar { width: 5px; }
+
+    /* Lock Screen Shake Animation */
+    @keyframes iOSShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+    .shake { animation: iOSShake 0.4s ease-in-out; }
+
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
     
     #flappy-canvas { touch-action: none; }
   </style>
 </head>
-<body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800" style="background: radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%);">
+<body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800 relative" style="background: radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%);">
+
+  <!-- Ambient Liquid Background Blobs -->
+  <div class="ambient-blob w-72 h-72 bg-rose-200/50 top-8 -left-16"></div>
+  <div class="ambient-blob w-80 h-80 bg-amber-100/60 bottom-10 -right-16" style="animation-delay: -5s;"></div>
+
+  <!-- ================= iOS 18 CLASSIFIED LOCK SCREEN VAULT ================= -->
+  <div id="vault-gate" class="fixed inset-0 z-[60] flex flex-col items-center justify-center p-6 bg-stone-950/85 backdrop-blur-2xl transition-all duration-700">
+    <div id="vault-card" class="w-full max-w-xs rounded-[34px] p-7 text-center border border-white/15 bg-white/10 backdrop-blur-3xl shadow-[0_25px_70px_rgba(0,0,0,0.65)] transition-all duration-500">
+      <div id="vault-icon-box" class="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner transition-all duration-300">
+        🔒
+      </div>
+      <div class="text-[10px] uppercase tracking-[0.28em] text-rose-300/90 font-semibold mb-1">
+        Classified Archive
+      </div>
+      <h2 class="font-editorial text-2xl text-white font-semibold mb-1">Identity Verification</h2>
+      <p class="text-xs text-stone-300/80 mb-6">Enter secret passcode to unlock</p>
+
+      <div id="passcode-box" class="relative mb-3">
+        <input id="vault-input" type="password" placeholder="Passcode..." autocomplete="off"
+          class="w-full py-3.5 px-5 rounded-2xl bg-black/35 border border-white/20 text-center text-white placeholder-stone-400 text-sm tracking-[0.18em] focus:outline-none focus:border-rose-400/80 transition-all shadow-inner"
+          onkeydown="if(event.key==='Enter') unlockVault()">
+      </div>
+
+      <p id="vault-error" class="text-[11px] text-rose-400 font-medium min-h-[1.25rem] mb-3 opacity-0 transition-opacity duration-200">
+        Access Denied. Try again.
+      </p>
+
+      <button onclick="unlockVault()" class="w-full py-3.5 rounded-2xl bg-white text-stone-950 text-xs font-bold uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all">
+        Unlock Vault &nbsp;→
+      </button>
+    </div>
+  </div>
 
   <!-- TOP MINIMAL PILL -->
   <header class="w-full max-w-md flex justify-center items-center z-20 pt-1">
-    <div class="px-4 py-2 rounded-full glass-card text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600 shadow-sm border border-stone-200">
+    <div class="px-5 py-2 rounded-full glass-pill text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600">
       CUSTOM BUILT FOR RAKHI &nbsp;•&nbsp; <span id="stage-indicator" class="text-rose-700 font-bold">01 / 07</span>
     </div>
   </header>
 
   <!-- FROSTED GLASS IPHONE-STYLE POPUP MODAL -->
-  <div id="modal-overlay" class="fixed inset-0 bg-stone-900/30 backdrop-blur-sm z-50 hidden items-center justify-center p-5 opacity-0 transition-opacity duration-300">
-    <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center border border-white shadow-2xl transform scale-95 transition-transform duration-300" id="modal-box">
+  <div id="modal-overlay" class="fixed inset-0 bg-stone-950/35 backdrop-blur-md z-50 hidden items-center justify-center p-5 opacity-0 transition-opacity duration-300">
+    <div class="glass-card max-w-sm w-full rounded-[32px] p-7 text-center transform scale-95 transition-transform duration-300" id="modal-box">
       <div id="modal-icon" class="text-4xl mb-3 drop-shadow-md">✨</div>
       <p id="modal-text" class="text-stone-800 font-medium text-base leading-relaxed mb-6 whitespace-pre-line"></p>
-      <button id="modal-btn" class="w-full py-3.5 rounded-2xl btn-luxury text-xs font-semibold uppercase tracking-widest">Continue</button>
+      <button id="modal-btn" class="w-full py-4 rounded-2xl btn-luxury text-xs font-semibold uppercase tracking-widest">Continue</button>
     </div>
   </div>
 
@@ -129,11 +208,11 @@
         So I built this whole little world for you instead.
       </p>
 
-      <div class="glass-card rounded-2xl p-4 mb-8 text-sm text-stone-600 leading-relaxed max-w-xs mx-auto">
+      <div class="glass-card rounded-[26px] p-5 mb-8 text-sm text-stone-600 leading-relaxed max-w-xs mx-auto">
         Normal tareeke se bolna meri aadat nahi hai. Aage 6 chhote stages hain—har ek page par ek khel hai. Bina cheating kiye aakhiri page tak pahunch ke dikhao, Madam.
       </div>
 
-      <button onclick="goToStage(2)" class="w-full max-w-xs py-4 px-8 rounded-full btn-luxury text-xs font-semibold uppercase tracking-[0.2em] shadow-lg">
+      <button onclick="SFX.click(); goToStage(2)" class="w-full max-w-xs py-4 px-8 rounded-full btn-luxury text-xs font-semibold uppercase tracking-[0.2em]">
         Accept The Challenge &nbsp;→
       </button>
     </section>
@@ -147,23 +226,23 @@
         <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Pritesh vs. Madam</h2>
         <p id="ttt-status" class="text-xs text-stone-500 mb-5">Aap 'O' (Rose Gold) ho, main 'X' (Crimson). Pehli chaal aapki.</p>
 
-        <div class="glass-card p-5 rounded-3xl mb-4">
+        <div class="glass-card p-5 rounded-[32px] mb-4">
           <div id="ttt-grid" class="grid grid-cols-3 gap-3 w-64 h-64"></div>
         </div>
       </div>
 
-      <!-- GAME 2: THE MOOD SWING CATCHER (Flappy Heart) -->
+      <!-- GAME 2: THE MOOD SWING CATCHER (Ultra-Smooth Flappy Heart) -->
       <div id="game-flappy" class="w-full hidden flex-col items-center">
         <span class="text-[11px] uppercase tracking-[0.2em] text-sky-800/80 font-semibold mb-1">Game 02 • Handle With Care</span>
         <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Mood Swing Catcher</h2>
-        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Tap karke dil (🤍) ko udao. 'Overthinking' (khambon) se bacho aur apne alag-alag moods (Nakhre, Gussa) collect karo. <br><span class="font-bold text-rose-600">Score: <span id="flappy-score">0</span> / 10</span></p>
+        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Tap karke dil (🤍) ko float karo. 'Overthinking' se bacho aur apne moods collect karo. <br><span class="font-bold text-rose-600">Score: <span id="flappy-score">0</span> / 7</span></p>
 
-        <div class="glass-card p-2 rounded-3xl mb-4 relative flex items-center justify-center border-stone-300 shadow-inner overflow-hidden" style="width: 300px; height: 380px;">
-          <canvas id="flappy-canvas" width="284" height="364" class="rounded-2xl cursor-pointer bg-gradient-to-b from-[#e0f2fe] to-[#f0f9ff]"></canvas>
+        <div class="glass-card p-2.5 rounded-[32px] mb-4 relative flex items-center justify-center overflow-hidden" style="width: 304px; height: 384px;">
+          <canvas id="flappy-canvas" width="284" height="364" class="rounded-[24px] cursor-pointer bg-gradient-to-b from-[#e0f2fe]/80 to-[#fff1f2]/80"></canvas>
           
-          <div id="flappy-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-white/40 backdrop-blur-[2px] rounded-3xl z-10 pointer-events-none transition-opacity duration-300">
+          <div id="flappy-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-white/45 backdrop-blur-md rounded-[32px] z-10 pointer-events-none transition-opacity duration-300">
              <div class="animate-bounce text-4xl mb-2">👆</div>
-             <span class="text-xs font-bold uppercase tracking-widest text-sky-900 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">Tap To Fly</span>
+             <span class="text-xs font-bold uppercase tracking-widest text-sky-900 glass-pill px-5 py-2 rounded-full">Tap Gently To Fly</span>
           </div>
         </div>
       </div>
@@ -177,28 +256,28 @@
       <p class="text-xs text-stone-600 mb-5 max-w-xs">Aap hamesha sochti thi na main aapki ajeeb-ajeeb snaps kyun save karta tha? Aaj dekh hi lo...</p>
 
       <div id="snap-spotlight" class="w-full">
-        <div class="glass-card p-4 rounded-3xl mb-4 mx-auto max-w-xs transition-all duration-300">
-          <div class="w-full h-64 rounded-2xl bg-stone-200/70 overflow-hidden mb-4 relative flex items-center justify-center">
+        <div class="glass-card p-4 rounded-[32px] mb-5 mx-auto max-w-xs transition-all duration-300">
+          <div class="w-full h-64 rounded-[22px] bg-stone-200/70 overflow-hidden mb-4 relative flex items-center justify-center shadow-inner">
             <img id="snap-img" src="" alt="Saved Snap" class="w-full h-full object-cover">
-            <span id="snap-badge" class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur text-[10px] font-semibold uppercase tracking-wider text-stone-700">01 / 04</span>
+            <span id="snap-badge" class="absolute top-3 right-3 px-3 py-1 rounded-full glass-pill text-[10px] font-semibold uppercase tracking-wider text-stone-700">01 / 04</span>
           </div>
           <p id="snap-caption" class="font-editorial italic text-lg text-stone-800 leading-snug mb-2 min-h-[3.5rem] flex items-center justify-center px-2"></p>
           <div class="text-[11px] text-stone-400 tracking-widest uppercase">— Saved by P.</div>
         </div>
 
-        <button id="snap-next-btn" onclick="nextSpotlightSnap()" class="py-3.5 px-7 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+        <button id="snap-next-btn" onclick="SFX.click(); nextSpotlightSnap()" class="py-4 px-8 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
           Next Memory &nbsp;→
         </button>
       </div>
 
       <div id="snap-vault" class="w-full hidden flex-col items-center">
-        <div class="glass-card p-3.5 rounded-3xl w-full max-h-80 overflow-y-auto mb-5">
+        <div class="glass-card p-3.5 rounded-[30px] w-full max-h-80 overflow-y-auto mb-5">
           <div class="grid grid-cols-3 gap-2" id="vault-grid-container"></div>
         </div>
         <p class="font-editorial italic text-base text-stone-700 mb-5 px-3">
           "Har ek snap aur video isliye sambhal ke rakhi hai, kyunki aapka har ek mood mere liye art hai."
         </p>
-        <button onclick="goToStage(4)" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+        <button onclick="SFX.click(); goToStage(4)" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
           Turn The Page &nbsp;→
         </button>
       </div>
@@ -214,16 +293,16 @@
 
       <div id="tags-container" class="flex flex-wrap justify-center gap-2 max-h-64 overflow-y-auto p-2 mb-3"></div>
 
-      <button onclick="selectAllTags()" class="w-full py-3 px-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold tracking-wide mb-4 hover:bg-rose-100 transition">
+      <button onclick="SFX.win(); selectAllTags()" class="w-full py-3.5 px-4 rounded-2xl glass-pill text-rose-800 text-xs font-semibold tracking-wide mb-4 hover:bg-rose-50/80 transition active:scale-95">
         Ek-ek karke thak jaogi... Seedha 'SELECT ALL' dabao 😌✨
       </button>
 
-      <div class="w-full glass-card p-3.5 rounded-2xl mb-5 text-left">
+      <div class="w-full glass-card p-4 rounded-[24px] mb-5 text-left">
         <label class="block text-[11px] text-stone-500 mb-1 font-medium">Kuch reh gaya jo is list mein nahi hai? Yahan likh do...</label>
-        <input id="custom-note-input" type="text" placeholder="Type here, Madam..." class="w-full bg-transparent text-sm text-stone-800 placeholder-stone-400 focus:outline-none border-b border-stone-300 pb-1">
+        <input id="custom-note-input" type="text" placeholder="Type here, Madam..." class="w-full bg-transparent text-sm text-stone-800 placeholder-stone-400 focus:outline-none border-b border-stone-300/80 pb-1">
       </div>
 
-      <button onclick="submitStage4()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+      <button onclick="SFX.click(); submitStage4()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
         Confirm & Go Next &nbsp;→
       </button>
     </section>
@@ -234,9 +313,9 @@
       <h2 class="font-editorial text-2xl sm:text-3xl font-semibold text-stone-800 mb-1 px-2">
         "Maine pehle hi kaha tha, mera dimaag ek artist ka hai... yeh har choti cheez notice karta hai."
       </h2>
-      <p class="text-xs text-stone-500 mb-5">(Swipe to read 🤍)</p>
+      <p class="text-xs text-stone-500 mb-5">(Swipe or tap card to read 🤍)</p>
 
-      <div id="obs-card-box" class="glass-card w-full rounded-3xl p-7 mb-6 min-h-[225px] flex flex-col justify-between relative overflow-hidden transition-all duration-300 cursor-pointer" onclick="nextObservation()">
+      <div id="obs-card-box" class="glass-card w-full rounded-[32px] p-7 mb-6 min-h-[230px] flex flex-col justify-between relative overflow-hidden transition-all duration-300 cursor-pointer active:scale-[0.99]" onclick="SFX.pop(); nextObservation()">
         <div class="flex justify-between items-center text-[11px] text-stone-400 uppercase tracking-widest">
           <span id="obs-title">Card 01</span>
           <span id="obs-counter" class="text-rose-700 font-bold">01 / 05</span>
@@ -248,7 +327,7 @@
         </div>
       </div>
 
-      <button id="obs-btn" onclick="nextObservation()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
+      <button id="obs-btn" onclick="SFX.click(); nextObservation()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
         Next Card &nbsp;→
       </button>
     </section>
@@ -257,7 +336,7 @@
     <section id="stage-6" class="stage-section flex-col items-center text-center relative overflow-hidden min-h-[85vh]">
       <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700 font-semibold mb-2">Chapter 06 • The Grand Finale</span>
       
-      <div class="glass-card rounded-3xl p-6 sm:p-7 mb-4 border border-rose-200/60 z-20 relative">
+      <div class="glass-card rounded-[32px] p-6 sm:p-7 mb-4 border border-rose-200/70 z-20 relative">
         <p class="font-editorial text-2xl sm:text-3xl text-stone-900 font-semibold leading-snug mb-3">
           "Is multiverse mein 8 Billion log hain..."
         </p>
@@ -276,26 +355,26 @@
       </div>
 
       <!-- BIG BOLD 15-NO TOAST MESSAGE -->
-      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-5 text-base sm:text-lg font-bold text-rose-900 bg-rose-100/95 border border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-4 leading-snug"></div>
+      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-5 text-base sm:text-lg font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-4 leading-snug"></div>
 
-      <!-- WILD FLYING BUTTON ARENA -->
+            <!-- WILD FLYING BUTTON ARENA -->
       <div class="flex items-center justify-center gap-3 w-full mb-12 relative min-h-[220px]" id="button-arena">
-        <button id="yes-btn" onclick="acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest transition-all duration-200 active:scale-95 z-10 shadow-lg">
+        <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-10">
           Haan, bilkul 🤍
         </button>
-        <button id="no-btn" onclick="clickNoButton()" class="py-4 px-7 rounded-full glass-card text-stone-800 text-sm font-bold uppercase tracking-wider border border-stone-400 transition-all duration-300 z-20 shadow-md">
+        <button id="no-btn" onclick="clickNoButton()" class="py-4 px-7 rounded-full glass-pill text-stone-800 text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-20">
           Nahi, sochna padega 🤔
         </button>
       </div>
 
-      <button onclick="tooSoonRespect()" class="absolute bottom-2 text-[11px] text-stone-400 underline underline-offset-4 hover:text-stone-600 transition z-10">
+      <button onclick="SFX.click(); tooSoonRespect()" class="absolute bottom-2 text-[11px] text-stone-400 underline underline-offset-4 hover:text-stone-600 transition z-10">
         No, it's a bit too soon.
       </button>
     </section>
 
     <!-- ================= STAGE 07: MULTIVERSE CONTRACT & TIMESTAMP SEAL ================= -->
     <section id="stage-7" class="stage-section flex-col items-center text-center">
-      <div id="certificate-card" class="glass-card gold-border rounded-3xl p-6 w-full mb-5 bg-[#FCFBF9] relative">
+      <div id="certificate-card" class="glass-card gold-border rounded-[32px] p-6 w-full mb-5 relative">
         <div class="text-[10px] uppercase tracking-[0.25em] text-amber-700 font-bold mb-1">
           THE MULTIVERSE CONTRACT // ARCHIVE SEALED
         </div>
@@ -306,14 +385,14 @@
 
         <div class="text-left mb-2 flex justify-between items-center">
           <span class="text-[11px] font-semibold text-stone-600">Apni ungli se yahan sign karo, Madam ✍️</span>
-          <button id="clear-sig-btn" onclick="clearSignature()" class="text-[10px] text-rose-700 underline font-semibold">Clear</button>
+          <button id="clear-sig-btn" onclick="SFX.pop(); clearSignature()" class="text-[10px] text-rose-700 underline font-semibold">Clear</button>
         </div>
 
-        <div class="rounded-2xl border border-stone-300 bg-white overflow-hidden mb-3 relative" id="canvas-container">
+        <div class="rounded-2xl border border-stone-300/80 bg-white/90 overflow-hidden mb-3 relative shadow-inner" id="canvas-container">
           <canvas id="sig-canvas" class="w-full h-36 touch-none cursor-crosshair"></canvas>
           
           <!-- Timestamp Overlay -->
-          <div id="timestamp-overlay" class="absolute inset-0 bg-white/75 backdrop-blur-[3px] hidden flex-col items-center justify-center text-center p-2 z-10 border border-emerald-500/30">
+          <div id="timestamp-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-md hidden flex-col items-center justify-center text-center p-2 z-10 border border-emerald-500/30">
              <span class="text-emerald-700 text-3xl mb-1">🔒</span>
              <span class="text-xs font-bold text-stone-800 uppercase tracking-widest">Officially Sealed</span>
              <span id="time-stamp-text" class="text-[11px] text-emerald-800 font-bold mt-1 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200"></span>
@@ -327,10 +406,10 @@
       </div>
 
       <div class="flex gap-3 w-full">
-        <button onclick="downloadCertificate()" class="flex-1 py-3.5 px-4 rounded-full glass-card border border-stone-300 text-stone-700 text-xs font-semibold uppercase tracking-wider">
+        <button onclick="SFX.click(); downloadCertificate()" class="flex-1 py-4 px-4 rounded-full glass-pill text-stone-700 text-xs font-semibold uppercase tracking-wider active:scale-95 transition">
           Save Memory 📥
         </button>
-        <button onclick="finishAndSeal()" class="flex-1 py-3.5 px-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest shadow-lg">
+        <button onclick="SFX.win(); finishAndSeal()" class="flex-1 py-4 px-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
           Seal Contract 🔒
         </button>
       </div>
@@ -338,12 +417,135 @@
 
   </main>
 
-  <footer class="text-[10px] text-stone-400 tracking-widest uppercase pb-1">
+  <footer class="text-[10px] text-stone-400 tracking-widest uppercase pb-1 z-10">
     Handcrafted with patience • Pritesh
   </footer>
 
-  <!-- ================= JAVASCRIPT MASTER ENGINE ================= -->
+  <!-- ================= JAVASCRIPT MASTER ENGINE + SYNTH AUDIO ================= -->
   <script>
+    /*************************************************************
+     * BUILT-IN iOS WEB AUDIO SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
+     *************************************************************/
+    const SFX = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      },
+      click() {
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(140, this.ctx.currentTime + 0.045);
+          gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.045);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.045);
+        } catch(e) {}
+      },
+      pop() {
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(320, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(640, this.ctx.currentTime + 0.065);
+          gain.gain.setValueAtTime(0.14, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.065);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + 0.065);
+        } catch(e) {}
+      },
+      ding() {
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          [880, 1318.5].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+            gain.gain.setValueAtTime(0.15, now + idx * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.28);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.06); osc.stop(now + idx * 0.06 + 0.28);
+          });
+        } catch(e) {}
+      },
+      error() {
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.setValueAtTime(125, now + 0.08);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now); osc.stop(now + 0.2);
+        } catch(e) {}
+      },
+      win() {
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.16, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.42);
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.08); osc.stop(now + i * 0.08 + 0.42);
+          });
+        } catch(e) {}
+      }
+    };
+
+    /*************************************************************
+     * VAULT PASSCODE LOGIC (PASSWORD: "madam")
+     *************************************************************/
+    function unlockVault() {
+      SFX.init();
+      const input = document.getElementById('vault-input');
+      const err = document.getElementById('vault-error');
+      const card = document.getElementById('vault-card');
+      const iconBox = document.getElementById('vault-icon-box');
+      const gate = document.getElementById('vault-gate');
+
+      const val = input.value.trim().toLowerCase();
+      if (val === 'madam') {
+        SFX.win();
+        err.classList.add('opacity-0');
+        iconBox.innerText = "🔓";
+        iconBox.classList.add('bg-emerald-500/30', 'border-emerald-300/50');
+        input.value = "WELCOME, MADAM ✨";
+        input.classList.add('text-emerald-300', 'font-bold');
+        
+        setTimeout(() => {
+          gate.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => { gate.style.display = 'none'; }, 700);
+        }, 550);
+      } else {
+        SFX.error();
+        err.innerText = "Access Denied. Galat jawab, wapas socho 😌";
+        err.classList.remove('opacity-0');
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
+      }
+    }
+
     const CONFIG = {
       whatsappNumber: "918328843203",
       web3FormsKey: "8097f3dd-d51d-4adb-a562-6aa0e889e1eb",
@@ -395,7 +597,7 @@
 
     const STAGE_BACKGROUNDS = {
       1: "radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%)",
-      2: "#F4F7FB",
+      2: "radial-gradient(circle at 50% 20%, #F0F9FF 0%, #E0F2FE 60%, #F4F7FB 100%)",
       3: "radial-gradient(circle at 50% 20%, #FFFDF7 0%, #FAF5E8 60%, #F2E9D5 100%)",
       4: "radial-gradient(circle at 50% 20%, #FFF5F7 0%, #FCECEF 60%, #F5DCE2 100%)",
       5: "linear-gradient(180deg, #F7F6F2 0%, #EFECE6 100%)",
@@ -434,6 +636,7 @@
       setTimeout(() => { overlay.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 20);
 
       btn.onclick = () => {
+        SFX.click();
         overlay.classList.add('opacity-0'); box.classList.add('scale-95');
         setTimeout(() => { overlay.classList.remove('flex'); overlay.classList.add('hidden'); if (callback) callback(); }, 280);
       };
@@ -459,7 +662,7 @@
       const grid = document.getElementById('ttt-grid'); grid.innerHTML = "";
       board.forEach((cell, i) => {
         const btn = document.createElement('button');
-        btn.className = "rounded-2xl bg-white/80 backdrop-blur-md border border-white shadow-sm flex items-center justify-center font-editorial text-3xl font-bold transition-all active:scale-95";
+        btn.className = "rounded-2xl bg-white/85 backdrop-blur-md border border-white shadow-sm flex items-center justify-center font-editorial text-3xl font-bold transition-all active:scale-90";
         if (cell === "O") { btn.style.color = "#E19898"; btn.innerText = "O"; } 
         else if (cell === "X") { btn.style.color = "#9F1239"; btn.innerText = "X"; } 
         else { btn.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-stone-300/75"></span>`; }
@@ -470,6 +673,7 @@
 
     function handlePlayerMove(index) {
       if (!tttActive || board[index] !== "") return;
+      SFX.pop();
       board[index] = "O"; renderTTTGrid();
       if (checkWinner(board, "O")) { handleRoundEnd("O"); return; }
       if (!board.includes("")) { handleRoundEnd("DRAW"); return; }
@@ -478,6 +682,7 @@
       setTimeout(() => {
         const move = (tttRound === 1) ? getUnbeatableMove(board) : getLetHerWinMove(board);
         if (move !== -1) board[move] = "X";
+        SFX.click();
         renderTTTGrid();
         if (checkWinner(board, "X")) { handleRoundEnd("X"); } 
         else if (!board.includes("")) { handleRoundEnd("DRAW"); } 
@@ -488,9 +693,13 @@
     function handleRoundEnd(winner) {
       tttActive = false;
       if (tttRound === 1) {
-        setTimeout(() => { showModal("\"Aapko kya laga, pehli baar mein hi mujhe hara dogi? Ek aur try lo, shayad is baar reham kha lu. 😌\"", "😌", "Try Again 🔄", () => initTicTacToe(2)); }, 380);
+        setTimeout(() => {
+          SFX.pop();
+          showModal("\"Aapko kya laga, pehli baar mein hi mujhe hara dogi? Ek aur try lo, shayad is baar reham kha lu. 😌\"", "😌", "Try Again 🔄", () => initTicTacToe(2));
+        }, 380);
       } else {
         setTimeout(() => {
+          SFX.win();
           showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Aage badhte hain. ✨\"", "✨", "Next Level →", () => {
             document.getElementById('game-ttt').classList.add('hidden');
             const flappyGame = document.getElementById('game-flappy');
@@ -524,20 +733,19 @@
     }
 
     /*************************************************************
-     * STAGE 02 - GAME 2: MOOD SWING CATCHER (Flappy Heart)
+     * STAGE 02 - GAME 2: ULTRA-EASY RIGGED MOOD SWING CATCHER
      *************************************************************/
     let fgCanvas, ctxFg;
     let fgActive = false;
     let fgAnimId;
     let fgScore = 0;
-    const TARGET_SCORE = 10;
+    const TARGET_SCORE = 7;
     
-    // Physics
-    let bird = { x: 50, y: 150, v: 0, r: 16, emoji: "🤍", hit: false };
-    const GRAVITY = 0.35;
-    const JUMP = -5.8;
-    const PIPE_SPEED = 2.0;
-    const GAP = 125;
+    let bird = { x: 58, y: 180, v: 0, r: 16, emoji: "🤍", shield: 0 };
+    const GRAVITY = 0.14;
+    const JUMP = -3.4;
+    const PIPE_SPEED = 1.45;
+    const GAP = 175;
     
     let pipes = [];
     let items = [];
@@ -550,7 +758,7 @@
       { text: "Nakhre", emoji: "😒", color: "#f59e0b" },
       { text: "Pyaar", emoji: "🤍", color: "#ec4899" },
       { text: "Zidd", emoji: "😤", color: "#8b5cf6" },
-      { text: "Smile", emoji: "😊", color: "#fcd34d" }
+      { text: "Smile", emoji: "😊", color: "#0284c7" }
     ];
 
     function initFlappyGame() {
@@ -561,11 +769,13 @@
       const startAction = (e) => {
         if(e) e.preventDefault();
         if(!fgActive) {
+          SFX.pop();
           fgActive = true;
           document.getElementById('flappy-overlay').classList.add('opacity-0');
           resetFlappy();
           flappyLoop();
         } else {
+          SFX.pop();
           bird.v = JUMP;
         }
       };
@@ -575,7 +785,7 @@
     }
 
     function resetFlappy() {
-      bird = { x: 50, y: fgCanvas.height/2, v: 0, r: 16, emoji: "🤍", hit: false };
+      bird = { x: 58, y: fgCanvas.height/2, v: 0, r: 16, emoji: "🤍", shield: 0 };
       pipes = [];
       items = [];
       particles = [];
@@ -585,77 +795,93 @@
     }
 
     function spawnParticle(x, y, text, color) {
-      particles.push({ x: x, y: y, text: text, color: color, life: 40, maxLife: 40 });
+      particles.push({ x: x, y: y, text: text, color: color, life: 45, maxLife: 45 });
     }
 
     function flappyLoop() {
       if(!fgActive) return;
       ctxFg.clearRect(0, 0, fgCanvas.width, fgCanvas.height);
       
-      // Update Bird
-      bird.v += GRAVITY;
+      bird.v = Math.min(bird.v + GRAVITY, 2.8);
       bird.y += bird.v;
+      if (bird.shield > 0) bird.shield--;
 
-      // Check Floor/Ceiling
-      if(bird.y + bird.r > fgCanvas.height || bird.y - bird.r < 0) {
-         gameOverFlappy();
-         return;
+      if(bird.y + bird.r > fgCanvas.height - 6) {
+        bird.y = fgCanvas.height - 6 - bird.r;
+        bird.v = JUMP * 0.7;
+      }
+      if(bird.y - bird.r < 6) {
+        bird.y = 6 + bird.r;
+        bird.v = 0.5;
       }
 
-      // Generate Pipes & Items
-      if(frames % 100 === 0) {
-        let topHeight = Math.random() * (fgCanvas.height - GAP - 60) + 30;
+      if(frames % 125 === 0) {
+        let topHeight = Math.random() * (fgCanvas.height - GAP - 90) + 45;
         let pX = fgCanvas.width;
-        pipes.push({ x: pX, w: 35, top: topHeight, bottom: topHeight + GAP, passed: false });
+        pipes.push({ x: pX, w: 36, top: topHeight, bottom: topHeight + GAP });
         
         let mood = MOODS[Math.floor(Math.random() * MOODS.length)];
-        items.push({ x: pX + 17, y: topHeight + GAP/2, mood: mood, active: true });
+        items.push({ x: pX + 18, y: topHeight + GAP/2, mood: mood, active: true });
       }
 
-      // Draw & Update Pipes
       for(let i = pipes.length - 1; i >= 0; i--) {
         let p = pipes[i];
         p.x -= PIPE_SPEED;
 
-        ctxFg.fillStyle = "rgba(100, 116, 139, 0.4)"; 
+        ctxFg.fillStyle = "rgba(148, 163, 184, 0.32)"; 
         ctxFg.fillRect(p.x, 0, p.w, p.top);
         ctxFg.fillRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
         
-        ctxFg.strokeStyle = "rgba(71, 85, 105, 0.6)";
-        ctxFg.lineWidth = 1.5;
+        ctxFg.strokeStyle = "rgba(100, 116, 139, 0.45)";
+        ctxFg.lineWidth = 1.2;
         ctxFg.strokeRect(p.x, 0, p.w, p.top);
         ctxFg.strokeRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
 
-        ctxFg.fillStyle = "rgba(71, 85, 105, 0.8)";
+        ctxFg.fillStyle = "rgba(71, 85, 105, 0.75)";
         ctxFg.font = "9px sans-serif";
         ctxFg.textAlign = "center";
-        ctxFg.fillText("Overthinking", p.x + p.w/2, p.top - 10);
+        ctxFg.fillText("Overthinking", p.x + p.w/2, Math.max(12, p.top - 8));
 
-        let cx = bird.x, cy = bird.y, r = bird.r - 4;
+        let cx = bird.x, cy = bird.y, r = 7;
         let hitTop = cx + r > p.x && cx - r < p.x + p.w && cy - r < p.top;
         let hitBot = cx + r > p.x && cx - r < p.x + p.w && cy + r > p.bottom;
-        if(hitTop || hitBot) { gameOverFlappy(); return; }
+        
+        if((hitTop || hitBot) && bird.shield === 0) {
+          bird.shield = 45;
+          bird.y = p.top + GAP / 2;
+          bird.v = -1.2;
+          SFX.pop();
+          spawnParticle(bird.x + 15, bird.y, "Saved by P ✨", "#be123c");
+        }
 
         if(p.x + p.w < 0) pipes.splice(i, 1);
       }
 
-      // Draw & Update Items
       for(let i = items.length - 1; i >= 0; i--) {
         let item = items[i];
         item.x -= PIPE_SPEED;
         if(item.active) {
-          ctxFg.font = "14px sans-serif";
+          ctxFg.font = "bold 12px sans-serif";
           ctxFg.textAlign = "center";
-          let floatY = item.y + Math.sin(frames * 0.1) * 3;
+          let floatY = item.y + Math.sin(frames * 0.08) * 4;
           
-          ctxFg.fillStyle = item.mood.color;
-          ctxFg.fillText(item.mood.text, item.x, floatY - 12);
-          ctxFg.fillText(item.mood.emoji, item.x, floatY + 5);
+          let dx = bird.x - item.x;
+          let dy = bird.y - floatY;
+          let dist = Math.hypot(dx, dy);
+          if (dist < 75) {
+            item.x += dx * 0.08;
+            item.y += dy * 0.08;
+          }
 
-          let dist = Math.hypot(bird.x - item.x, bird.y - floatY);
-          if(dist < 28) {
+          ctxFg.fillStyle = item.mood.color;
+          ctxFg.fillText(item.mood.text, item.x, floatY - 14);
+          ctxFg.font = "22px sans-serif";
+          ctxFg.fillText(item.mood.emoji, item.x, floatY + 6);
+
+          if(dist < 42) {
             item.active = false;
             fgScore++;
+            SFX.ding();
             document.getElementById('flappy-score').innerText = fgScore;
             
             bird.emoji = item.mood.emoji;
@@ -670,27 +896,25 @@
         if(item.x < -30) items.splice(i, 1);
       }
 
-      // Draw Particles
       for(let i = particles.length - 1; i >= 0; i--) {
         let pt = particles[i];
-        pt.y -= 1.5;
+        pt.y -= 1.2;
         pt.life--;
         ctxFg.globalAlpha = pt.life / pt.maxLife;
         ctxFg.fillStyle = pt.color;
-        ctxFg.font = "bold 16px sans-serif";
+        ctxFg.font = "bold 14px sans-serif";
         ctxFg.fillText("+" + pt.text, pt.x, pt.y);
         ctxFg.globalAlpha = 1.0;
         if(pt.life <= 0) particles.splice(i, 1);
       }
 
-      // Draw Bird
       ctxFg.font = "28px sans-serif";
       ctxFg.textAlign = "center";
       ctxFg.textBaseline = "middle";
       
       ctxFg.save();
       ctxFg.translate(bird.x, bird.y);
-      let rot = Math.min(Math.PI/4, Math.max(-Math.PI/4, (bird.v * 0.1)));
+      let rot = Math.min(Math.PI/6, Math.max(-Math.PI/6, (bird.v * 0.08)));
       ctxFg.rotate(rot);
       ctxFg.fillText(bird.emoji, 0, 0);
       ctxFg.restore();
@@ -699,22 +923,13 @@
       fgAnimId = requestAnimationFrame(flappyLoop);
     }
 
-    function gameOverFlappy() {
-      fgActive = false;
-      cancelAnimationFrame(fgAnimId);
-      setTimeout(() => {
-        showModal("\"Overthinking mein crash ho gayi? Tsk tsk... Dhyan kahan hai aajkal? Wapas try karo aur is baar thoda game pe focus kar lena, mere baare mein baad mein soch lena. 😏\"", "😏", "Try Again 🔄", () => {
-          document.getElementById('flappy-overlay').classList.remove('opacity-0');
-        });
-      }, 300);
-    }
-
     function winFlappy() {
       fgActive = false;
       cancelAnimationFrame(fgAnimId);
+      SFX.win();
       setTimeout(() => {
         showModal("\"Aapke yeh 100 nakhre, gussa aur mood swings jhelna sirf mere hi bas ki baat hai, Madam. Koi aur hota toh kabka bhaag chuka hota. Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
-      }, 500);
+      }, 450);
     }
 
     /*************************************************************
@@ -731,7 +946,7 @@
       vaultContainer.innerHTML = "";
       CONFIG.vaultGridImages.forEach((imgUrl) => {
         const item = document.createElement('div');
-        item.className = "aspect-square rounded-xl overflow-hidden bg-stone-200 border border-white shadow-sm";
+        item.className = "aspect-square rounded-2xl overflow-hidden bg-stone-200 border border-white shadow-sm";
         item.innerHTML = `<img src="${imgUrl}" alt="Vault Snap" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">`;
         vaultContainer.appendChild(item);
       });
@@ -765,9 +980,10 @@
       selectedTags.clear();
       CONFIG.traitsTags.forEach(tag => {
         const btn = document.createElement('button');
-        btn.className = "tag-pill px-3.5 py-2 rounded-full text-xs font-medium bg-white/85 text-stone-700 border border-stone-200 shadow-sm";
+        btn.className = "tag-pill px-3.5 py-2 rounded-full text-xs font-medium glass-pill text-stone-700";
         btn.innerText = tag;
         btn.onclick = () => {
+          SFX.pop();
           if (selectedTags.has(tag)) { selectedTags.delete(tag); btn.classList.remove('selected'); }
           else { selectedTags.add(tag); btn.classList.add('selected'); }
         };
@@ -781,7 +997,7 @@
     }
 
     function submitStage4() {
-      if (selectedTags.size === 0) { showModal("Kam se kam ek cheez toh select karo, Madam! Ya seedha 'SELECT ALL' daba do 😌", "✨", "Okay"); return; }
+      if (selectedTags.size === 0) { showModal("Kam se kam ek cheez toh select karo, Madam! Ya seedha 'SELECT ALL' dabao 😌", "✨", "Okay"); return; }
       goToStage(5);
     }
 
@@ -796,7 +1012,7 @@
       cardBox.ontouchstart = (e) => { touchStartX = e.changedTouches[0].screenX; };
       cardBox.ontouchend = (e) => {
         const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 35) nextObservation();
+        if (Math.abs(diff) > 35) { SFX.pop(); nextObservation(); }
       };
     }
 
@@ -821,11 +1037,12 @@
       const hook2 = document.getElementById('climax-hook-2');
       const body = document.getElementById('climax-body');
       hook2.classList.remove('visible'); body.classList.remove('visible');
-      setTimeout(() => { hook2.classList.add('visible'); }, 2000);
-      setTimeout(() => { body.classList.add('visible'); }, 3100);
+      setTimeout(() => { hook2.classList.add('visible'); }, 1800);
+      setTimeout(() => { body.classList.add('visible'); }, 2900);
     }
 
     function clickNoButton() {
+      SFX.error();
       const noBtn = document.getElementById('no-btn');
       const yesBtn = document.getElementById('yes-btn');
       const toast = document.getElementById('no-toast');
@@ -835,12 +1052,9 @@
         toast.classList.remove('opacity-0');
         noClickCount++;
 
-        // WILD CRAZY MOVEMENT ACROSS THE ENTIRE SCREEN
         noBtn.style.position = 'absolute';
-        
-        // Huge random jumps inside the container (-40vw to +40vw, -30vh to +30vh)
-        const randomX = Math.floor(Math.random() * 80) - 40; 
-        const randomY = Math.floor(Math.random() * 60) - 30; 
+        const randomX = Math.floor(Math.random() * 72) - 36; 
+        const randomY = Math.floor(Math.random() * 52) - 26; 
         
         const shrinkScale = Math.max(0.6, 1 - noClickCount * 0.025);
         const growScale = Math.min(1.25, 1 + noClickCount * 0.015);
@@ -848,7 +1062,6 @@
         noBtn.style.transform = `translate(${randomX}vw, ${randomY}vh) scale(${shrinkScale})`;
         yesBtn.style.transform = `scale(${growScale})`;
 
-        // 15th Click: Button Disappears!
         if (noClickCount === CONFIG.noButtonTexts.length) {
           setTimeout(() => {
             noBtn.style.opacity = "0";
@@ -936,22 +1149,18 @@
         return;
       }
 
-      // Generate Exact Timestamp
       const now = new Date();
       const options = { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
       const timeString = now.toLocaleString('en-IN', options);
 
-      // Lock the Canvas visually
       document.getElementById('time-stamp-text').innerText = timeString;
       document.getElementById('timestamp-overlay').classList.remove('hidden');
       document.getElementById('timestamp-overlay').classList.add('flex');
       document.getElementById('clear-sig-btn').style.display = 'none';
 
-      // Send Silent Email Alert to Pritesh
       const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
       sendStealthNotification(`🚨 CONTRACT SEALED BY RAKHI! 🤍\nTime: ${timeString}\nSelected Tags (${selectedTags.size}): ${Array.from(selectedTags).join(", ")}\nHer Custom Note: ${customNote}`);
 
-      // Grand Celebration & Final Popup (No WhatsApp App redirect)
       fireCelebrationConfetti();
       
       setTimeout(() => {
@@ -968,8 +1177,6 @@
 
     function sendStealthNotification(statusMessage) {
       if (!CONFIG.web3FormsKey) return;
-      const customNote = document.getElementById('custom-note-input') ? document.getElementById('custom-note-input').value : "";
-
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
