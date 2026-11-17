@@ -23,7 +23,6 @@
     }
     .font-editorial { font-family: var(--serif); }
 
-    /* Animated Ambient iOS Mesh Background */
     .ambient-blob {
       position: fixed;
       border-radius: 50%;
@@ -38,7 +37,6 @@
       100% { transform: translate(25px, -35px) scale(1.12); }
     }
 
-    /* High-End iPhone Pro Frosted Glassmorphism */
     .glass-card {
       background: rgba(255, 255, 255, 0.62);
       backdrop-filter: blur(28px) saturate(190%);
@@ -58,7 +56,6 @@
       box-shadow: 0 24px 60px rgba(212, 175, 55, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
 
-    /* Apple Spring Button Physics */
     .btn-luxury {
       background: rgba(24, 24, 27, 0.88);
       backdrop-filter: blur(16px);
@@ -68,13 +65,9 @@
       box-shadow: 0 14px 28px -6px rgba(24, 24, 27, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .btn-luxury:hover {
-      background: rgba(39, 39, 42, 0.94);
-      transform: translateY(-2px);
-    }
-    .btn-luxury:active {
-      transform: scale(0.95);
-    }
+    .btn-luxury:hover { background: rgba(39, 39, 42, 0.94); transform: translateY(-2px); }
+    .btn-luxury:active { transform: scale(0.95); }
+    
     .btn-rose {
       background: linear-gradient(135deg, rgba(225, 29, 72, 0.92), rgba(159, 18, 57, 0.95));
       backdrop-filter: blur(16px);
@@ -102,9 +95,7 @@
     }
     .emblem-breathe { animation: pulseSlow 4s ease-in-out infinite; }
     
-    .tag-pill {
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+    .tag-pill { transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .tag-pill.selected {
       background: linear-gradient(135deg, #be123c, #e11d48);
       color: #ffffff;
@@ -117,12 +108,8 @@
       transform: translateY(8px);
       transition: opacity 1s ease, transform 1s ease;
     }
-    .fade-in-slow.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in-slow.visible { opacity: 1; transform: translateY(0); }
 
-    /* Lock Screen Shake Animation */
     @keyframes iOSShake {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-10px); }
@@ -134,12 +121,11 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
     
-    #flappy-canvas { touch-action: none; }
+    #sniper-canvas { touch-action: none; }
   </style>
 </head>
 <body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800 relative" style="background: radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%);">
 
-  <!-- Ambient Liquid Background Blobs -->
   <div class="ambient-blob w-72 h-72 bg-rose-200/50 top-8 -left-16"></div>
   <div class="ambient-blob w-80 h-80 bg-amber-100/60 bottom-10 -right-16" style="animation-delay: -5s;"></div>
 
@@ -171,8 +157,11 @@
     </div>
   </div>
 
-  <!-- TOP MINIMAL PILL -->
-  <header class="w-full max-w-md flex justify-center items-center z-20 pt-1">
+  <!-- TOP MINIMAL PILL WITH BACK ARROW -->
+  <header class="w-full max-w-md flex justify-center items-center z-20 pt-1 relative">
+    <button id="back-nav-btn" onclick="goBackStage()" class="hidden absolute left-1 w-9 h-9 rounded-full glass-pill items-center justify-center text-stone-700 text-sm font-bold active:scale-90 transition shadow-sm" title="Go Back">
+      ←
+    </button>
     <div class="px-5 py-2 rounded-full glass-pill text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600">
       CUSTOM BUILT FOR RAKHI &nbsp;•&nbsp; <span id="stage-indicator" class="text-rose-700 font-bold">01 / 07</span>
     </div>
@@ -217,7 +206,7 @@
       </button>
     </section>
 
-    <!-- ================= STAGE 02: THE EGO CLASH & MOOD SWING CATCHER ================= -->
+    <!-- ================= STAGE 02: THE EGO CLASH & SNIPER SHOOTER ================= -->
     <section id="stage-2" class="stage-section flex-col items-center text-center">
       
       <!-- GAME 1: TIC-TAC-TOE PRITESH STYLE -->
@@ -231,18 +220,18 @@
         </div>
       </div>
 
-      <!-- GAME 2: THE MOOD SWING CATCHER (Ultra-Smooth Flappy Heart) -->
-      <div id="game-flappy" class="w-full hidden flex-col items-center">
-        <span class="text-[11px] uppercase tracking-[0.2em] text-sky-800/80 font-semibold mb-1">Game 02 • Handle With Care</span>
-        <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Mood Swing Catcher</h2>
-        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Tap karke dil (🤍) ko float karo. 'Overthinking' se bacho aur apne moods collect karo. <br><span class="font-bold text-rose-600">Score: <span id="flappy-score">0</span> / 7</span></p>
+      <!-- GAME 2: SNIPER TARGET SHOOTER (SKILL BASED) -->
+      <div id="game-sniper" class="w-full hidden flex-col items-center">
+        <span class="text-[11px] uppercase tracking-[0.2em] text-rose-800/80 font-semibold mb-1">Game 02 • Sharp Shooter</span>
+        <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Shoot The Nakhre 🎯</h2>
+        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Table ke upar chalte hue targets par सीधा **Tap (Aim & Shoot)** karo. Apne dum par 8 targets uda ke dikhao! <br><span class="font-bold text-rose-600">Hits: <span id="sniper-score">0</span> / 8</span></p>
 
         <div class="glass-card p-2.5 rounded-[32px] mb-4 relative flex items-center justify-center overflow-hidden" style="width: 304px; height: 384px;">
-          <canvas id="flappy-canvas" width="284" height="364" class="rounded-[24px] cursor-pointer bg-gradient-to-b from-[#e0f2fe]/80 to-[#fff1f2]/80"></canvas>
+          <canvas id="sniper-canvas" width="284" height="364" class="rounded-[24px] cursor-crosshair bg-gradient-to-b from-stone-900 via-stone-800 to-stone-900"></canvas>
           
-          <div id="flappy-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-white/45 backdrop-blur-md rounded-[32px] z-10 pointer-events-none transition-opacity duration-300">
-             <div class="animate-bounce text-4xl mb-2">👆</div>
-             <span class="text-xs font-bold uppercase tracking-widest text-sky-900 glass-pill px-5 py-2 rounded-full">Tap Gently To Fly</span>
+          <div id="sniper-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/55 backdrop-blur-md rounded-[32px] z-10 pointer-events-none transition-opacity duration-300">
+             <div class="animate-pulse text-4xl mb-2">🎯</div>
+             <span class="text-xs font-bold uppercase tracking-widest text-stone-900 bg-white/90 px-5 py-2 rounded-full shadow-md">Tap To Activate Scope</span>
           </div>
         </div>
       </div>
@@ -332,7 +321,7 @@
       </button>
     </section>
 
-    <!-- ================= STAGE 06: THE GRAND FINALE (WILD 'NO' TRAP) ================= -->
+    <!-- ================= STAGE 06: THE GRAND FINALE (BOUNDED 'NO' TRAP) ================= -->
     <section id="stage-6" class="stage-section flex-col items-center text-center relative overflow-hidden min-h-[85vh]">
       <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700 font-semibold mb-2">Chapter 06 • The Grand Finale</span>
       
@@ -341,7 +330,7 @@
           "Is multiverse mein 8 Billion log hain..."
         </p>
         <p id="climax-hook-2" class="font-editorial italic text-xl text-rose-800 leading-snug mb-5 fade-in-slow">
-          "Par mera dimaag, meri art, aur mera 'Spider-Sense' sirf ek hi insaan par aakar lock ho gaya hai."
+          "Par mera dimaag, meri art, aur mera 'Spidey-Sense' sirf ek hi insaan par aakar lock ho gaya hai."
         </p>
         <div id="climax-body" class="fade-in-slow">
           <hr class="border-rose-200/50 my-4">
@@ -355,14 +344,13 @@
       </div>
 
       <!-- BIG BOLD 15-NO TOAST MESSAGE -->
-      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-5 text-base sm:text-lg font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-4 leading-snug"></div>
-
-            <!-- WILD FLYING BUTTON ARENA -->
-      <div class="flex items-center justify-center gap-3 w-full mb-12 relative min-h-[220px]" id="button-arena">
+      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-3 text-base sm:text-lg font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-2 leading-snug"></div>
+        <!-- BOUNDED FLYING BUTTON ARENA (STAYS 100% INSIDE SCREEN) -->
+      <div class="flex items-center justify-center gap-3 w-full mb-10 relative min-h-[230px] overflow-hidden rounded-3xl p-3" id="button-arena">
         <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-10">
           Haan, bilkul 🤍
         </button>
-        <button id="no-btn" onclick="clickNoButton()" class="py-4 px-7 rounded-full glass-pill text-stone-800 text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-20">
+        <button id="no-btn" onclick="clickNoButton()" class="py-3.5 px-6 rounded-full glass-pill text-stone-800 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-20">
           Nahi, sochna padega 🤔
         </button>
       </div>
@@ -423,9 +411,6 @@
 
   <!-- ================= JAVASCRIPT MASTER ENGINE + SYNTH AUDIO ================= -->
   <script>
-    /*************************************************************
-     * BUILT-IN iOS WEB AUDIO SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
-     *************************************************************/
     const SFX = {
       ctx: null,
       init() {
@@ -461,6 +446,21 @@
           gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.065);
           osc.connect(gain); gain.connect(this.ctx.destination);
           osc.start(); osc.stop(this.ctx.currentTime + 0.065);
+        } catch(e) {}
+      },
+      shoot() {
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(680, now);
+          osc.frequency.exponentialRampToValueAtTime(85, now + 0.13);
+          gain.gain.setValueAtTime(0.24, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(now); osc.stop(now + 0.13);
         } catch(e) {}
       },
       ding() {
@@ -512,9 +512,6 @@
       }
     };
 
-    /*************************************************************
-     * VAULT PASSCODE LOGIC (PASSWORD: "madam")
-     *************************************************************/
     function unlockVault() {
       SFX.init();
       const input = document.getElementById('vault-input');
@@ -605,7 +602,31 @@
       7: "radial-gradient(circle at 50% 20%, #FFFCF7 0%, #FAF4E8 60%, #F2E8D5 100%)"
     };
 
+    function goBackStage() {
+      SFX.click();
+      if (currentStage === 2) {
+        const sniperDiv = document.getElementById('game-sniper');
+        if (!sniperDiv.classList.contains('hidden')) {
+          sniperActive = false;
+          cancelAnimationFrame(sniperAnimId);
+          sniperDiv.classList.add('hidden');
+          sniperDiv.classList.remove('flex');
+          document.getElementById('game-ttt').classList.remove('hidden');
+          initTicTacToe(1);
+          return;
+        }
+      }
+      if (currentStage > 1) {
+        goToStage(currentStage - 1);
+      }
+    }
+
     function goToStage(stageNum) {
+      if (typeof sniperActive !== 'undefined' && stageNum !== 2) {
+        sniperActive = false;
+        cancelAnimationFrame(sniperAnimId);
+      }
+
       document.querySelectorAll('.stage-section').forEach(sec => sec.classList.remove('active'));
       const target = document.getElementById(`stage-${stageNum}`);
       if (target) target.classList.add('active');
@@ -613,10 +634,25 @@
       currentStage = stageNum;
       document.getElementById('stage-indicator').innerText = `0${stageNum} / 07`;
 
+      // Toggle Back Arrow visibility
+      const backBtn = document.getElementById('back-nav-btn');
+      if (stageNum > 1) {
+        backBtn.classList.remove('hidden');
+        backBtn.classList.add('flex');
+      } else {
+        backBtn.classList.add('hidden');
+        backBtn.classList.remove('flex');
+      }
+
       if (STAGE_BACKGROUNDS[stageNum]) document.getElementById('app-body').style.background = STAGE_BACKGROUNDS[stageNum];
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (stageNum === 2) initTicTacToe(1);
+      if (stageNum === 2) {
+        document.getElementById('game-ttt').classList.remove('hidden');
+        document.getElementById('game-sniper').classList.add('hidden');
+        document.getElementById('game-sniper').classList.remove('flex');
+        initTicTacToe(1);
+      }
       if (stageNum === 3) initStage3();
       if (stageNum === 4) initStage4();
       if (stageNum === 5) initStage5();
@@ -700,11 +736,11 @@
       } else {
         setTimeout(() => {
           SFX.win();
-          showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Aage badhte hain. ✨\"", "✨", "Next Level →", () => {
+                    showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Ab apna निशाना (Aim) dikhao! ✨\"", "🎯", "Next Game →", () => {
             document.getElementById('game-ttt').classList.add('hidden');
-            const flappyGame = document.getElementById('game-flappy');
-            flappyGame.classList.remove('hidden'); flappyGame.classList.add('flex');
-            initFlappyGame();
+            const sniperGame = document.getElementById('game-sniper');
+            sniperGame.classList.remove('hidden'); sniperGame.classList.add('flex');
+            initSniperGame();
           });
         }, 380);
       }
@@ -733,202 +769,220 @@
     }
 
     /*************************************************************
-     * STAGE 02 - GAME 2: ULTRA-EASY RIGGED MOOD SWING CATCHER
+     * STAGE 02 - GAME 2: SNIPER TARGET SHOOTER (SKILL-BASED)
      *************************************************************/
-    let fgCanvas, ctxFg;
-    let fgActive = false;
-    let fgAnimId;
-    let fgScore = 0;
-    const TARGET_SCORE = 7;
-    
-    let bird = { x: 58, y: 180, v: 0, r: 16, emoji: "🤍", shield: 0 };
-    const GRAVITY = 0.14;
-    const JUMP = -3.4;
-    const PIPE_SPEED = 1.45;
-    const GAP = 175;
-    
-    let pipes = [];
-    let items = [];
-    let particles = [];
-    let frames = 0;
+    let snCanvas, ctxSn;
+    let sniperActive = false;
+    let sniperAnimId;
+    let sniperScore = 0;
+    const SNIPER_TARGET_GOAL = 8;
 
-    const MOODS = [
-      { text: "Gussa", emoji: "😡", color: "#f43f5e" },
-      { text: "Care", emoji: "🥰", color: "#10b981" },
-      { text: "Nakhre", emoji: "😒", color: "#f59e0b" },
-      { text: "Pyaar", emoji: "🤍", color: "#ec4899" },
-      { text: "Zidd", emoji: "😤", color: "#8b5cf6" },
-      { text: "Smile", emoji: "😊", color: "#0284c7" }
+    const SHELF_Y = [95, 195, 295];
+    let targets = [];
+    let snParticles = [];
+    let scopePos = { x: 142, y: 182, recoil: 0, flash: 0 };
+
+    const TARGET_TYPES = [
+      { label: "Overthinking", emoji: "🤯", color: "#fb7185" },
+      { label: "Nakhre", emoji: "😒", color: "#fbbf24" },
+      { label: "Gussa", emoji: "😡", color: "#f87171" },
+      { label: "Zidd", emoji: "😤", color: "#c084fc" },
+      { label: "Sust Neend", emoji: "😴", color: "#38bdf8" }
     ];
 
-    function initFlappyGame() {
-      fgCanvas = document.getElementById('flappy-canvas');
-      ctxFg = fgCanvas.getContext('2d');
-      document.getElementById('flappy-overlay').classList.remove('opacity-0');
-      
-      const startAction = (e) => {
-        if(e) e.preventDefault();
-        if(!fgActive) {
+    function initSniperGame() {
+      snCanvas = document.getElementById('sniper-canvas');
+      ctxSn = snCanvas.getContext('2d');
+      document.getElementById('sniper-overlay').classList.remove('opacity-0');
+      sniperScore = 0;
+      document.getElementById('sniper-score').innerText = sniperScore;
+
+      const handleFire = (clientX, clientY) => {
+        const rect = snCanvas.getBoundingClientRect();
+        const x = (clientX - rect.left) * (snCanvas.width / rect.width);
+        const y = (clientY - rect.top) * (snCanvas.height / rect.height);
+
+        if (!sniperActive) {
           SFX.pop();
-          fgActive = true;
-          document.getElementById('flappy-overlay').classList.add('opacity-0');
-          resetFlappy();
-          flappyLoop();
-        } else {
-          SFX.pop();
-          bird.v = JUMP;
-        }
-      };
-
-      fgCanvas.onmousedown = startAction;
-      fgCanvas.ontouchstart = startAction;
-    }
-
-    function resetFlappy() {
-      bird = { x: 58, y: fgCanvas.height/2, v: 0, r: 16, emoji: "🤍", shield: 0 };
-      pipes = [];
-      items = [];
-      particles = [];
-      frames = 0;
-      fgScore = 0;
-      document.getElementById('flappy-score').innerText = fgScore;
-    }
-
-    function spawnParticle(x, y, text, color) {
-      particles.push({ x: x, y: y, text: text, color: color, life: 45, maxLife: 45 });
-    }
-
-    function flappyLoop() {
-      if(!fgActive) return;
-      ctxFg.clearRect(0, 0, fgCanvas.width, fgCanvas.height);
-      
-      bird.v = Math.min(bird.v + GRAVITY, 2.8);
-      bird.y += bird.v;
-      if (bird.shield > 0) bird.shield--;
-
-      if(bird.y + bird.r > fgCanvas.height - 6) {
-        bird.y = fgCanvas.height - 6 - bird.r;
-        bird.v = JUMP * 0.7;
-      }
-      if(bird.y - bird.r < 6) {
-        bird.y = 6 + bird.r;
-        bird.v = 0.5;
-      }
-
-      if(frames % 125 === 0) {
-        let topHeight = Math.random() * (fgCanvas.height - GAP - 90) + 45;
-        let pX = fgCanvas.width;
-        pipes.push({ x: pX, w: 36, top: topHeight, bottom: topHeight + GAP });
-        
-        let mood = MOODS[Math.floor(Math.random() * MOODS.length)];
-        items.push({ x: pX + 18, y: topHeight + GAP/2, mood: mood, active: true });
-      }
-
-      for(let i = pipes.length - 1; i >= 0; i--) {
-        let p = pipes[i];
-        p.x -= PIPE_SPEED;
-
-        ctxFg.fillStyle = "rgba(148, 163, 184, 0.32)"; 
-        ctxFg.fillRect(p.x, 0, p.w, p.top);
-        ctxFg.fillRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
-        
-        ctxFg.strokeStyle = "rgba(100, 116, 139, 0.45)";
-        ctxFg.lineWidth = 1.2;
-        ctxFg.strokeRect(p.x, 0, p.w, p.top);
-        ctxFg.strokeRect(p.x, p.bottom, p.w, fgCanvas.height - p.bottom);
-
-        ctxFg.fillStyle = "rgba(71, 85, 105, 0.75)";
-        ctxFg.font = "9px sans-serif";
-        ctxFg.textAlign = "center";
-        ctxFg.fillText("Overthinking", p.x + p.w/2, Math.max(12, p.top - 8));
-
-        let cx = bird.x, cy = bird.y, r = 7;
-        let hitTop = cx + r > p.x && cx - r < p.x + p.w && cy - r < p.top;
-        let hitBot = cx + r > p.x && cx - r < p.x + p.w && cy + r > p.bottom;
-        
-        if((hitTop || hitBot) && bird.shield === 0) {
-          bird.shield = 45;
-          bird.y = p.top + GAP / 2;
-          bird.v = -1.2;
-          SFX.pop();
-          spawnParticle(bird.x + 15, bird.y, "Saved by P ✨", "#be123c");
+          sniperActive = true;
+          document.getElementById('sniper-overlay').classList.add('opacity-0');
+          resetSniperTargets();
+          sniperLoop();
+          return;
         }
 
-        if(p.x + p.w < 0) pipes.splice(i, 1);
-      }
+        scopePos.x = x;
+        scopePos.y = y;
+        scopePos.recoil = 14;
+        scopePos.flash = 6;
+        SFX.shoot();
 
-      for(let i = items.length - 1; i >= 0; i--) {
-        let item = items[i];
-        item.x -= PIPE_SPEED;
-        if(item.active) {
-          ctxFg.font = "bold 12px sans-serif";
-          ctxFg.textAlign = "center";
-          let floatY = item.y + Math.sin(frames * 0.08) * 4;
-          
-          let dx = bird.x - item.x;
-          let dy = bird.y - floatY;
-          let dist = Math.hypot(dx, dy);
-          if (dist < 75) {
-            item.x += dx * 0.08;
-            item.y += dy * 0.08;
-          }
+        let hitAny = false;
+        for (let i = 0; i < targets.length; i++) {
+          let t = targets[i];
+          if (t.alive) {
+            let dist = Math.hypot(x - t.x, y - (t.y - 24));
+            if (dist < 34) {
+              t.alive = false;
+              t.respawnTimer = 42;
+              hitAny = true;
+              sniperScore++;
+              SFX.ding();
+              document.getElementById('sniper-score').innerText = sniperScore;
+              spawnSnParticle(t.x, t.y - 28, "SHOT! 💥", t.type.color);
 
-          ctxFg.fillStyle = item.mood.color;
-          ctxFg.fillText(item.mood.text, item.x, floatY - 14);
-          ctxFg.font = "22px sans-serif";
-          ctxFg.fillText(item.mood.emoji, item.x, floatY + 6);
-
-          if(dist < 42) {
-            item.active = false;
-            fgScore++;
-            SFX.ding();
-            document.getElementById('flappy-score').innerText = fgScore;
-            
-            bird.emoji = item.mood.emoji;
-            spawnParticle(item.x, floatY, item.mood.text, item.mood.color);
-
-            if(fgScore >= TARGET_SCORE) {
-              winFlappy();
-              return;
+              if (sniperScore >= SNIPER_TARGET_GOAL) {
+                winSniperGame();
+                return;
+              }
+              break;
             }
           }
         }
-        if(item.x < -30) items.splice(i, 1);
-      }
+        if (!hitAny) {
+          spawnSnParticle(x, y - 10, "Miss!", "#94a3b8");
+        }
+      };
 
-      for(let i = particles.length - 1; i >= 0; i--) {
-        let pt = particles[i];
-        pt.y -= 1.2;
-        pt.life--;
-        ctxFg.globalAlpha = pt.life / pt.maxLife;
-        ctxFg.fillStyle = pt.color;
-        ctxFg.font = "bold 14px sans-serif";
-        ctxFg.fillText("+" + pt.text, pt.x, pt.y);
-        ctxFg.globalAlpha = 1.0;
-        if(pt.life <= 0) particles.splice(i, 1);
-      }
-
-      ctxFg.font = "28px sans-serif";
-      ctxFg.textAlign = "center";
-      ctxFg.textBaseline = "middle";
-      
-      ctxFg.save();
-      ctxFg.translate(bird.x, bird.y);
-      let rot = Math.min(Math.PI/6, Math.max(-Math.PI/6, (bird.v * 0.08)));
-      ctxFg.rotate(rot);
-      ctxFg.fillText(bird.emoji, 0, 0);
-      ctxFg.restore();
-
-      frames++;
-      fgAnimId = requestAnimationFrame(flappyLoop);
+      snCanvas.onmousedown = (e) => { e.preventDefault(); handleFire(e.clientX, e.clientY); };
+      snCanvas.ontouchstart = (e) => {
+        e.preventDefault();
+        const t = e.touches[0];
+        handleFire(t.clientX, t.clientY);
+      };
     }
 
-    function winFlappy() {
-      fgActive = false;
-      cancelAnimationFrame(fgAnimId);
+    function resetSniperTargets() {
+      targets = [];
+      snParticles = [];
+      SHELF_Y.forEach((sy, idx) => {
+        targets.push(createTargetOnShelf(sy, idx));
+      });
+    }
+
+    function createTargetOnShelf(shelfY, idx) {
+      const type = TARGET_TYPES[Math.floor(Math.random() * TARGET_TYPES.length)];
+      const dir = idx % 2 === 0 ? 1 : -1;
+      const speed = (1.55 + Math.random() * 0.65) * dir;
+      return {
+        x: 50 + Math.random() * 180,
+        y: shelfY,
+        vx: speed,
+        type: type,
+        alive: true,
+        respawnTimer: 0
+      };
+    }
+
+    function spawnSnParticle(x, y, text, color) {
+      snParticles.push({ x, y, text, color, life: 32, maxLife: 32 });
+    }
+
+    function sniperLoop() {
+      if (!sniperActive) return;
+      ctxSn.clearRect(0, 0, snCanvas.width, snCanvas.height);
+
+      if (scopePos.flash > 0) {
+        ctxSn.fillStyle = `rgba(255, 240, 200, ${scopePos.flash * 0.04})`;
+        ctxSn.fillRect(0, 0, snCanvas.width, snCanvas.height);
+        scopePos.flash--;
+      }
+
+      SHELF_Y.forEach((sy) => {
+        ctxSn.fillStyle = "#44403c";
+        ctxSn.fillRect(16, sy, snCanvas.width - 32, 8);
+        ctxSn.strokeStyle = "#d6d3d1";
+        ctxSn.lineWidth = 0.6;
+        ctxSn.strokeRect(16, sy, snCanvas.width - 32, 8);
+      });
+
+      targets.forEach((t, idx) => {
+        if (t.alive) {
+          t.x += t.vx;
+          if (t.x < 38 || t.x > snCanvas.width - 38) {
+            t.vx *= -1;
+          }
+
+          ctxSn.fillStyle = "#a8a29e";
+          ctxSn.fillRect(t.x - 10, t.y - 5, 20, 5);
+
+          ctxSn.beginPath();
+          ctxSn.arc(t.x, t.y - 24, 21, 0, Math.PI * 2);
+          ctxSn.fillStyle = "rgba(255, 255, 255, 0.92)";
+          ctxSn.fill();
+          ctxSn.lineWidth = 3;
+          ctxSn.strokeStyle = t.type.color;
+          ctxSn.stroke();
+
+          ctxSn.beginPath();
+          ctxSn.arc(t.x, t.y - 24, 13, 0, Math.PI * 2);
+          ctxSn.strokeStyle = "rgba(225, 29, 72, 0.35)";
+          ctxSn.lineWidth = 1.5;
+          ctxSn.stroke();
+
+          ctxSn.font = "20px sans-serif";
+          ctxSn.textAlign = "center";
+          ctxSn.textBaseline = "middle";
+          ctxSn.fillText(t.type.emoji, t.x, t.y - 24);
+
+          ctxSn.font = "bold 9px sans-serif";
+          ctxSn.fillStyle = t.type.color;
+          ctxSn.fillText(t.type.label, t.x, t.y - 52);
+        } else {
+          t.respawnTimer--;
+          if (t.respawnTimer <= 0) {
+            targets[idx] = createTargetOnShelf(t.y, idx);
+          }
+        }
+      });
+
+      for (let i = snParticles.length - 1; i >= 0; i--) {
+        let p = snParticles[i];
+        p.y -= 1.1;
+        p.life--;
+        ctxSn.globalAlpha = p.life / p.maxLife;
+        ctxSn.font = "bold 13px sans-serif";
+        ctxSn.fillStyle = p.color;
+        ctxSn.textAlign = "center";
+        ctxSn.fillText(p.text, p.x, p.y);
+        ctxSn.globalAlpha = 1.0;
+        if (p.life <= 0) snParticles.splice(i, 1);
+      }
+
+      if (scopePos.recoil > 0) scopePos.recoil *= 0.75;
+      const sx = scopePos.x;
+      const sy = scopePos.y - scopePos.recoil;
+
+      ctxSn.save();
+      ctxSn.strokeStyle = "rgba(244, 63, 94, 0.85)";
+      ctxSn.lineWidth = 1.8;
+
+      ctxSn.beginPath();
+      ctxSn.arc(sx, sy, 28, 0, Math.PI * 2);
+      ctxSn.stroke();
+
+      ctxSn.beginPath();
+      ctxSn.moveTo(sx - 38, sy); ctxSn.lineTo(sx - 10, sy);
+      ctxSn.moveTo(sx + 10, sy); ctxSn.lineTo(sx + 38, sy);
+      ctxSn.moveTo(sx, sy - 38); ctxSn.lineTo(sx, sy - 10);
+      ctxSn.moveTo(sx, sy + 10); ctxSn.lineTo(sx, sy + 38);
+      ctxSn.stroke();
+
+      ctxSn.beginPath();
+      ctxSn.arc(sx, sy, 3, 0, Math.PI * 2);
+      ctxSn.fillStyle = "#e11d48";
+      ctxSn.fill();
+      ctxSn.restore();
+
+      sniperAnimId = requestAnimationFrame(sniperLoop);
+    }
+
+    function winSniperGame() {
+      sniperActive = false;
+      cancelAnimationFrame(sniperAnimId);
       SFX.win();
       setTimeout(() => {
-        showModal("\"Aapke yeh 100 nakhre, gussa aur mood swings jhelna sirf mere hi bas ki baat hai, Madam. Koi aur hota toh kabka bhaag chuka hota. Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
+        showModal("\"Kya baat hai Sharp Shooter! 🎯 Apne saare nakhre aur overthinking ek-ek karke uda diye. Maan gaye aapka निशाना, Madam! Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
       }, 450);
     }
 
@@ -997,7 +1051,7 @@
     }
 
     function submitStage4() {
-      if (selectedTags.size === 0) { showModal("Kam se kam ek cheez toh select karo, Madam! Ya seedha 'SELECT ALL' dabao 😌", "✨", "Okay"); return; }
+      if (selectedTags.size === 0) { showModal("Kam se kam ek cheez toh select karo, Madam! Ya seedha 'SELECT ALL' daba do 😌", "✨", "Okay"); return; }
       goToStage(5);
     }
 
@@ -1031,7 +1085,7 @@
     }
 
     /*************************************************************
-     * STAGE 06: THE GRAND FINALE (WILD 'NO' TRAP & BIG TOAST)
+     * STAGE 06: THE GRAND FINALE (100% INSIDE-SCREEN 'NO' TRAP)
      *************************************************************/
     function initStage6Climax() {
       const hook2 = document.getElementById('climax-hook-2');
@@ -1043,6 +1097,7 @@
 
     function clickNoButton() {
       SFX.error();
+      const arena = document.getElementById('button-arena');
       const noBtn = document.getElementById('no-btn');
       const yesBtn = document.getElementById('yes-btn');
       const toast = document.getElementById('no-toast');
@@ -1052,14 +1107,20 @@
         toast.classList.remove('opacity-0');
         noClickCount++;
 
-        noBtn.style.position = 'absolute';
-        const randomX = Math.floor(Math.random() * 72) - 36; 
-        const randomY = Math.floor(Math.random() * 52) - 26; 
-        
-        const shrinkScale = Math.max(0.6, 1 - noClickCount * 0.025);
-        const growScale = Math.min(1.25, 1 + noClickCount * 0.015);
+        const shrinkScale = Math.max(0.68, 1 - noClickCount * 0.02);
+        const growScale = Math.min(1.22, 1 + noClickCount * 0.015);
 
-        noBtn.style.transform = `translate(${randomX}vw, ${randomY}vh) scale(${shrinkScale})`;
+        const pad = 10;
+        const maxLeft = Math.max(pad, arena.clientWidth - noBtn.offsetWidth - pad);
+        const maxTop = Math.max(pad, arena.clientHeight - noBtn.offsetHeight - pad);
+
+        const safeLeft = Math.floor(pad + Math.random() * (maxLeft - pad));
+        const safeTop = Math.floor(pad + Math.random() * (maxTop - pad));
+
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${safeLeft}px`;
+        noBtn.style.top = `${safeTop}px`;
+        noBtn.style.transform = `scale(${shrinkScale})`;
         yesBtn.style.transform = `scale(${growScale})`;
 
         if (noClickCount === CONFIG.noButtonTexts.length) {
@@ -1085,7 +1146,7 @@
     }
 
     /*************************************************************
-     * STAGE 07: MULTIVERSE CONTRACT (TIMESTAMP LOCK SYSTEM)
+     * STAGE 07: MULTIVERSE CONTRACT + BLANK WHATSAPP REDIRECT
      *************************************************************/
     let canvas, ctx, drawing = false;
 
@@ -1158,18 +1219,19 @@
       document.getElementById('timestamp-overlay').classList.add('flex');
       document.getElementById('clear-sig-btn').style.display = 'none';
 
-      const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
+          const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
       sendStealthNotification(`🚨 CONTRACT SEALED BY RAKHI! 🤍\nTime: ${timeString}\nSelected Tags (${selectedTags.size}): ${Array.from(selectedTags).join(", ")}\nHer Custom Note: ${customNote}`);
 
       fireCelebrationConfetti();
       
       setTimeout(() => {
         showModal(
-          "Contract Officially Sealed! 🤍\n\nAapka jawab aur yeh contract exact time aur date ke saath humesha ke liye lock ho chuka hai, Madam.\n\nAb seedha chat par aao, Pritesh aapka wait kar raha hai 😌✨",
+          "Contract Officially Sealed! 🤍\n\nAapka jawab aur yeh contract exact time aur date ke saath humesha ke liye lock ho chuka hai, Madam.\n\nAb seedha Pritesh ke chat par chalo aur jo dil mein hai khud likh ke batao 😌✨",
           "🔒✨",
-          "Done 🤍",
+          "Go To Pritesh's Chat 💬",
           () => {
             document.getElementById('stage-indicator').innerText = "SEALED 🤍";
+            window.location.href = `https://wa.me/${CONFIG.whatsappNumber}`;
           }
         );
       }, 800);
