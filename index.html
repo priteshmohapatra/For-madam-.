@@ -38,17 +38,17 @@
     }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.62);
+      background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(28px) saturate(190%);
       -webkit-backdrop-filter: blur(28px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.9);
       box-shadow: 0 24px 48px -12px rgba(28, 25, 23, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
     .glass-pill {
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.74);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.92);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
     .gold-border {
@@ -67,7 +67,7 @@
     }
     .btn-luxury:hover { background: rgba(39, 39, 42, 0.94); transform: translateY(-2px); }
     .btn-luxury:active { transform: scale(0.95); }
-    
+
     .btn-rose {
       background: linear-gradient(135deg, rgba(225, 29, 72, 0.92), rgba(159, 18, 57, 0.95));
       backdrop-filter: blur(16px);
@@ -78,11 +78,20 @@
     }
     .btn-rose:active { transform: scale(0.94); }
 
+    .btn-pink-cute {
+      background: linear-gradient(135deg, #f472b6, #ec4899);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 12px 24px rgba(236, 72, 153, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-pink-cute:active { transform: scale(0.94); }
+
     .stage-section {
       display: none;
       opacity: 0;
       transform: translateY(16px) scale(0.98);
-      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .stage-section.active {
       display: flex;
@@ -94,7 +103,7 @@
       50% { transform: scale(1.06); opacity: 1; }
     }
     .emblem-breathe { animation: pulseSlow 4s ease-in-out infinite; }
-    
+
     .tag-pill { transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .tag-pill.selected {
       background: linear-gradient(135deg, #be123c, #e11d48);
@@ -120,11 +129,11 @@
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
-    
-    #sniper-canvas { touch-action: none; }
+
+    #archery-canvas { touch-action: none; }
   </style>
 </head>
-<body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800 relative" style="background: radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%);">
+<body id="app-body" class="min-h-screen flex flex-col justify-between items-center px-4 py-6 text-stone-800 relative" style="background: radial-gradient(circle at 50% 20%, #F5ECFF 0%, #EDE4F8 60%, #E7DCF5 100%);">
 
   <div class="ambient-blob w-72 h-72 bg-rose-200/50 top-8 -left-16"></div>
   <div class="ambient-blob w-80 h-80 bg-amber-100/60 bottom-10 -right-16" style="animation-delay: -5s;"></div>
@@ -163,7 +172,7 @@
       ←
     </button>
     <div class="px-5 py-2 rounded-full glass-pill text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600">
-      CUSTOM BUILT FOR RAKHI &nbsp;•&nbsp; <span id="stage-indicator" class="text-rose-700 font-bold">01 / 07</span>
+      CUSTOM BUILT FOR RAKHI &nbsp;•&nbsp; <span id="stage-indicator" class="text-rose-700 font-bold">SURPRISE ✨</span>
     </div>
   </header>
 
@@ -179,8 +188,43 @@
   <!-- MAIN CONTAINER -->
   <main class="w-full max-w-md my-auto py-6 z-10">
 
+    <!-- ================= PRE-ENTRY SURPRISE PAGE (BEAR GIF) ================= -->
+    <section id="stage-0" class="stage-section active flex-col items-center text-center">
+      <h2 class="font-editorial text-3xl sm:text-4xl font-bold text-rose-500 leading-tight mb-6 px-4">
+        Are you ready for surprise?
+      </h2>
+
+      <div class="glass-card p-3 rounded-[32px] mb-7 w-64 h-64 flex items-center justify-center overflow-hidden shadow-xl">
+        <img src="bear.gif" alt="Cute Bear" class="w-full h-full object-contain rounded-[24px]">
+      </div>
+
+      <div class="flex items-center justify-center gap-4 w-full max-w-xs">
+        <button onclick="SFX.win(); goToStage(1)" class="flex-1 py-3.5 px-6 rounded-full btn-pink-cute text-sm font-bold uppercase tracking-widest">
+          YES
+        </button>
+        <button onclick="SFX.error(); goToStage('0-no')" class="flex-1 py-3.5 px-6 rounded-full btn-pink-cute text-sm font-bold uppercase tracking-widest opacity-90">
+          NO
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= HOW DARE YOU PAGE (CAT GIF) ================= -->
+    <section id="stage-0-no" class="stage-section flex-col items-center text-center">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-rose-500 tracking-wide mb-6">
+        HOW DARE YOU!! 😒
+      </h2>
+
+      <div class="glass-card p-3 rounded-[32px] mb-7 w-64 h-80 flex items-center justify-center overflow-hidden shadow-xl">
+        <img src="howdare.gif" alt="How Dare You Cat" class="w-full h-full object-cover rounded-[24px]">
+      </div>
+
+      <button onclick="SFX.pop(); goToStage(0)" class="py-3.5 px-10 rounded-full btn-pink-cute text-sm font-bold uppercase tracking-widest shadow-lg">
+        TRY AGAIN
+      </button>
+    </section>
+
     <!-- ================= STAGE 01: THE MASTER HOOK ================= -->
-    <section id="stage-1" class="stage-section active flex-col items-center text-center">
+    <section id="stage-1" class="stage-section flex-col items-center text-center">
       <div class="w-24 h-24 rounded-full glass-card gold-border flex items-center justify-center mb-7 emblem-breathe">
         <svg class="w-11 h-11 text-rose-800/80" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="50" cy="50" r="38" stroke-dasharray="4 4"/>
@@ -206,10 +250,9 @@
       </button>
     </section>
 
-    <!-- ================= STAGE 02: THE EGO CLASH & SNIPER SHOOTER ================= -->
+        <!-- ================= STAGE 02: THE EGO CLASH & ARCHERY ================= -->
     <section id="stage-2" class="stage-section flex-col items-center text-center">
-      
-      <!-- GAME 1: TIC-TAC-TOE PRITESH STYLE -->
+      <!-- GAME 1: TIC-TAC-TOE -->
       <div id="game-ttt" class="w-full flex flex-col items-center">
         <span id="ttt-round-badge" class="text-[11px] uppercase tracking-[0.2em] text-sky-800/80 font-semibold mb-1">Game 01 • The Ego Clash (Round 1/2)</span>
         <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Pritesh vs. Madam</h2>
@@ -220,35 +263,34 @@
         </div>
       </div>
 
-      <!-- GAME 2: SNIPER TARGET SHOOTER (SKILL BASED) -->
-      <div id="game-sniper" class="w-full hidden flex-col items-center">
-        <span class="text-[11px] uppercase tracking-[0.2em] text-rose-800/80 font-semibold mb-1">Game 02 • Sharp Shooter</span>
+      <!-- GAME 2: ARCHERY BOW & ARROW (DRAG & SHOOT) -->
+      <div id="game-archery" class="w-full hidden flex-col items-center">
+        <span class="text-[11px] uppercase tracking-[0.2em] text-rose-800/80 font-semibold mb-1">Game 02 • Master Archer</span>
         <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Shoot The Nakhre 🎯</h2>
-        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Table ke upar chalte hue targets par seedha **Tap (Aim & Shoot)** karo. Apne dum par 8 targets uda ke dikhao! <br><span class="font-bold text-rose-600">Hits: <span id="sniper-score">0</span> / 8</span></p>
+        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Screen par tap karke <strong>peeche kheencho (Drag &amp; Aim)</strong> aur chhod kar target udao! <br><span class="font-bold text-rose-600">Hits: <span id="archery-score">0</span> / 6</span></p>
 
         <div class="glass-card p-2.5 rounded-[32px] mb-4 relative flex items-center justify-center overflow-hidden" style="width: 304px; height: 384px;">
-          <canvas id="sniper-canvas" width="284" height="364" class="rounded-[24px] cursor-crosshair bg-gradient-to-b from-stone-900 via-stone-800 to-stone-900"></canvas>
+          <canvas id="archery-canvas" width="284" height="364" class="rounded-[24px] cursor-crosshair bg-gradient-to-b from-stone-900 via-stone-800 to-stone-950"></canvas>
           
-          <div id="sniper-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/55 backdrop-blur-md rounded-[32px] z-10 pointer-events-none transition-opacity duration-300">
-             <div class="animate-pulse text-4xl mb-2">🎯</div>
-             <span class="text-xs font-bold uppercase tracking-widest text-stone-900 bg-white/90 px-5 py-2 rounded-full shadow-md">Tap To Activate Scope</span>
+          <div id="archery-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm rounded-[32px] z-10 pointer-events-none transition-opacity duration-300">
+             <div class="animate-bounce text-4xl mb-2">👇</div>
+             <span class="text-xs font-bold uppercase tracking-widest text-stone-900 bg-white/90 px-5 py-2 rounded-full shadow-md">Drag Down To Aim</span>
           </div>
         </div>
       </div>
-
     </section>
 
-    <!-- ================= STAGE 03: THE SECRET ARCHIVE ================= -->
+    <!-- ================= STAGE 03: THE PERSONAL MUSEUM (PHOTO + VIDEO) ================= -->
     <section id="stage-3" class="stage-section flex-col items-center text-center">
-      <span class="text-[11px] uppercase tracking-[0.2em] text-amber-800/70 font-semibold mb-1">Chapter 03 • The Secret Archive</span>
+      <span class="text-[11px] uppercase tracking-[0.2em] text-amber-800/70 font-semibold mb-1">Chapter 03 • The Personal Museum</span>
       <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-2">Why I Saved Them</h2>
-      <p class="text-xs text-stone-600 mb-5 max-w-xs">Aap hamesha sochti thi na main aapki ajeeb-ajeeb snaps kyun save karta tha? Aaj dekh hi lo...</p>
+      <p class="text-xs text-stone-600 mb-5 max-w-xs">Aap hamesha sochti thi na main aapki ajeeb snaps kyun save karta tha? Aaj dekh hi lo...</p>
 
       <div id="snap-spotlight" class="w-full">
         <div class="glass-card p-4 rounded-[32px] mb-5 mx-auto max-w-xs transition-all duration-300">
           <div class="w-full h-64 rounded-[22px] bg-stone-200/70 overflow-hidden mb-4 relative flex items-center justify-center shadow-inner">
-            <img id="snap-img" src="" alt="Saved Snap" class="w-full h-full object-cover">
-            <span id="snap-badge" class="absolute top-3 right-3 px-3 py-1 rounded-full glass-pill text-[10px] font-semibold uppercase tracking-wider text-stone-700">01 / 04</span>
+            <div id="snap-media-box" class="w-full h-full"></div>
+            <span id="snap-badge" class="absolute top-3 right-3 px-3 py-1 rounded-full glass-pill text-[10px] font-semibold uppercase tracking-wider text-stone-700 z-10">01 / 04</span>
           </div>
           <p id="snap-caption" class="font-editorial italic text-lg text-stone-800 leading-snug mb-2 min-h-[3.5rem] flex items-center justify-center px-2"></p>
           <div class="text-[11px] text-stone-400 tracking-widest uppercase">— Saved by P.</div>
@@ -292,7 +334,7 @@
       </div>
 
       <button onclick="SFX.click(); submitStage4()" class="w-full max-w-xs py-4 rounded-full btn-luxury text-xs font-semibold uppercase tracking-widest">
-        Confirm & Go Next &nbsp;→
+        Confirm &amp; Go Next &nbsp;→
       </button>
     </section>
 
@@ -321,11 +363,24 @@
       </button>
     </section>
 
-    <!-- ================= STAGE 06: THE GRAND FINALE (FULL SCREEN 'NO' TRAP) ================= -->
-    <section id="stage-6" class="stage-section flex-col items-center text-center relative min-h-[82vh]">
+    <!-- ================= PRE-PROPOSAL TRANSITION PAGE (FOR YOU GIF) ================= -->
+    <section id="stage-5b" class="stage-section flex-col items-center text-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700/80 font-semibold mb-3">Before The Final Question...</span>
+
+      <div class="glass-card p-4 rounded-[34px] mb-7 w-72 h-72 flex items-center justify-center overflow-hidden shadow-xl">
+        <img src="foryou.gif" alt="For You Bunny" class="w-full h-full object-contain rounded-[24px]">
+      </div>
+
+      <button onclick="SFX.win(); goToStage(6)" class="w-full max-w-xs py-4 px-8 rounded-full btn-rose text-xs font-bold uppercase tracking-[0.2em] shadow-lg">
+        Accept Flower 🌸 &nbsp;→
+      </button>
+    </section>
+
+    <!-- ================= STAGE 06: THE GRAND FINALE (BOUNDED 'NO' JAIL) ================= -->
+    <section id="stage-6" class="stage-section flex-col items-center text-center relative min-h-[82vh] w-full">
       <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700 font-semibold mb-2">Chapter 06 • The Grand Finale</span>
       
-      <div class="glass-card rounded-[32px] p-6 sm:p-7 mb-4 border border-rose-200/70 z-20 relative">
+      <div class="glass-card rounded-[32px] p-6 sm:p-7 mb-4 border border-rose-200/70 z-20 relative w-full">
         <p class="font-editorial text-2xl sm:text-3xl text-stone-900 font-semibold leading-snug mb-3">
           "Is multiverse mein 8 Billion log hain..."
         </p>
@@ -334,29 +389,27 @@
         </p>
         <div id="climax-body" class="fade-in-slow">
           <hr class="border-rose-200/50 my-4">
-          <p class="text-xs sm:text-sm text-stone-600 leading-relaxed mb-4">
-            "Ab main chupke se aapki snaps save nahi karna chahta. Mujhe wo saare moments saamne se jeene hain. Aapke nakhre, aapki overthinking, aur aapki wo bina-filter wali vibe—mujhe yeh poora package chahiye. Hamesha ke liye."
+          <p class="text-sm text-stone-600 leading-relaxed mb-4 font-medium">
+            "Bohot games khel liye. Ab ekdum seedhi baat.<br><br>Tumhari overthinking, tumhara bina-filter wala dimaag, aur yeh 'Madam' wala attitude... mujhe yeh poora package humesha ke liye chahiye."
           </p>
           <p class="font-editorial font-semibold text-xl text-stone-900">
-            "Toh bataiye Madam... Should we make this official?"
+            "Toh batao Madam... Should we make this official?"
           </p>
         </div>
       </div>
 
-      <!-- BIG BOLD 15-NO TOAST MESSAGE -->
-      <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-3 text-base sm:text-lg font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-2 leading-snug"></div>
+      <div id="no-toast" class="opacity-0 min-h-[3.2rem] flex items-center justify-center px-5 py-2 mb-3 text-sm sm:text-base font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-2 leading-snug"></div>
 
-            <!-- BUTTON ARENA -->
-      <div class="flex items-center justify-center gap-3 w-full mb-10 relative min-h-[160px] p-3" id="button-arena">
-        <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-30">
+      <div class="flex items-center justify-center gap-3 w-full mb-10 relative min-h-[185px] p-3 rounded-3xl overflow-hidden" id="button-arena">
+        <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-7 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-20 shadow-lg">
           Haan, bilkul 🤍
         </button>
-        <button id="no-btn" onclick="clickNoButton()" class="py-3.5 px-6 rounded-full glass-pill text-stone-800 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-40">
+        <button id="no-btn" onclick="clickNoButton()" class="py-3.5 px-5 rounded-full glass-pill text-stone-800 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 z-30 shadow-md">
           Nahi, sochna padega 🤔
         </button>
       </div>
 
-      <button onclick="SFX.click(); tooSoonRespect()" class="absolute bottom-2 text-[11px] text-stone-400 underline underline-offset-4 hover:text-stone-600 transition z-10">
+      <button onclick="SFX.click(); tooSoonRespect()" class="absolute bottom-1 text-[11px] text-stone-400 underline underline-offset-4 hover:text-stone-600 transition z-10">
         No, it's a bit too soon.
       </button>
     </section>
@@ -380,7 +433,6 @@
         <div class="rounded-2xl border border-stone-300/80 bg-white/90 overflow-hidden mb-3 relative shadow-inner" id="canvas-container">
           <canvas id="sig-canvas" class="w-full h-36 touch-none cursor-crosshair"></canvas>
           
-          <!-- Timestamp Overlay -->
           <div id="timestamp-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-md hidden flex-col items-center justify-center text-center p-2 z-10 border border-emerald-500/30">
              <span class="text-emerald-700 text-3xl mb-1">🔒</span>
              <span class="text-xs font-bold text-stone-800 uppercase tracking-widest">Officially Sealed</span>
@@ -457,11 +509,11 @@
           const gain = this.ctx.createGain();
           osc.type = 'triangle';
           osc.frequency.setValueAtTime(680, now);
-          osc.frequency.exponentialRampToValueAtTime(85, now + 0.13);
-          gain.gain.setValueAtTime(0.24, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+          osc.frequency.exponentialRampToValueAtTime(85, now + 0.15);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
           osc.connect(gain); gain.connect(this.ctx.destination);
-          osc.start(now); osc.stop(now + 0.13);
+          osc.start(now); osc.stop(now + 0.15);
         } catch(e) {}
       },
       ding() {
@@ -544,21 +596,21 @@
       }
     }
 
-    const CONFIG = {
+        const CONFIG = {
       whatsappNumber: "918328843203",
       web3FormsKey: "8097f3dd-d51d-4adb-a562-6aa0e889e1eb",
-      
       spotlightSnaps: [
-        { img: "main1.jpg", caption: "Isme aapki shakal sach mein cartoon jaisi lag rahi hai. Par din bhar ki thakan ke baad yeh dekh ke hi sabse pehle smile aati thi." },
-        { img: "main2.jpg", caption: "Nakhre aasman pe, par vibe ekdum flawless. Yeh snap save karna toh mera birthright tha." },
-        { img: "main3.jpg", caption: "Bina kisi filter ya koshish ke bhi koi itna sukoon kaise de sakta hai? An artist knows a masterpiece when he sees one." },
-        { img: "main4.jpg", caption: "Yeh wo 4th snap hai jisme aapka pura mood aur bina-filter wali vibe ek saath dikhti hai. Mera absolute favourite frame." }
+        { img: "main1.mp4", caption: "Isme aapki shakal sach mein cartoon jaisi lag rahi hai. Par din bhar ki thakan ke baad yeh dekh ke hi sabse pehle smile aati thi." },
+        { img: "main2.mp4", caption: "Spider-Man cap aur yeh nakhre... ab samajh aaya mera 'Spidey-Sense' hamesha aap par hi kyun lock hota hai. 🕷️😌" },
+        { img: "main3.mp4", caption: "Koi sticker nahi, koi filter nahi, koi makeup nahi... sirf aapka yeh real aur raw version. An artist knows a masterpiece when he sees one." },
+        { img: "main4.jpg", caption: "Aur yeh mera absolute favourite frame—bina kisi koshish ke bhi koi itna sukoon kaise de sakta hai? 🤍" }
       ],
       vaultGridImages: [
-        "snap1.jpg", "snap2.jpg", "snap3.jpg", "snap4.jpg", "snap5.jpg", "snap6.jpg", "snap7.jpg", "snap8.jpg", "snap9.jpg", "snap10.jpg", "snap11.jpg", "snap12.jpg", "snap13.jpg", "snap14.jpg", "snap15.jpg", "snap16.jpg", "snap17.jpg", "snap18.jpg"
+        "snap1.mp4", "snap2.mp4", "snap3.mp4", "snap4.mp4", "snap5.mp4", "snap6.mp4",
+        "snap7.jpg", "snap8.jpg", "snap9.jpg", "snap10.jpg", "snap11.jpg", "snap12.jpg"
       ],
       traitsTags: [
-        "Mujhe \"Madam\" bulana ✨", "Aapka calm aur tension-free nature", "Meri chhoti-chhoti details notice karna", "Meri overthinking ko comedy bana dena", "Aapka Hyper-realistic art aur aesthetic vibe 🎨", "Mere nakhre aur mood swings aaram se jhelna", "Humari Babuaa-Madam wali chemistry", "Bina judge kiye meri saari baatein sunna", "Chupke se meri ajeeb snaps save karna 👀", "Aapke andar ka chhupa hua 'soft corner' 🤍", "Humari late-night weird baatein", "Mere secrets hamesha safe rakhne ka trust", "Har tension ko hansi mein badal dena", "Aapka bina-filter wala sense of humor", "Mujhe respect aur apni space dena", "Aapka focused aur ambitious mindset", "Aapke saath aane wali wo 'comfort vibe'", "Mujhe bina bole samajh jaana", "Aapka hamesha dependable rehna 🛡️", "Aapka kisi bhi aam din ko special bana dena ✨"
+        "Mujhe \"Madam\" bulana ✨", "Aapka calm aur tension-free nature", "Meri chhoti-chhoti details notice karna", "Meri overthinking ko comedy bana dena", "Aapka Hyper-realistic art aur aesthetic vibe 🎨", "Mere nakhre aur mood swings aaram se jhelna", "Humari Babuaa-Madam wali chemistry", "Bina judge kiye meri saari baatein sunna", "Meri ajeeb snaps save karna 👀", "Aapke andar ka chhupa hua 'soft corner' 🤍", "Humari late-night weird baatein", "Mere secrets hamesha safe rakhne ka trust", "Har tension ko hansi mein badal dena", "Aapka bina-filter wala sense of humor", "Mujhe respect aur apni space dena", "Aapka focused aur ambitious mindset", "Aapke saath aane wali wo 'comfort vibe'", "Mujhe bina bole samajh jaana", "Aapka hamesha dependable rehna 🛡️", "Aapka kisi bhi aam din ko special bana dena ✨"
       ],
       observations: [
         { title: "Card 01 • The Nakhre Tease", text: "Nakhre aur zidd toh bhare pade hain aap mein... par sach bataun? Aapke wo nakhre jhelne mein ek alag hi sukoon milta hai, Madam. 😌" },
@@ -568,25 +620,25 @@
         { title: "Card 05 • The Ultimate Security", text: "Bahar se kitni bhi strong banne ki koshish kar lo, par aapke andar ek bohot pyara aur soft side hai... aur us soft side ko main hamesha protect karunga. 🤍" }
       ],
       noButtonTexts: [
-        "Itni jaldi No? Ek baar aur soch lijiye 😌", 
-        "Ungli fisal gayi kya madam? 'Haan' wala button left mein hai. 👀", 
-        "Acha zidd? Dekhte hain kiski zidd badi hai.", 
-        "Abhi bhi 'Nahi'? Itne nakhre toh main canvas pe bhi nahi jhelta. 🎨", 
-        "Pata hai na main artist hu? Mere paas patience bohot hai, karte raho try.", 
-        "Dabate raho 'Nahi', mujhe sach mein koi jaldi nahi hai.", 
-        "Thakogi nahi? Meri tarah thoda calm ho jao aur 'Haan' dabao.", 
-        "Okay, ab lag raha hai aap sach mein maze le rahi ho is button ke saath.", 
-        "Dekho, ab Universe bhi keh raha hai ki maan jao.", 
-        "10 baar daba chuki ho. Dedication toh bohot hai aapke andar.", 
-        "Accha ruko, ab main sach mein bura maan jaunga. 😂", 
-        "Babuaa-Madam wali chemistry kharab karogi kya ab?", 
-        "Bas 2 attempt aur, uske baad yeh button hi main hata dunga.", 
-        "Aakhiri warning madam... shanti se 'Haan' pe click kar lijiye.", 
+        "Itni jaldi No? Ek baar aur soch lijiye 😌",
+        "Ungli fisal gayi kya madam? 'Haan' wala button idhar hai. 👀",
+        "Acha zidd? Dekhte hain kiski zidd badi hai.",
+        "Abhi bhi 'Nahi'? Itne nakhre toh main canvas pe bhi nahi jhelta. 🎨",
+        "Pata hai na main artist hu? Mere paas patience bohot hai, karte raho try.",
+        "Dabate raho 'Nahi', mujhe sach mein koi jaldi nahi hai.",
+        "Thakogi nahi? Meri tarah thoda calm ho jao aur 'Haan' dabao.",
+        "Okay, ab lag raha hai aap sach mein maze le rahi ho is button ke saath.",
+        "Dekho, ab Universe bhi keh raha hai ki maan jao.",
+        "10 baar daba chuki ho. Dedication toh bohot hai aapke andar.",
+        "Accha ruko, ab main sach mein bura maan jaunga. 😂",
+        "Babuaa-Madam wali chemistry kharab karogi kya ab?",
+        "Bas 2 attempt aur, uske baad yeh button hi main hata dunga.",
+        "Aakhiri warning madam... shanti se 'Haan' pe click kar lijiye.",
         "Bohot nakhre ho gaye! 😌 Ab aap chaho toh bhi 'Nahi' daba sakti. You are officially out of options."
       ]
     };
 
-    let currentStage = 1;
+    let currentStage = 0;
     let selectedTags = new Set();
     let currentSnapIndex = 0;
     let currentObsIndex = 0;
@@ -594,29 +646,31 @@
     let hasSignedCanvas = false;
 
     const STAGE_BACKGROUNDS = {
+      0: "radial-gradient(circle at 50% 20%, #F5ECFF 0%, #EDE4F8 60%, #E7DCF5 100%)",
+      "0-no": "radial-gradient(circle at 50% 20%, #F5ECFF 0%, #EDE4F8 60%, #E7DCF5 100%)",
       1: "radial-gradient(circle at 50% 20%, #FFF9F5 0%, #FAF7F2 60%, #F3EDE2 100%)",
       2: "radial-gradient(circle at 50% 20%, #F0F9FF 0%, #E0F2FE 60%, #F4F7FB 100%)",
       3: "radial-gradient(circle at 50% 20%, #FFFDF7 0%, #FAF5E8 60%, #F2E9D5 100%)",
       4: "radial-gradient(circle at 50% 20%, #FFF5F7 0%, #FCECEF 60%, #F5DCE2 100%)",
       5: "linear-gradient(180deg, #F7F6F2 0%, #EFECE6 100%)",
+      "5b": "radial-gradient(circle at 50% 20%, #FFFDF7 0%, #FAF5EC 60%, #F5EDE0 100%)",
       6: "radial-gradient(circle at 50% 20%, #FFF0F3 0%, #FDE2E8 60%, #F7CDD6 100%)",
       7: "radial-gradient(circle at 50% 20%, #FFFCF7 0%, #FAF4E8 60%, #F2E8D5 100%)"
     };
 
-    // ACTION-BY-ACTION UNDO ENGINE
     function goBackStage() {
       SFX.click();
+      if (currentStage === "0-no") { goToStage(0); return; }
+      if (currentStage === 1) { goToStage(0); return; }
+      if (currentStage === 7) { goToStage(6); return; }
 
-      if (currentStage === 7) {
-        goToStage(6);
+      if (currentStage === 6) {
+        if (noClickCount > 0) { resetNoButtonState(); return; }
+        goToStage("5b");
         return;
       }
 
-      if (currentStage === 6) {
-        if (noClickCount > 0) {
-          resetNoButtonState();
-          return;
-        }
+      if (currentStage === "5b") {
         goToStage(5);
         currentObsIndex = CONFIG.observations.length - 1;
         renderObservationCard();
@@ -624,12 +678,8 @@
       }
 
       if (currentStage === 5) {
-        if (currentObsIndex > 0) {
-          currentObsIndex--;
-          renderObservationCard();
-        } else {
-          goToStage(4);
-        }
+        if (currentObsIndex > 0) { currentObsIndex--; renderObservationCard(); }
+        else { goToStage(4); }
         return;
       }
 
@@ -637,40 +687,34 @@
         goToStage(3);
         document.getElementById('snap-spotlight').classList.add('hidden');
         const vault = document.getElementById('snap-vault');
-        vault.classList.remove('hidden');
-        vault.classList.add('flex');
+        vault.classList.remove('hidden'); vault.classList.add('flex');
         return;
       }
 
       if (currentStage === 3) {
         const vault = document.getElementById('snap-vault');
         if (!vault.classList.contains('hidden')) {
-          vault.classList.add('hidden');
-          vault.classList.remove('flex');
+          vault.classList.add('hidden'); vault.classList.remove('flex');
           document.getElementById('snap-spotlight').classList.remove('hidden');
           currentSnapIndex = CONFIG.spotlightSnaps.length - 1;
           renderSpotlightSnap();
         } else if (currentSnapIndex > 0) {
-          currentSnapIndex--;
-          renderSpotlightSnap();
+          currentSnapIndex--; renderSpotlightSnap();
         } else {
           goToStage(2);
           document.getElementById('game-ttt').classList.add('hidden');
-          const sniperDiv = document.getElementById('game-sniper');
-          sniperDiv.classList.remove('hidden');
-          sniperDiv.classList.add('flex');
-          initSniperGame();
+          const archeryDiv = document.getElementById('game-archery');
+          archeryDiv.classList.remove('hidden'); archeryDiv.classList.add('flex');
+          initArcheryGame();
         }
         return;
       }
 
       if (currentStage === 2) {
-        const sniperDiv = document.getElementById('game-sniper');
-        if (!sniperDiv.classList.contains('hidden')) {
-          sniperActive = false;
-          cancelAnimationFrame(sniperAnimId);
-          sniperDiv.classList.add('hidden');
-          sniperDiv.classList.remove('flex');
+        const archeryDiv = document.getElementById('game-archery');
+        if (!archeryDiv.classList.contains('hidden')) {
+          archeryActive = false; cancelAnimationFrame(archeryAnimId);
+          archeryDiv.classList.add('hidden'); archeryDiv.classList.remove('flex');
           document.getElementById('game-ttt').classList.remove('hidden');
           initTicTacToe(2);
         } else if (tttRound === 2) {
@@ -678,7 +722,6 @@
         } else {
           goToStage(1);
         }
-        return;
       }
     }
 
@@ -700,42 +743,44 @@
       if (yesBtn) yesBtn.style.transform = 'scale(1)';
     }
 
-    function goToStage(stageNum) {
-      if (typeof sniperActive !== 'undefined' && stageNum !== 2) {
-        sniperActive = false;
-        cancelAnimationFrame(sniperAnimId);
+    function goToStage(stageId) {
+      if (typeof archeryActive !== 'undefined' && stageId !== 2) {
+        archeryActive = false;
+        cancelAnimationFrame(archeryAnimId);
       }
 
       document.querySelectorAll('.stage-section').forEach(sec => sec.classList.remove('active'));
-      const target = document.getElementById(`stage-${stageNum}`);
+      const target = document.getElementById(`stage-${stageId}`);
       if (target) target.classList.add('active');
 
-      currentStage = stageNum;
-      document.getElementById('stage-indicator').innerText = `0${stageNum} / 07`;
+      currentStage = stageId;
+      const ind = document.getElementById('stage-indicator');
+      if (stageId === 0) ind.innerText = "SURPRISE ✨";
+      else if (stageId === "0-no") ind.innerText = "WAIT A SEC 😒";
+      else if (stageId === "5b") ind.innerText = "FOR YOU 🌸";
+      else ind.innerText = `0${stageId} / 07`;
 
       const backBtn = document.getElementById('back-nav-btn');
-      if (stageNum > 1) {
-        backBtn.classList.remove('hidden');
-        backBtn.classList.add('flex');
+      if (stageId !== 0) {
+        backBtn.classList.remove('hidden'); backBtn.classList.add('flex');
       } else {
-        backBtn.classList.add('hidden');
-        backBtn.classList.remove('flex');
+        backBtn.classList.add('hidden'); backBtn.classList.remove('flex');
       }
 
-      if (STAGE_BACKGROUNDS[stageNum]) document.getElementById('app-body').style.background = STAGE_BACKGROUNDS[stageNum];
+      if (STAGE_BACKGROUNDS[stageId]) document.getElementById('app-body').style.background = STAGE_BACKGROUNDS[stageId];
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (stageNum === 2) {
+      if (stageId === 2) {
         document.getElementById('game-ttt').classList.remove('hidden');
-        document.getElementById('game-sniper').classList.add('hidden');
-        document.getElementById('game-sniper').classList.remove('flex');
+        document.getElementById('game-archery').classList.add('hidden');
+        document.getElementById('game-archery').classList.remove('flex');
         initTicTacToe(1);
       }
-      if (stageNum === 3) initStage3();
-      if (stageNum === 4) initStage4();
-      if (stageNum === 5) initStage5();
-      if (stageNum === 6) initStage6Climax();
-      if (stageNum === 7) { setTimeout(initSignatureCanvas, 150); }
+      if (stageId === 3) initStage3();
+      if (stageId === 4) initStage4();
+      if (stageId === 5) initStage5();
+      if (stageId === 6) initStage6Climax();
+      if (stageId === 7) setTimeout(initSignatureCanvas, 150);
     }
 
     function showModal(text, icon = "✨", btnText = "Continue", callback = null) {
@@ -816,9 +861,9 @@
           SFX.win();
           showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Ab apna Aim dikhao! ✨\"", "🎯", "Next Game →", () => {
             document.getElementById('game-ttt').classList.add('hidden');
-            const sniperGame = document.getElementById('game-sniper');
-            sniperGame.classList.remove('hidden'); sniperGame.classList.add('flex');
-            initSniperGame();
+            const archeryGame = document.getElementById('game-archery');
+            archeryGame.classList.remove('hidden'); archeryGame.classList.add('flex');
+            initArcheryGame();
           });
         }, 380);
       }
@@ -847,18 +892,22 @@
     }
 
     /*************************************************************
-     * STAGE 02 - GAME 2: SNIPER TARGET SHOOTER (SKILL-BASED)
+     * STAGE 02 - GAME 2: ARCHERY BOW & ARROW (DRAG & SHOOT)
      *************************************************************/
-    let snCanvas, ctxSn;
-    let sniperActive = false;
-    let sniperAnimId;
-    let sniperScore = 0;
-    const SNIPER_TARGET_GOAL = 8;
+    let arCanvas, ctxAr;
+    let archeryActive = false;
+    let archeryAnimId;
+    let archeryScore = 0;
+    const ARCHERY_TARGET_GOAL = 6;
 
-    const SHELF_Y = [95, 195, 295];
+    const SHELF_Y = [65, 145, 225];
     let targets = [];
+    let arrows = [];
     let snParticles = [];
-    let scopePos = { x: 142, y: 182, recoil: 0, flash: 0 };
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let dragCurrent = { x: 0, y: 0 };
+    const bowBase = { x: 142, y: 310 };
 
     const TARGET_TYPES = [
       { label: "Overthinking", emoji: "🤯", color: "#fb7185" },
@@ -868,204 +917,250 @@
       { label: "Sust Neend", emoji: "😴", color: "#38bdf8" }
     ];
 
-    function initSniperGame() {
-      snCanvas = document.getElementById('sniper-canvas');
-      ctxSn = snCanvas.getContext('2d');
-      document.getElementById('sniper-overlay').classList.remove('opacity-0');
-      sniperScore = 0;
-      document.getElementById('sniper-score').innerText = sniperScore;
+    function initArcheryGame() {
+      arCanvas = document.getElementById('archery-canvas');
+      ctxAr = arCanvas.getContext('2d');
+      document.getElementById('archery-overlay').classList.remove('opacity-0');
+      archeryScore = 0;
+      document.getElementById('archery-score').innerText = archeryScore;
 
-      const handleFire = (clientX, clientY) => {
-        const rect = snCanvas.getBoundingClientRect();
-        const x = (clientX - rect.left) * (snCanvas.width / rect.width);
-        const y = (clientY - rect.top) * (snCanvas.height / rect.height);
+      const getEventPos = (e) => {
+        const rect = arCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (arCanvas.width / rect.width),
+          y: (clientY - rect.top) * (arCanvas.height / rect.height)
+        };
+      };
 
-        if (!sniperActive) {
+      const handleStart = (e) => {
+        e.preventDefault();
+        if (!archeryActive) {
           SFX.pop();
-          sniperActive = true;
-          document.getElementById('sniper-overlay').classList.add('opacity-0');
-          resetSniperTargets();
-          sniperLoop();
+          archeryActive = true;
+          document.getElementById('archery-overlay').classList.add('opacity-0');
+          resetArcheryTargets();
+          archeryLoop();
           return;
         }
-
-        scopePos.x = x;
-        scopePos.y = y;
-        scopePos.recoil = 14;
-        scopePos.flash = 6;
-        SFX.shoot();
-
-        let hitAny = false;
-        for (let i = 0; i < targets.length; i++) {
-          let t = targets[i];
-          if (t.alive) {
-            let dist = Math.hypot(x - t.x, y - (t.y - 24));
-            if (dist < 34) {
-              t.alive = false;
-              t.respawnTimer = 42;
-              hitAny = true;
-              sniperScore++;
-              SFX.ding();
-              document.getElementById('sniper-score').innerText = sniperScore;
-              spawnSnParticle(t.x, t.y - 28, "SHOT! 💥", t.type.color);
-
-              if (sniperScore >= SNIPER_TARGET_GOAL) {
-                winSniperGame();
-                return;
-              }
-              break;
-            }
-          }
-        }
-        if (!hitAny) {
-          spawnSnParticle(x, y - 10, "Miss!", "#94a3b8");
-        }
+        isDragging = true;
+        dragStart = getEventPos(e);
+        dragCurrent = { ...dragStart };
       };
 
-      snCanvas.onmousedown = (e) => { e.preventDefault(); handleFire(e.clientX, e.clientY); };
-      snCanvas.ontouchstart = (e) => {
+      const handleMove = (e) => {
+        if (!isDragging) return;
         e.preventDefault();
-        const t = e.touches[0];
-        handleFire(t.clientX, t.clientY);
+        dragCurrent = getEventPos(e);
       };
+
+      const handleEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        let dx = dragStart.x - dragCurrent.x;
+        let dy = dragStart.y - dragCurrent.y;
+        let pullDist = Math.hypot(dx, dy);
+        if (pullDist > 14) {
+          SFX.shoot();
+          arrows.push({
+            x: bowBase.x,
+            y: bowBase.y - 30,
+            vx: dx * 0.18,
+            vy: dy * 0.18,
+            active: true
+          });
+        }
+      };
+
+      arCanvas.ontouchstart = handleStart;
+      arCanvas.ontouchmove = handleMove;
+      arCanvas.ontouchend = handleEnd;
+      arCanvas.onmousedown = handleStart;
+      arCanvas.onmousemove = handleMove;
+      arCanvas.onmouseup = handleEnd;
+      arCanvas.onmouseleave = handleEnd;
     }
 
-    function resetSniperTargets() {
-      targets = [];
-      snParticles = [];
-      SHELF_Y.forEach((sy, idx) => {
-        targets.push(createTargetOnShelf(sy, idx));
-      });
+    function resetArcheryTargets() {
+      targets = []; arrows = []; snParticles = [];
+      SHELF_Y.forEach((sy, idx) => targets.push(createTargetOnShelf(sy, idx)));
     }
 
     function createTargetOnShelf(shelfY, idx) {
       const type = TARGET_TYPES[Math.floor(Math.random() * TARGET_TYPES.length)];
       const dir = idx % 2 === 0 ? 1 : -1;
-      const speed = (1.55 + Math.random() * 0.65) * dir;
-      return {
-        x: 50 + Math.random() * 180,
-        y: shelfY,
-        vx: speed,
-        type: type,
-        alive: true,
-        respawnTimer: 0
-      };
+      const speed = (1.15 + Math.random() * 0.7) * dir;
+      return { x: 50 + Math.random() * 180, y: shelfY, vx: speed, type, alive: true, respawnTimer: 0 };
     }
 
     function spawnSnParticle(x, y, text, color) {
-      snParticles.push({ x, y, text, color, life: 32, maxLife: 32 });
+      snParticles.push({ x, y, text, color, life: 35, maxLife: 35 });
     }
 
-    function sniperLoop() {
-      if (!sniperActive) return;
-      ctxSn.clearRect(0, 0, snCanvas.width, snCanvas.height);
+    function drawAvatar() {
+      const cx = bowBase.x;
+      const cy = bowBase.y + 40;
 
-      if (scopePos.flash > 0) {
-        ctxSn.fillStyle = `rgba(255, 240, 200, ${scopePos.flash * 0.04})`;
-        ctxSn.fillRect(0, 0, snCanvas.width, snCanvas.height);
-        scopePos.flash--;
-      }
+      ctxAr.fillStyle = "#1e293b";
+      ctxAr.beginPath(); ctxAr.arc(cx, cy, 38, Math.PI, 0); ctxAr.fill();
+
+      ctxAr.fillStyle = "#fcd34d";
+      ctxAr.fillRect(cx - 8, cy - 45, 16, 12);
+      ctxAr.beginPath(); ctxAr.arc(cx, cy - 55, 18, 0, Math.PI * 2); ctxAr.fill();
+
+      ctxAr.fillStyle = "#0f172a";
+      ctxAr.beginPath(); ctxAr.arc(cx, cy - 58, 20, 0, Math.PI * 2); ctxAr.fill();
+      ctxAr.beginPath(); ctxAr.ellipse(cx, cy - 35, 10, 22, 0, 0, Math.PI * 2); ctxAr.fill();
+
+      ctxAr.strokeStyle = "#334155";
+      ctxAr.lineWidth = 5;
+      ctxAr.beginPath(); ctxAr.arc(cx, cy - 58, 24, Math.PI, 0); ctxAr.stroke();
+      ctxAr.fillStyle = "#0f172a";
+      ctxAr.fillRect(cx - 27, cy - 65, 6, 14);
+            ctxAr.fillRect(cx + 21, cy - 65, 6, 14);
+
+      ctxAr.strokeStyle = "#fbbf24";
+      ctxAr.lineWidth = 3;
+      ctxAr.beginPath(); ctxAr.arc(cx, cy - 35, 30, Math.PI * 1.1, Math.PI * 1.9); ctxAr.stroke();
+
+      ctxAr.fillStyle = "#fcd34d";
+      ctxAr.beginPath();
+      ctxAr.arc(cx - 15, cy - 35, 6, 0, Math.PI * 2);
+      ctxAr.arc(cx + 15, cy - 35, 6, 0, Math.PI * 2);
+      ctxAr.fill();
+    }
+
+    function archeryLoop() {
+      if (!archeryActive) return;
+      ctxAr.clearRect(0, 0, arCanvas.width, arCanvas.height);
 
       SHELF_Y.forEach((sy) => {
-        ctxSn.fillStyle = "#44403c";
-        ctxSn.fillRect(16, sy, snCanvas.width - 32, 8);
-        ctxSn.strokeStyle = "#d6d3d1";
-        ctxSn.lineWidth = 0.6;
-        ctxSn.strokeRect(16, sy, snCanvas.width - 32, 8);
+        ctxAr.fillStyle = "#44403c";
+        ctxAr.fillRect(16, sy, arCanvas.width - 32, 6);
+        ctxAr.strokeStyle = "#d6d3d1";
+        ctxAr.lineWidth = 0.5;
+        ctxAr.strokeRect(16, sy, arCanvas.width - 32, 6);
       });
 
       targets.forEach((t, idx) => {
         if (t.alive) {
           t.x += t.vx;
-          if (t.x < 38 || t.x > snCanvas.width - 38) {
-            t.vx *= -1;
-          }
+          if (t.x < 38 || t.x > arCanvas.width - 38) t.vx *= -1;
 
-          ctxSn.fillStyle = "#a8a29e";
-          ctxSn.fillRect(t.x - 10, t.y - 5, 20, 5);
+          ctxAr.fillStyle = "#a8a29e";
+          ctxAr.fillRect(t.x - 10, t.y - 5, 20, 5);
 
-          ctxSn.beginPath();
-          ctxSn.arc(t.x, t.y - 24, 21, 0, Math.PI * 2);
-          ctxSn.fillStyle = "rgba(255, 255, 255, 0.92)";
-          ctxSn.fill();
-          ctxSn.lineWidth = 3;
-          ctxSn.strokeStyle = t.type.color;
-          ctxSn.stroke();
+          ctxAr.beginPath();
+          ctxAr.arc(t.x, t.y - 24, 21, 0, Math.PI * 2);
+          ctxAr.fillStyle = "rgba(255, 255, 255, 0.92)";
+          ctxAr.fill();
+          ctxAr.lineWidth = 3;
+          ctxAr.strokeStyle = t.type.color;
+          ctxAr.stroke();
 
-          ctxSn.beginPath();
-          ctxSn.arc(t.x, t.y - 24, 13, 0, Math.PI * 2);
-          ctxSn.strokeStyle = "rgba(225, 29, 72, 0.35)";
-          ctxSn.lineWidth = 1.5;
-          ctxSn.stroke();
+          ctxAr.font = "20px sans-serif";
+          ctxAr.textAlign = "center";
+          ctxAr.textBaseline = "middle";
+          ctxAr.fillText(t.type.emoji, t.x, t.y - 24);
 
-          ctxSn.font = "20px sans-serif";
-          ctxSn.textAlign = "center";
-          ctxSn.textBaseline = "middle";
-          ctxSn.fillText(t.type.emoji, t.x, t.y - 24);
-
-          ctxSn.font = "bold 9px sans-serif";
-          ctxSn.fillStyle = t.type.color;
-          ctxSn.fillText(t.type.label, t.x, t.y - 52);
+          ctxAr.font = "bold 9px sans-serif";
+          ctxAr.fillStyle = t.type.color;
+          ctxAr.fillText(t.type.label, t.x, t.y - 52);
         } else {
           t.respawnTimer--;
-          if (t.respawnTimer <= 0) {
-            targets[idx] = createTargetOnShelf(t.y, idx);
-          }
+          if (t.respawnTimer <= 0) targets[idx] = createTargetOnShelf(t.y, idx);
         }
       });
 
+      for (let i = arrows.length - 1; i >= 0; i--) {
+        let arr = arrows[i];
+        if (arr.active) {
+          arr.x += arr.vx;
+          arr.y += arr.vy;
+          arr.vy += 0.14;
+
+          ctxAr.save();
+          ctxAr.translate(arr.x, arr.y);
+          ctxAr.rotate(Math.atan2(arr.vy, arr.vx));
+          ctxAr.strokeStyle = "#fef08a";
+          ctxAr.lineWidth = 2.2;
+          ctxAr.beginPath();
+          ctxAr.moveTo(-10, 0); ctxAr.lineTo(10, 0);
+          ctxAr.moveTo(5, -5); ctxAr.lineTo(10, 0); ctxAr.lineTo(5, 5);
+          ctxAr.stroke();
+          ctxAr.restore();
+
+          for (let j = 0; j < targets.length; j++) {
+            let t = targets[j];
+            if (t.alive && Math.hypot(arr.x - t.x, arr.y - (t.y - 24)) < 27) {
+              t.alive = false; t.respawnTimer = 42; arr.active = false;
+              archeryScore++;
+              SFX.ding();
+              document.getElementById('archery-score').innerText = archeryScore;
+              spawnSnParticle(t.x, t.y - 28, "HIT! 💥", t.type.color);
+              if (archeryScore >= ARCHERY_TARGET_GOAL) { winArcheryGame(); return; }
+              break;
+            }
+          }
+          if (arr.x < -20 || arr.x > arCanvas.width + 20 || arr.y > arCanvas.height || arr.y < -50) {
+            arrows.splice(i, 1);
+          }
+        }
+      }
+
+      if (isDragging) {
+        let dx = dragStart.x - dragCurrent.x;
+        let dy = dragStart.y - dragCurrent.y;
+        ctxAr.strokeStyle = "rgba(255, 255, 255, 0.55)";
+        ctxAr.lineWidth = 2;
+        ctxAr.setLineDash([5, 5]);
+        ctxAr.beginPath();
+        ctxAr.moveTo(bowBase.x, bowBase.y - 30);
+        ctxAr.lineTo(bowBase.x + dx * 2, (bowBase.y - 30) + dy * 2);
+        ctxAr.stroke();
+        ctxAr.setLineDash([]);
+      }
+
+      drawAvatar();
+
       for (let i = snParticles.length - 1; i >= 0; i--) {
         let p = snParticles[i];
-        p.y -= 1.1;
-        p.life--;
-        ctxSn.globalAlpha = p.life / p.maxLife;
-        ctxSn.font = "bold 13px sans-serif";
-        ctxSn.fillStyle = p.color;
-        ctxSn.textAlign = "center";
-        ctxSn.fillText(p.text, p.x, p.y);
-        ctxSn.globalAlpha = 1.0;
+        p.y -= 1.1; p.life--;
+        ctxAr.globalAlpha = p.life / p.maxLife;
+        ctxAr.font = "bold 13px sans-serif";
+        ctxAr.fillStyle = p.color;
+        ctxAr.textAlign = "center";
+        ctxAr.fillText(p.text, p.x, p.y);
+        ctxAr.globalAlpha = 1.0;
         if (p.life <= 0) snParticles.splice(i, 1);
       }
 
-      if (scopePos.recoil > 0) scopePos.recoil *= 0.75;
-      const sx = scopePos.x;
-      const sy = scopePos.y - scopePos.recoil;
-
-      ctxSn.save();
-      ctxSn.strokeStyle = "rgba(244, 63, 94, 0.85)";
-      ctxSn.lineWidth = 1.8;
-
-      ctxSn.beginPath();
-      ctxSn.arc(sx, sy, 28, 0, Math.PI * 2);
-      ctxSn.stroke();
-
-      ctxSn.beginPath();
-      ctxSn.moveTo(sx - 38, sy); ctxSn.lineTo(sx - 10, sy);
-      ctxSn.moveTo(sx + 10, sy); ctxSn.lineTo(sx + 38, sy);
-      ctxSn.moveTo(sx, sy - 38); ctxSn.lineTo(sx, sy - 10);
-      ctxSn.moveTo(sx, sy + 10); ctxSn.lineTo(sx, sy + 38);
-      ctxSn.stroke();
-
-      ctxSn.beginPath();
-      ctxSn.arc(sx, sy, 3, 0, Math.PI * 2);
-      ctxSn.fillStyle = "#e11d48";
-      ctxSn.fill();
-      ctxSn.restore();
-
-      sniperAnimId = requestAnimationFrame(sniperLoop);
+      archeryAnimId = requestAnimationFrame(archeryLoop);
     }
 
-    function winSniperGame() {
-      sniperActive = false;
-      cancelAnimationFrame(sniperAnimId);
+    function winArcheryGame() {
+      archeryActive = false;
+      cancelAnimationFrame(archeryAnimId);
       SFX.win();
       setTimeout(() => {
-        showModal("\"Kya baat hai Sharp Shooter! 🎯 Apne saare nakhre aur overthinking ek-ek karke uda diye. Maan gaye aapka Aim, Madam! Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
+        showModal("\"Nishana ekdum perfect! 🎯 Jaise tumhari baaton ka hota hai. Tumhare nakhre udane ka maza hi alag hai... Aage badhein, Madam? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
       }, 450);
     }
 
+        function isVideoFile(filename) {
+      return /\.(mp4|webm|mov)$/i.test(filename);
+    }
+
+    function createMediaHTML(src, extraClasses = "w-full h-full object-cover") {
+      if (isVideoFile(src)) {
+        return `<video src="${src}" class="${extraClasses}" autoplay loop muted playsinline></video>`;
+      }
+      return `<img src="${src}" alt="Memory" class="${extraClasses}">`;
+    }
+
     /*************************************************************
-     * STAGE 03: SNAP ARCHIVE
+     * STAGE 03: PERSONAL MUSEUM (AUTO PHOTO + VIDEO)
      *************************************************************/
     function initStage3() {
       currentSnapIndex = 0;
@@ -1076,10 +1171,10 @@
 
       const vaultContainer = document.getElementById('vault-grid-container');
       vaultContainer.innerHTML = "";
-      CONFIG.vaultGridImages.forEach((imgUrl) => {
+      CONFIG.vaultGridImages.forEach((fileUrl) => {
         const item = document.createElement('div');
         item.className = "aspect-square rounded-2xl overflow-hidden bg-stone-200 border border-white shadow-sm";
-        item.innerHTML = `<img src="${imgUrl}" alt="Vault Snap" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">`;
+        item.innerHTML = createMediaHTML(fileUrl, "w-full h-full object-cover hover:scale-105 transition-transform duration-300");
         vaultContainer.appendChild(item);
       });
     }
@@ -1087,7 +1182,7 @@
     function renderSpotlightSnap() {
       const total = CONFIG.spotlightSnaps.length;
       const current = CONFIG.spotlightSnaps[currentSnapIndex];
-      document.getElementById('snap-img').src = current.img;
+      document.getElementById('snap-media-box').innerHTML = createMediaHTML(current.img, "w-full h-full object-cover");
       document.getElementById('snap-caption').innerText = `"${current.caption}"`;
       document.getElementById('snap-badge').innerText = `0${currentSnapIndex + 1} / 0${total}`;
       const btn = document.getElementById('snap-next-btn');
@@ -1104,7 +1199,7 @@
     }
 
     /*************************************************************
-     * STAGE 04: THE 20 "HER PERSPECTIVE" TAGS
+     * STAGE 04: THE 20 TAGS
      *************************************************************/
     function initStage4() {
       const container = document.getElementById('tags-container');
@@ -1134,7 +1229,7 @@
     }
 
     /*************************************************************
-     * STAGE 05: THE OBSERVATION DECK
+     * STAGE 05: THE OBSERVATION DECK -> PRE-PROPOSAL (5b)
      *************************************************************/
     let touchStartX = 0;
     function initStage5() {
@@ -1154,16 +1249,16 @@
       document.getElementById('obs-title').innerText = item.title;
       document.getElementById('obs-counter').innerText = `0${currentObsIndex + 1} / 0${total}`;
       document.getElementById('obs-text').innerText = `"${item.text}"`;
-      document.getElementById('obs-btn').innerHTML = (currentObsIndex === total - 1) ? "Aage Badein? (Last Stage) ➡️" : "Next Card &nbsp;→";
+      document.getElementById('obs-btn').innerHTML = (currentObsIndex === total - 1) ? "Ek Chhota Surprise Hai 🌸 →" : "Next Card &nbsp;→";
     }
 
     function nextObservation() {
       if (currentObsIndex < CONFIG.observations.length - 1) { currentObsIndex++; renderObservationCard(); } 
-      else { goToStage(6); }
+      else { goToStage("5b"); }
     }
 
     /*************************************************************
-     * STAGE 06: FULL-SCREEN COLLISION-FREE 'NO' BUTTON TRAP
+     * STAGE 06: BOUNDED 'NO' JAIL (STAYS IN BOTTOM ARENA, NO OVERLAP)
      *************************************************************/
     function initStage6Climax() {
       resetNoButtonState();
@@ -1176,6 +1271,7 @@
 
     function clickNoButton() {
       SFX.error();
+      const arena = document.getElementById('button-arena');
       const noBtn = document.getElementById('no-btn');
       const yesBtn = document.getElementById('yes-btn');
       const toast = document.getElementById('no-toast');
@@ -1185,56 +1281,44 @@
         toast.classList.remove('opacity-0');
         noClickCount++;
 
-        const shrinkScale = Math.max(0.74, 1 - noClickCount * 0.016);
-        const growScale = Math.min(1.25, 1 + noClickCount * 0.018);
+        const shrinkScale = Math.max(0.75, 1 - noClickCount * 0.015);
+        const growScale = Math.min(1.18, 1 + noClickCount * 0.012);
         yesBtn.style.transform = `scale(${growScale})`;
 
-        noBtn.style.position = 'fixed';
-        noBtn.style.zIndex = '45';
+        noBtn.style.position = 'absolute';
+        const pad = 8;
+        const btnW = noBtn.offsetWidth || 160;
+        const btnH = noBtn.offsetHeight || 44;
+        const maxLeft = Math.max(pad, arena.clientWidth - btnW - pad);
+        const maxTop = Math.max(pad, arena.clientHeight - btnH - pad);
 
-        const btnW = noBtn.offsetWidth || 170;
-        const btnH = noBtn.offsetHeight || 46;
-        const margin = 14;
+        const yLeft = yesBtn.offsetLeft;
+        const yTop = yesBtn.offsetTop;
+        const yRight = yLeft + yesBtn.offsetWidth;
+        const yBottom = yTop + yesBtn.offsetHeight;
 
-        const minX = margin;
-        const maxX = Math.max(minX, window.innerWidth - btnW - margin);
-        const minY = 72;
-        const maxY = Math.max(minY, window.innerHeight - btnH - 60);
+        let safeLeft = pad;
+        let safeTop = pad;
 
-        const yesRect = yesBtn.getBoundingClientRect();
-        const toastRect = toast.getBoundingClientRect();
-
-        let randX = minX;
-        let randY = minY;
-
-        for (let attempt = 0; attempt < 45; attempt++) {
-          const testX = Math.floor(minX + Math.random() * (maxX - minX));
-          const testY = Math.floor(minY + Math.random() * (maxY - minY));
-
-          const buffer = 20;
-          const hitsYes = !(
-            testX + btnW < yesRect.left - buffer ||
-            testX > yesRect.right + buffer ||
-            testY + btnH < yesRect.top - buffer ||
-            testY > yesRect.bottom + buffer
+        for (let attempt = 0; attempt < 40; attempt++) {
+          const testX = Math.floor(pad + Math.random() * (maxLeft - pad));
+          const testY = Math.floor(pad + Math.random() * (maxTop - pad));
+          const gap = 10;
+          const overlapsYes = !(
+            testX + btnW < yLeft - gap ||
+            testX > yRight + gap ||
+            testY + btnH < yTop - gap ||
+            testY > yBottom + gap
           );
-
-          const hitsToast = !(
-            testX + btnW < toastRect.left - 8 ||
-            testX > toastRect.right + 8 ||
-            testY + btnH < toastRect.top - 8 ||
-            testY > toastRect.bottom + 8
-          );
-
-          if (!hitsYes && !hitsToast) {
-            randX = testX;
-            randY = testY;
+          if (!overlapsYes) {
+            safeLeft = testX;
+            safeTop = testY;
             break;
           }
         }
 
-        noBtn.style.left = `${randX}px`;
-        noBtn.style.top = `${randY}px`;
+        noBtn.style.left = `${safeLeft}px`;
+        noBtn.style.top = `${safeTop}px`;
         noBtn.style.transform = `scale(${shrinkScale})`;
 
         if (noClickCount === CONFIG.noButtonTexts.length) {
