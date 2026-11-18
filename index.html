@@ -157,9 +157,9 @@
     </div>
   </div>
 
-  <!-- TOP MINIMAL PILL WITH BACK ARROW -->
+  <!-- TOP MINIMAL PILL WITH STEP-BY-STEP UNDO ARROW -->
   <header class="w-full max-w-md flex justify-center items-center z-20 pt-1 relative">
-    <button id="back-nav-btn" onclick="goBackStage()" class="hidden absolute left-1 w-9 h-9 rounded-full glass-pill items-center justify-center text-stone-700 text-sm font-bold active:scale-90 transition shadow-sm" title="Go Back">
+    <button id="back-nav-btn" onclick="goBackStage()" class="hidden absolute left-1 w-9 h-9 rounded-full glass-pill items-center justify-center text-stone-700 text-sm font-bold active:scale-90 transition shadow-sm" title="Undo / Back">
       ←
     </button>
     <div class="px-5 py-2 rounded-full glass-pill text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-600">
@@ -224,7 +224,7 @@
       <div id="game-sniper" class="w-full hidden flex-col items-center">
         <span class="text-[11px] uppercase tracking-[0.2em] text-rose-800/80 font-semibold mb-1">Game 02 • Sharp Shooter</span>
         <h2 class="font-editorial text-3xl font-semibold text-stone-800 mb-1">Shoot The Nakhre 🎯</h2>
-        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Table ke upar chalte hue targets par सीधा **Tap (Aim & Shoot)** karo. Apne dum par 8 targets uda ke dikhao! <br><span class="font-bold text-rose-600">Hits: <span id="sniper-score">0</span> / 8</span></p>
+        <p class="text-[11px] text-stone-500 mb-4 max-w-xs leading-snug">Table ke upar chalte hue targets par seedha **Tap (Aim & Shoot)** karo. Apne dum par 8 targets uda ke dikhao! <br><span class="font-bold text-rose-600">Hits: <span id="sniper-score">0</span> / 8</span></p>
 
         <div class="glass-card p-2.5 rounded-[32px] mb-4 relative flex items-center justify-center overflow-hidden" style="width: 304px; height: 384px;">
           <canvas id="sniper-canvas" width="284" height="364" class="rounded-[24px] cursor-crosshair bg-gradient-to-b from-stone-900 via-stone-800 to-stone-900"></canvas>
@@ -321,8 +321,8 @@
       </button>
     </section>
 
-    <!-- ================= STAGE 06: THE GRAND FINALE (BOUNDED 'NO' TRAP) ================= -->
-    <section id="stage-6" class="stage-section flex-col items-center text-center relative overflow-hidden min-h-[85vh]">
+    <!-- ================= STAGE 06: THE GRAND FINALE (FULL SCREEN 'NO' TRAP) ================= -->
+    <section id="stage-6" class="stage-section flex-col items-center text-center relative min-h-[82vh]">
       <span class="text-[11px] uppercase tracking-[0.2em] text-rose-700 font-semibold mb-2">Chapter 06 • The Grand Finale</span>
       
       <div class="glass-card rounded-[32px] p-6 sm:p-7 mb-4 border border-rose-200/70 z-20 relative">
@@ -345,12 +345,13 @@
 
       <!-- BIG BOLD 15-NO TOAST MESSAGE -->
       <div id="no-toast" class="opacity-0 min-h-[3.5rem] flex items-center justify-center px-5 py-2.5 mb-3 text-base sm:text-lg font-bold text-rose-900 glass-pill border-rose-300 rounded-2xl shadow-md transition-all duration-300 text-center z-20 mx-2 leading-snug"></div>
-        <!-- BOUNDED FLYING BUTTON ARENA (STAYS 100% INSIDE SCREEN) -->
-      <div class="flex items-center justify-center gap-3 w-full mb-10 relative min-h-[230px] overflow-hidden rounded-3xl p-3" id="button-arena">
-        <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-10">
+
+            <!-- BUTTON ARENA -->
+      <div class="flex items-center justify-center gap-3 w-full mb-10 relative min-h-[160px] p-3" id="button-arena">
+        <button id="yes-btn" onclick="SFX.win(); acceptProposal()" class="py-4 px-8 rounded-full btn-rose text-sm font-bold uppercase tracking-widest z-30">
           Haan, bilkul 🤍
         </button>
-        <button id="no-btn" onclick="clickNoButton()" class="py-3.5 px-6 rounded-full glass-pill text-stone-800 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-20">
+        <button id="no-btn" onclick="clickNoButton()" class="py-3.5 px-6 rounded-full glass-pill text-stone-800 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) z-40">
           Nahi, sochna padega 🤔
         </button>
       </div>
@@ -602,8 +603,67 @@
       7: "radial-gradient(circle at 50% 20%, #FFFCF7 0%, #FAF4E8 60%, #F2E8D5 100%)"
     };
 
+    // ACTION-BY-ACTION UNDO ENGINE
     function goBackStage() {
       SFX.click();
+
+      if (currentStage === 7) {
+        goToStage(6);
+        return;
+      }
+
+      if (currentStage === 6) {
+        if (noClickCount > 0) {
+          resetNoButtonState();
+          return;
+        }
+        goToStage(5);
+        currentObsIndex = CONFIG.observations.length - 1;
+        renderObservationCard();
+        return;
+      }
+
+      if (currentStage === 5) {
+        if (currentObsIndex > 0) {
+          currentObsIndex--;
+          renderObservationCard();
+        } else {
+          goToStage(4);
+        }
+        return;
+      }
+
+      if (currentStage === 4) {
+        goToStage(3);
+        document.getElementById('snap-spotlight').classList.add('hidden');
+        const vault = document.getElementById('snap-vault');
+        vault.classList.remove('hidden');
+        vault.classList.add('flex');
+        return;
+      }
+
+      if (currentStage === 3) {
+        const vault = document.getElementById('snap-vault');
+        if (!vault.classList.contains('hidden')) {
+          vault.classList.add('hidden');
+          vault.classList.remove('flex');
+          document.getElementById('snap-spotlight').classList.remove('hidden');
+          currentSnapIndex = CONFIG.spotlightSnaps.length - 1;
+          renderSpotlightSnap();
+        } else if (currentSnapIndex > 0) {
+          currentSnapIndex--;
+          renderSpotlightSnap();
+        } else {
+          goToStage(2);
+          document.getElementById('game-ttt').classList.add('hidden');
+          const sniperDiv = document.getElementById('game-sniper');
+          sniperDiv.classList.remove('hidden');
+          sniperDiv.classList.add('flex');
+          initSniperGame();
+        }
+        return;
+      }
+
       if (currentStage === 2) {
         const sniperDiv = document.getElementById('game-sniper');
         if (!sniperDiv.classList.contains('hidden')) {
@@ -612,13 +672,32 @@
           sniperDiv.classList.add('hidden');
           sniperDiv.classList.remove('flex');
           document.getElementById('game-ttt').classList.remove('hidden');
+          initTicTacToe(2);
+        } else if (tttRound === 2) {
           initTicTacToe(1);
-          return;
+        } else {
+          goToStage(1);
         }
+        return;
       }
-      if (currentStage > 1) {
-        goToStage(currentStage - 1);
+    }
+
+    function resetNoButtonState() {
+      noClickCount = 0;
+      const noBtn = document.getElementById('no-btn');
+      const yesBtn = document.getElementById('yes-btn');
+      const toast = document.getElementById('no-toast');
+      if (toast) toast.classList.add('opacity-0');
+      if (noBtn) {
+        noBtn.style.position = 'relative';
+        noBtn.style.left = 'auto';
+        noBtn.style.top = 'auto';
+        noBtn.style.transform = 'scale(1)';
+        noBtn.style.opacity = '1';
+        noBtn.style.pointerEvents = 'auto';
+        noBtn.style.display = 'inline-block';
       }
+      if (yesBtn) yesBtn.style.transform = 'scale(1)';
     }
 
     function goToStage(stageNum) {
@@ -634,7 +713,6 @@
       currentStage = stageNum;
       document.getElementById('stage-indicator').innerText = `0${stageNum} / 07`;
 
-      // Toggle Back Arrow visibility
       const backBtn = document.getElementById('back-nav-btn');
       if (stageNum > 1) {
         backBtn.classList.remove('hidden');
@@ -736,7 +814,7 @@
       } else {
         setTimeout(() => {
           SFX.win();
-                    showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Ab apna निशाना (Aim) dikhao! ✨\"", "🎯", "Next Game →", () => {
+          showModal("\"Accha theek hai... itni mehnat kar rahi thi toh maine hi jeetne diya. Khush raho, Madam. Ab apna Aim dikhao! ✨\"", "🎯", "Next Game →", () => {
             document.getElementById('game-ttt').classList.add('hidden');
             const sniperGame = document.getElementById('game-sniper');
             sniperGame.classList.remove('hidden'); sniperGame.classList.add('flex');
@@ -982,7 +1060,7 @@
       cancelAnimationFrame(sniperAnimId);
       SFX.win();
       setTimeout(() => {
-        showModal("\"Kya baat hai Sharp Shooter! 🎯 Apne saare nakhre aur overthinking ek-ek karke uda diye. Maan gaye aapka निशाना, Madam! Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
+        showModal("\"Kya baat hai Sharp Shooter! 🎯 Apne saare nakhre aur overthinking ek-ek karke uda diye. Maan gaye aapka Aim, Madam! Aage badhein? 😌🔥\"", "🔥", "Open Archive →", () => goToStage(3));
       }, 450);
     }
 
@@ -1085,9 +1163,10 @@
     }
 
     /*************************************************************
-     * STAGE 06: THE GRAND FINALE (100% INSIDE-SCREEN 'NO' TRAP)
+     * STAGE 06: FULL-SCREEN COLLISION-FREE 'NO' BUTTON TRAP
      *************************************************************/
     function initStage6Climax() {
+      resetNoButtonState();
       const hook2 = document.getElementById('climax-hook-2');
       const body = document.getElementById('climax-body');
       hook2.classList.remove('visible'); body.classList.remove('visible');
@@ -1097,7 +1176,6 @@
 
     function clickNoButton() {
       SFX.error();
-      const arena = document.getElementById('button-arena');
       const noBtn = document.getElementById('no-btn');
       const yesBtn = document.getElementById('yes-btn');
       const toast = document.getElementById('no-toast');
@@ -1107,21 +1185,57 @@
         toast.classList.remove('opacity-0');
         noClickCount++;
 
-        const shrinkScale = Math.max(0.68, 1 - noClickCount * 0.02);
-        const growScale = Math.min(1.22, 1 + noClickCount * 0.015);
-
-        const pad = 10;
-        const maxLeft = Math.max(pad, arena.clientWidth - noBtn.offsetWidth - pad);
-        const maxTop = Math.max(pad, arena.clientHeight - noBtn.offsetHeight - pad);
-
-        const safeLeft = Math.floor(pad + Math.random() * (maxLeft - pad));
-        const safeTop = Math.floor(pad + Math.random() * (maxTop - pad));
-
-        noBtn.style.position = 'absolute';
-        noBtn.style.left = `${safeLeft}px`;
-        noBtn.style.top = `${safeTop}px`;
-        noBtn.style.transform = `scale(${shrinkScale})`;
+        const shrinkScale = Math.max(0.74, 1 - noClickCount * 0.016);
+        const growScale = Math.min(1.25, 1 + noClickCount * 0.018);
         yesBtn.style.transform = `scale(${growScale})`;
+
+        noBtn.style.position = 'fixed';
+        noBtn.style.zIndex = '45';
+
+        const btnW = noBtn.offsetWidth || 170;
+        const btnH = noBtn.offsetHeight || 46;
+        const margin = 14;
+
+        const minX = margin;
+        const maxX = Math.max(minX, window.innerWidth - btnW - margin);
+        const minY = 72;
+        const maxY = Math.max(minY, window.innerHeight - btnH - 60);
+
+        const yesRect = yesBtn.getBoundingClientRect();
+        const toastRect = toast.getBoundingClientRect();
+
+        let randX = minX;
+        let randY = minY;
+
+        for (let attempt = 0; attempt < 45; attempt++) {
+          const testX = Math.floor(minX + Math.random() * (maxX - minX));
+          const testY = Math.floor(minY + Math.random() * (maxY - minY));
+
+          const buffer = 20;
+          const hitsYes = !(
+            testX + btnW < yesRect.left - buffer ||
+            testX > yesRect.right + buffer ||
+            testY + btnH < yesRect.top - buffer ||
+            testY > yesRect.bottom + buffer
+          );
+
+          const hitsToast = !(
+            testX + btnW < toastRect.left - 8 ||
+            testX > toastRect.right + 8 ||
+            testY + btnH < toastRect.top - 8 ||
+            testY > toastRect.bottom + 8
+          );
+
+          if (!hitsYes && !hitsToast) {
+            randX = testX;
+            randY = testY;
+            break;
+          }
+        }
+
+        noBtn.style.left = `${randX}px`;
+        noBtn.style.top = `${randY}px`;
+        noBtn.style.transform = `scale(${shrinkScale})`;
 
         if (noClickCount === CONFIG.noButtonTexts.length) {
           setTimeout(() => {
@@ -1219,7 +1333,7 @@
       document.getElementById('timestamp-overlay').classList.add('flex');
       document.getElementById('clear-sig-btn').style.display = 'none';
 
-          const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
+      const customNote = document.getElementById('custom-note-input').value.trim() || "No extra note";
       sendStealthNotification(`🚨 CONTRACT SEALED BY RAKHI! 🤍\nTime: ${timeString}\nSelected Tags (${selectedTags.size}): ${Array.from(selectedTags).join(", ")}\nHer Custom Note: ${customNote}`);
 
       fireCelebrationConfetti();
