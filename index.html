@@ -1000,37 +1000,86 @@
 
     function drawAvatar() {
       const cx = bowBase.x;
-      const cy = bowBase.y + 40;
+      const cy = bowBase.y - 18;
 
-      ctxAr.fillStyle = "#1e293b";
-      ctxAr.beginPath(); ctxAr.arc(cx, cy, 38, Math.PI, 0); ctxAr.fill();
+      let angle = -Math.PI / 2; // Default seedha upar
+      let pull = 0;
 
-      ctxAr.fillStyle = "#fcd34d";
-      ctxAr.fillRect(cx - 8, cy - 45, 16, 12);
-      ctxAr.beginPath(); ctxAr.arc(cx, cy - 55, 18, 0, Math.PI * 2); ctxAr.fill();
+      if (isDragging) {
+        let dx = dragStart.x - dragCurrent.x;
+        let dy = dragStart.y - dragCurrent.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist > 5) {
+          angle = Math.atan2(dy, dx);
+          pull = Math.min(34, dist * 0.45);
+        }
+      }
 
-      ctxAr.fillStyle = "#0f172a";
-      ctxAr.beginPath(); ctxAr.arc(cx, cy - 58, 20, 0, Math.PI * 2); ctxAr.fill();
-      ctxAr.beginPath(); ctxAr.ellipse(cx, cy - 35, 10, 22, 0, 0, Math.PI * 2); ctxAr.fill();
+      ctxAr.save();
+      ctxAr.translate(cx, cy);
+      ctxAr.rotate(angle + Math.PI / 2);
 
-      ctxAr.strokeStyle = "#334155";
-      ctxAr.lineWidth = 5;
-      ctxAr.beginPath(); ctxAr.arc(cx, cy - 58, 24, Math.PI, 0); ctxAr.stroke();
-      ctxAr.fillStyle = "#0f172a";
-      ctxAr.fillRect(cx - 27, cy - 65, 6, 14);
-            ctxAr.fillRect(cx + 21, cy - 65, 6, 14);
-
-      ctxAr.strokeStyle = "#fbbf24";
-      ctxAr.lineWidth = 3;
-      ctxAr.beginPath(); ctxAr.arc(cx, cy - 35, 30, Math.PI * 1.1, Math.PI * 1.9); ctxAr.stroke();
-
-      ctxAr.fillStyle = "#fcd34d";
+      // 1. Bowstring (Dori jo drag karne par peeche khichegi)
+      ctxAr.strokeStyle = "rgba(255, 255, 255, 0.85)";
+      ctxAr.lineWidth = 1.6;
       ctxAr.beginPath();
-      ctxAr.arc(cx - 15, cy - 35, 6, 0, Math.PI * 2);
-      ctxAr.arc(cx + 15, cy - 35, 6, 0, Math.PI * 2);
-      ctxAr.fill();
-    }
+      ctxAr.moveTo(-34, 12);
+      ctxAr.lineTo(0, 12 + pull);
+      ctxAr.lineTo(34, 12);
+      ctxAr.stroke();
 
+      // 2. Ulta-U Glowing Dhanush (Bow Limbs)
+      ctxAr.strokeStyle = "#fbbf24"; // Gold glow
+      ctxAr.lineWidth = 4.5;
+      ctxAr.lineCap = "round";
+      ctxAr.shadowColor = "rgba(251, 191, 36, 0.55)";
+      ctxAr.shadowBlur = 10;
+      ctxAr.beginPath();
+      ctxAr.moveTo(-34, 12);
+      ctxAr.quadraticCurveTo(-24, -22, 0, -22);
+      ctxAr.quadraticCurveTo(24, -22, 34, 12);
+      ctxAr.stroke();
+      ctxAr.shadowBlur = 0;
+
+      // 3. Center Grip (Handle)
+      ctxAr.strokeStyle = "#e11d48"; // Rose accent grip
+      ctxAr.lineWidth = 6;
+      ctxAr.beginPath();
+      ctxAr.moveTo(-7, -22);
+      ctxAr.lineTo(7, -22);
+      ctxAr.stroke();
+
+      // 4. Loaded Arrow (Teer jo dori ke sath peeche khichega)
+      const tailY = 12 + pull;
+      const tipY = tailY - 46;
+
+      ctxAr.strokeStyle = "#fef08a";
+      ctxAr.lineWidth = 2.4;
+      ctxAr.beginPath();
+      ctxAr.moveTo(0, tailY);
+      ctxAr.lineTo(0, tipY);
+      ctxAr.stroke();
+
+      // Arrow Head (Nok)
+      ctxAr.fillStyle = "#f43f5e";
+      ctxAr.beginPath();
+      ctxAr.moveTo(0, tipY - 6);
+      ctxAr.lineTo(-5, tipY + 4);
+      ctxAr.lineTo(5, tipY + 4);
+      ctxAr.closePath();
+      ctxAr.fill();
+
+      // Arrow Feathers (Piche ke pankh)
+      ctxAr.strokeStyle = "#fda4af";
+      ctxAr.lineWidth = 1.8;
+      ctxAr.beginPath();
+      ctxAr.moveTo(0, tailY - 4); ctxAr.lineTo(-5, tailY + 3);
+      ctxAr.moveTo(0, tailY - 4); ctxAr.lineTo(5, tailY + 3);
+      ctxAr.stroke();
+
+      ctxAr.restore();
+    }
+                   
     function archeryLoop() {
       if (!archeryActive) return;
       ctxAr.clearRect(0, 0, arCanvas.width, arCanvas.height);
