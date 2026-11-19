@@ -1202,7 +1202,24 @@
       return /\.(mp4|webm|mov)$/i.test(filename);
     }
 
-        function createMediaHTML(src, extraClasses = "w-full h-full object-cover") {
+            let mediaPreloaded = false;
+    function preloadAllMedia() {
+      if (mediaPreloaded || typeof CONFIG === 'undefined') return;
+      mediaPreloaded = true;
+      const spotlightFiles = (CONFIG.spotlightSnaps || []).map(s => s.img);
+      const vaultFiles = CONFIG.vaultGridImages || [];
+
+      // Pehle Spotlight ke 4 snaps turant background mein download honge
+      Promise.all(
+        spotlightFiles.map(url => fetch(url).then(r => r.arrayBuffer()).catch(() => {}))
+      ).then(() => {
+        // Phir peeche se Vault ke 12 snaps cache mein load ho jayenge
+        vaultFiles.forEach(url => fetch(url).then(r => r.arrayBuffer()).catch(() => {}));
+      });
+    }
+    window.addEventListener('load', preloadAllMedia);
+
+    function createMediaHTML(src, extraClasses = "w-full h-full object-cover object-[50%_20%]") {
       if (isVideoFile(src)) {
         return `<video src="${src}" class="${extraClasses} pointer-events-none" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>`;
       }
@@ -1223,21 +1240,36 @@
     }
 
     /*************************************************************
-     * STAGE 03: PERSONAL MUSEUM (AUTO PHOTO + VIDEO)
+     * STAGE 03: PERSONAL MUSEUM (INSTANT + FACE-FIT VERTICAL)
      *************************************************************/
     function initStage3() {
       currentSnapIndex = 0;
       document.getElementById('snap-spotlight').classList.remove('hidden');
       document.getElementById('snap-vault').classList.add('hidden');
       document.getElementById('snap-vault').classList.remove('flex');
+
+      // Slim width + Tall vertical portrait frame (face bilkul nahi katega)
+      const mediaBox = document.getElementById('snap-media-box');
+      mediaBox.className = "relative w-[78%] max-w-[240px] aspect-[9/14] mx-auto mb-4 rounded-2xl overflow-hidden bg-stone-200 border-2 border-white shadow-md";
+      mediaBox.innerHTML = "";
+
+      // Saare 4 Spotlight snaps ek hi baar mein ready rahenge (0ms switch)
+      CONFIG.spotlightSnaps.forEach((snap, idx) => {
+        const slide = document.createElement('div');
+        slide.className = `spotlight-slide absolute inset-0 w-full h-full transition-opacity duration-300 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`;
+        slide.innerHTML = createMediaHTML(snap.img, "w-full h-full object-cover object-[50%_20%]");
+        mediaBox.appendChild(slide);
+      });
+      forcePlayVideos(mediaBox);
       renderSpotlightSnap();
 
+      // Full Vault grid (face-focused squares)
       const vaultContainer = document.getElementById('vault-grid-container');
       vaultContainer.innerHTML = "";
       CONFIG.vaultGridImages.forEach((fileUrl) => {
         const item = document.createElement('div');
         item.className = "aspect-square rounded-2xl overflow-hidden bg-stone-200 border border-white shadow-sm";
-        item.innerHTML = createMediaHTML(fileUrl, "w-full h-full object-cover hover:scale-105 transition-transform duration-300");
+        item.innerHTML = createMediaHTML(fileUrl, "w-full h-full object-cover object-[50%_20%] hover:scale-105 transition-transform duration-300");
         vaultContainer.appendChild(item);
       });
     }
@@ -1245,9 +1277,23 @@
     function renderSpotlightSnap() {
       const total = CONFIG.spotlightSnaps.length;
       const current = CONFIG.spotlightSnaps[currentSnapIndex];
-      const mediaBox = document.getElementById('snap-media-box');
-      mediaBox.innerHTML = createMediaHTML(current.img, "w-full h-full object-cover");
-      forcePlayVideos(mediaBox);
+      const slides = document.querySelectorAll('#snap-media-box .spotlight-slide');
+
+      slides.forEach((slide, idx) => {
+        if (idx === currentSnapIndex) {
+          slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+          slide.classList.add('opacity-100', 'z-10');
+          const vid = slide.querySelector('video');
+          if (vid) {
+            vid.muted = true;
+            vid.play().catch(() => {});
+          }
+        } else {
+          slide.classList.remove('opacity-100', 'z-10');
+          slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+        }
+      });
+
       document.getElementById('snap-caption').innerText = `"${current.caption}"`;
       document.getElementById('snap-badge').innerText = `0${currentSnapIndex + 1} / 0${total}`;
       const btn = document.getElementById('snap-next-btn');
@@ -1265,8 +1311,8 @@
         vault.classList.add('flex');
         forcePlayVideos(vault);
       }
-    }
-
+      }
+                                                               
     /*************************************************************
      * STAGE 04: THE 20 TAGS
      *************************************************************/
