@@ -1202,11 +1202,24 @@
       return /\.(mp4|webm|mov)$/i.test(filename);
     }
 
-    function createMediaHTML(src, extraClasses = "w-full h-full object-cover") {
+        function createMediaHTML(src, extraClasses = "w-full h-full object-cover") {
       if (isVideoFile(src)) {
-        return `<video src="${src}" class="${extraClasses}" autoplay loop muted playsinline></video>`;
+        return `<video src="${src}" class="${extraClasses} pointer-events-none" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>`;
       }
       return `<img src="${src}" alt="Memory" class="${extraClasses}">`;
+    }
+
+    function forcePlayVideos(container) {
+      if (!container) return;
+      container.querySelectorAll('video').forEach(vid => {
+        vid.muted = true;
+        vid.loop = true;
+        vid.playsInline = true;
+        const playPromise = vid.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      });
     }
 
     /*************************************************************
@@ -1232,7 +1245,9 @@
     function renderSpotlightSnap() {
       const total = CONFIG.spotlightSnaps.length;
       const current = CONFIG.spotlightSnaps[currentSnapIndex];
-      document.getElementById('snap-media-box').innerHTML = createMediaHTML(current.img, "w-full h-full object-cover");
+      const mediaBox = document.getElementById('snap-media-box');
+      mediaBox.innerHTML = createMediaHTML(current.img, "w-full h-full object-cover");
+      forcePlayVideos(mediaBox);
       document.getElementById('snap-caption').innerText = `"${current.caption}"`;
       document.getElementById('snap-badge').innerText = `0${currentSnapIndex + 1} / 0${total}`;
       const btn = document.getElementById('snap-next-btn');
@@ -1240,11 +1255,15 @@
     }
 
     function nextSpotlightSnap() {
-      if (currentSnapIndex < CONFIG.spotlightSnaps.length - 1) { currentSnapIndex++; renderSpotlightSnap(); } 
-      else {
+      if (currentSnapIndex < CONFIG.spotlightSnaps.length - 1) {
+        currentSnapIndex++;
+        renderSpotlightSnap();
+      } else {
         document.getElementById('snap-spotlight').classList.add('hidden');
         const vault = document.getElementById('snap-vault');
-        vault.classList.remove('hidden'); vault.classList.add('flex');
+        vault.classList.remove('hidden');
+        vault.classList.add('flex');
+        forcePlayVideos(vault);
       }
     }
 
