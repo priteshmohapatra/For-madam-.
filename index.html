@@ -1205,97 +1205,134 @@
       return /\.(mp4|webm|mov)$/i.test(filename);
     }
 
-            let mediaPreloaded = false;
-    function preloadAllMedia() {
-      if (mediaPreloaded || typeof CONFIG === 'undefined') return;
-      mediaPreloaded = true;
+        const MEDIA_CACHE = {};
+    const MEDIA_PROMISES = {};
+    let mediaPreloadStarted = false;
+
+    function fetchIntoCache(url) {
+      if (MEDIA_CACHE[url]) return Promise.resolve(MEDIA_CACHE[url]);
+      if (MEDIA_PROMISES[url]) return MEDIA_PROMISES[url];
+      MEDIA_PROMISES[url] = fetch(url)
+        .then(res => {
+          if (!res.ok) throw new Error('File not found');
+          return res.blob();
+        })
+        .then(blob => {
+          let finalBlob = blob;
+          if (isVideoFile(url) && (!blob.type || blob.type === 'application/octet-stream')) {
+            finalBlob = new Blob([blob], { type: 'video/mp4' });
+          }
+          const blobUrl = URL.createObjectURL(finalBlob);
+          MEDIA_CACHE[url] = blobUrl;
+          return blobUrl;
+        })
+        .catch(() => url);
+      return MEDIA_PROMISES[url];
+    }
+
+    async function preloadAllMedia() {
+      if (mediaPreloadStarted || typeof CONFIG === 'undefined') return;
+      mediaPreloadStarted = true;
       const spotlightFiles = (CONFIG.spotlightSnaps || []).map(s => s.img);
       const vaultFiles = CONFIG.vaultGridImages || [];
+      const allFiles = [...spotlightFiles, ...vaultFiles];
 
-      // Pehle Spotlight ke 4 snaps turant background mein download honge
-      Promise.all(
-        spotlightFiles.map(url => fetch(url).then(r => r.arrayBuffer()).catch(() => {}))
-      ).then(() => {
-        // Phir peeche se Vault ke 12 snaps cache mein load ho jayenge
-        vaultFiles.forEach(url => fetch(url).then(r => r.arrayBuffer()).catch(() => {}));
-      });
-    }
-    window.addEventListener('load', preloadAllMedia);
-
-    function createMediaHTML(src, extraClasses = "w-full h-full object-cover object-[50%_20%]") {
-      if (isVideoFile(src)) {
-        return `<video src="${src}" class="${extraClasses} pointer-events-none" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>`;
+      // 2-2 files karke peeche RAM mein save hongi (network jam nahi hoga)
+      for (let i = 0; i < allFiles.length; i += 2) {
+        await Promise.all(allFiles.slice(i, i + 2).map(fetchIntoCache));
       }
-      return `<img src="${src}" alt="Memory" class="${extraClasses}">`;
+    }
+    setTimeout(preloadAllMedia, 400);
+
+    function attachCachedMedia(el, url) {
+      const startMedia = (finalSrc) => {
+        el.src = finalSrc;
+        if (el.tagName === 'VIDEO') {
+          el.muted = true;
+          el.loop = true;
+          el.playsInline = true;
+          requestAnimationFrame(() => {
+            el.play().catch(() => {});
+          });
+        }
+      };
+
+      if (MEDIA_CACHE[url]) {
+        startMedia(MEDIA_CACHE[url]);
+      } else {
+        fetchIntoCache(url).then((finalSrc) => {
+          if (el.isConnected) startMedia(finalSrc);
+        });
+      }
     }
 
-    function forcePlayVideos(container) {
+    function createMediaElement(url, extraClasses = "w-full h-full object-cover object-center") {
+      if (isVideoFile(url)) {
+        const vid = document.createElement('video');
+        vid.className = `${extraClasses} pointer-events-none`;
+        vid.autoplay = true;
+        vid.loop = true;
+        vid.muted = true;
+        vid.playsInline = true;
+        vid.setAttribute('autoplay', '');
+        vid.setAttribute('loop', '');
+        vid.setAttribute('muted', '');
+        vid.setAttribute('playsinline', '');
+        vid.setAttribute('webkit-playsinline', '');
+        vid.preload = 'auto';
+        attachCachedMedia(vid, url);
+        return vid;
+      }
+      const img = document.createElement('img');
+      img.alt = "Memory";
+      img.className = extraClasses;
+      attachCachedMedia(img, url);
+      return img;
+    }
+
+    function clearContainerMedia(container) {
       if (!container) return;
       container.querySelectorAll('video').forEach(vid => {
-        vid.muted = true;
-        vid.loop = true;
-        vid.playsInline = true;
-        const playPromise = vid.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {});
-        }
+        vid.pause();
+        vid.removeAttribute('src');
+        vid.load();
       });
+      container.innerHTML = "";
     }
 
     /*************************************************************
-     * STAGE 03: PERSONAL MUSEUM (INSTANT + FACE-FIT VERTICAL)
+     * STAGE 03: PERSONAL MUSEUM (RAM CACHE + EXACT 9:16 SNAP SIZE)
      *************************************************************/
     function initStage3() {
       currentSnapIndex = 0;
+      const stage3 = document.getElementById('stage-3');
+      if (stage3) {
+        stage3.style.justifyContent = "flex-start";
+        stage3.style.paddingTop = "6px";
+      }
+
       document.getElementById('snap-spotlight').classList.remove('hidden');
       document.getElementById('snap-vault').classList.add('hidden');
       document.getElementById('snap-vault').classList.remove('flex');
 
-      // Slim width + Tall vertical portrait frame (face bilkul nahi katega)
+      // Bahar wale wrapper ko hi exact 9:16 Snap size bana denge (no double box)
       const mediaBox = document.getElementById('snap-media-box');
-      mediaBox.className = "relative w-[78%] max-w-[240px] aspect-[9/14] mx-auto mb-4 rounded-2xl overflow-hidden bg-stone-200 border-2 border-white shadow-md";
-      mediaBox.innerHTML = "";
+      if (mediaBox && mediaBox.parentElement) {
+        mediaBox.parentElement.className = "relative w-[195px] sm:w-[220px] aspect-[9/16] mx-auto mb-3 rounded-2xl overflow-hidden bg-stone-200 shadow-sm";
+      }
+      if (mediaBox) mediaBox.className = "w-full h-full";
 
-      // Saare 4 Spotlight snaps ek hi baar mein ready rahenge (0ms switch)
-      CONFIG.spotlightSnaps.forEach((snap, idx) => {
-        const slide = document.createElement('div');
-        slide.className = `spotlight-slide absolute inset-0 w-full h-full transition-opacity duration-300 ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`;
-        slide.innerHTML = createMediaHTML(snap.img, "w-full h-full object-cover object-[50%_20%]");
-        mediaBox.appendChild(slide);
-      });
-      forcePlayVideos(mediaBox);
+      clearContainerMedia(document.getElementById('vault-grid-container'));
       renderSpotlightSnap();
-
-      // Full Vault grid (face-focused squares)
-      const vaultContainer = document.getElementById('vault-grid-container');
-      vaultContainer.innerHTML = "";
-      CONFIG.vaultGridImages.forEach((fileUrl) => {
-        const item = document.createElement('div');
-        item.className = "aspect-square rounded-2xl overflow-hidden bg-stone-200 border border-white shadow-sm";
-        item.innerHTML = createMediaHTML(fileUrl, "w-full h-full object-cover object-[50%_20%] hover:scale-105 transition-transform duration-300");
-        vaultContainer.appendChild(item);
-      });
     }
 
     function renderSpotlightSnap() {
       const total = CONFIG.spotlightSnaps.length;
       const current = CONFIG.spotlightSnaps[currentSnapIndex];
-      const slides = document.querySelectorAll('#snap-media-box .spotlight-slide');
+      const mediaBox = document.getElementById('snap-media-box');
 
-      slides.forEach((slide, idx) => {
-        if (idx === currentSnapIndex) {
-          slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
-          slide.classList.add('opacity-100', 'z-10');
-          const vid = slide.querySelector('video');
-          if (vid) {
-            vid.muted = true;
-            vid.play().catch(() => {});
-          }
-        } else {
-          slide.classList.remove('opacity-100', 'z-10');
-          slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
-        }
-      });
+      clearContainerMedia(mediaBox);
+      mediaBox.appendChild(createMediaElement(current.img, "w-full h-full object-cover object-center"));
 
       document.getElementById('snap-caption').innerText = `"${current.caption}"`;
       document.getElementById('snap-badge').innerText = `0${currentSnapIndex + 1} / 0${total}`;
@@ -1308,14 +1345,27 @@
         currentSnapIndex++;
         renderSpotlightSnap();
       } else {
+        // Spotlight video band karke Vault kholenge taaki decoders free rahein
+        clearContainerMedia(document.getElementById('snap-media-box'));
         document.getElementById('snap-spotlight').classList.add('hidden');
+
         const vault = document.getElementById('snap-vault');
         vault.classList.remove('hidden');
         vault.classList.add('flex');
-        forcePlayVideos(vault);
+
+        const vaultContainer = document.getElementById('vault-grid-container');
+        vaultContainer.style.maxHeight = "54vh";
+        clearContainerMedia(vaultContainer);
+
+        CONFIG.vaultGridImages.forEach((fileUrl) => {
+          const item = document.createElement('div');
+          item.className = "aspect-[9/16] rounded-xl overflow-hidden bg-stone-200 border border-white shadow-sm";
+          item.appendChild(createMediaElement(fileUrl, "w-full h-full object-cover object-center"));
+          vaultContainer.appendChild(item);
+        });
       }
-      }
-                                                               
+    }
+    
     /*************************************************************
      * STAGE 04: THE 20 TAGS
      *************************************************************/
